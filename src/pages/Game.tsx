@@ -1,22 +1,20 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { prepositions } from '@/data/prepositions';
+import { sentences } from '@/data/sentences';
+import rand from '@/util/rand';
 
 export default function GamePage() {
+  const randomIndex = rand(0, sentences.length);
+
   return (
-    <div>
+    <section>
+      <h1>{sentences[randomIndex].q}</h1>
       <ul>
-        <li>UL LI</li>
+        {prepositions.map((ans) => (
+          <li key={ans}>
+            {ans}
+          </li>
+        ))}
       </ul>
-      <ol>
-        <li>OL LI</li>
-      </ol>
-      <p>This is a paragraph.</p>
-      <h1>Heading 1</h1>
-      <h2>Heading 2</h2>
-      <h3>Heading 3</h3>
-      <h4>Heading 4</h4>
-      <h5>Heading 5</h5>
-      <h6>Heading 6</h6>
-      <FontAwesomeIcon icon='anchor' size='xs' />
-    </div>
+    </section>
   );
 }
