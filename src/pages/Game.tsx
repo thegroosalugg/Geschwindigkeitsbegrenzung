@@ -1,20 +1,5 @@
-import { prepositions } from '@/data/prepositions';
-import { sentences } from '@/data/sentences';
-import rand from '@/util/rand';
+import Quiz from '@/components/quiz/Quiz';
 
 export default function GamePage() {
-  const randomIndex = rand(0, sentences.length);
-
-  return (
-    <section>
-      <h1>{sentences[randomIndex].q}</h1>
-      <ul>
-        {prepositions.map((ans) => (
-          <li key={ans}>
-            {ans}
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
+  return <Quiz />;
 }
