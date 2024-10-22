@@ -1,0 +1,7 @@
+.nav {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem;
+  overflow-x: scroll;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+}

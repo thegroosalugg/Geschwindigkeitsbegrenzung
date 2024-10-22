@@ -1,0 +1,28 @@
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  color: #d8cccc;
+  transition: 0.5s ease-in-out;
+
+  .active-tab {
+    border: 1px solid #e3a137;
+    transition: border-color 0.5s ease-in-out;
+  }
+
+  &.active {
+    color: #e3a137;
+
+    &:hover {
+      color: #b4802c;
+
+      .active-tab {
+        border-color: #b4802c;
+      }
+    }
+  }
+
+  &:hover {
+    color: #777777;
+  }
+}
