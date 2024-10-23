@@ -1,4 +1,6 @@
 // min inclusive, max exclusive
-const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min) + min);
+// const rand = (min: number, max: number) => Math.floor(Math.random() * (max - min) + min);
 
-export default rand;
+const randomIndex = (max: number) => Math.floor(Math.random() * max);
+
+export default randomIndex;
