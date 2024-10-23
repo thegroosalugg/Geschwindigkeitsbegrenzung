@@ -24,13 +24,14 @@ export default function Quiz() {
         missed: 0,
   });
   const maxTime = useRef(5000);
+  const interval = useRef<number | undefined>(undefined);
   const [     question,      setQuestion] = useState(initialQuestion);
   const [timeRemaining, setTimeRemaining] = useState(maxTime.current);
 
   // console.log(quizItems.length, quizPool.length); // *logData
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const startTimer = () => {
+    interval.current = setInterval(() => {
       setTimeRemaining((prevTimer) => {
         prevTimer -= 100;
 
@@ -45,11 +46,7 @@ export default function Quiz() {
         return prevTimer;
       });
     }, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  }
 
   function clickHandler(choice: string) {
     const isCorrect = choice === question.a;
@@ -57,9 +54,18 @@ export default function Quiz() {
     const    missed = !isCorrect ? user.missed + 1             : user.missed;
     const     score =  isCorrect ? user.score  + timeRemaining : user.score;
 
+    clearInterval(interval.current);
     setUser({ choice, isCorrect, solved, missed, score });
     console.log({ choice, isCorrect, solved, missed, score }); // *logData
   }
+
+  useEffect(() => {
+    startTimer();
+
+    return () => {
+      clearInterval(interval.current);
+    };
+  }, []);
 
   return (
     <>
