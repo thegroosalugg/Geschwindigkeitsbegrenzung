@@ -6,14 +6,13 @@ import randomIndex from '@/util/rand';
 import css from './Quiz.module.css';
 
 let quizPool = [...quizItems];
-const checkPoolforZero = () => {
+
+const randomQuestion = () => {
   if (quizPool.length === 0) {
     quizPool = [...quizItems];
   }
-};
-
-const randomQuestion = () => quizPool.splice(randomIndex(quizPool.length), 1)[0];
-const initialQuestion = randomQuestion();
+  return quizPool.splice(randomIndex(quizPool.length), 1)[0];
+}
 
 export default function Quiz() {
   const [user, setUser] = useState({
@@ -25,14 +24,17 @@ export default function Quiz() {
   });
   const maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [     question,      setQuestion] = useState(initialQuestion);
-  const [timeRemaining, setTimeRemaining] = useState(maxTime.current);
+  const [     question,      setQuestion] = useState({ id: '', q: '', a: '', eng: '', ru: ''});
+  const [timeRemaining, setTimeRemaining] = useState(0);
   const [ timerStopped,  setTimerStopped] = useState(false);
 
-  // console.log(quizItems.length, quizPool.length); // *logData
+  console.log(quizItems.length, quizPool.length); // *logData
 
   const startTimer = () => {
     setTimerStopped(false);
+    setQuestion(randomQuestion());
+    setTimeRemaining(maxTime.current);
+
     interval.current = setInterval(() => {
       setTimeRemaining((prevTimer) => {
         prevTimer -= 100;
@@ -40,7 +42,6 @@ export default function Quiz() {
         if (prevTimer <= 0) {
           maxTime.current = 5000;
           setQuestion(randomQuestion());
-          checkPoolforZero();
           setUser((prevState) => ({ ...prevState, missed: prevState.missed + 1 }));
           return maxTime.current;
         }
@@ -69,6 +70,16 @@ export default function Quiz() {
       clearInterval(interval.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (timerStopped) {
+      const timer = setTimeout(() => {
+        startTimer();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [timerStopped]);
 
   return (
     <>
