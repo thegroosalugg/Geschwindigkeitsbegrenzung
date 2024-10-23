@@ -1,4 +1,4 @@
-export const prepositions = [
+export const userChoices = [
   { ans: 'an',    background: '#697565' }, // at, on
   { ans: 'auf',   background: '#6A9AB0' }, // on, upon
   { ans: 'aus',   background: '#9A7E6F' }, // from, out of

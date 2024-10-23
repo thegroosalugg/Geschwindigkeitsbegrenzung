@@ -1,4 +1,4 @@
-export const sentences = [
+export const quizItems = [
   {
     id: '1',
     q: 'Ich hänge ___ meiner Entscheidung ab.',
