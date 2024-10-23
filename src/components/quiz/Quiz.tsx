@@ -27,10 +27,12 @@ export default function Quiz() {
   const interval = useRef<number | undefined>(undefined);
   const [     question,      setQuestion] = useState(initialQuestion);
   const [timeRemaining, setTimeRemaining] = useState(maxTime.current);
+  const [ timerStopped,  setTimerStopped] = useState(false);
 
   // console.log(quizItems.length, quizPool.length); // *logData
 
   const startTimer = () => {
+    setTimerStopped(false);
     interval.current = setInterval(() => {
       setTimeRemaining((prevTimer) => {
         prevTimer -= 100;
@@ -54,6 +56,7 @@ export default function Quiz() {
     const    missed = !isCorrect ? user.missed + 1             : user.missed;
     const     score =  isCorrect ? user.score  + timeRemaining : user.score;
 
+    setTimerStopped(true);
     clearInterval(interval.current);
     setUser({ choice, isCorrect, solved, missed, score });
     console.log({ choice, isCorrect, solved, missed, score }); // *logData
@@ -73,18 +76,19 @@ export default function Quiz() {
         <h1>{question.q}</h1>
         <progress value={timeRemaining} max={maxTime.current} />
       </div>
-      <ul className={css['answers']}>
+      <div className={css['answers']}>
         {userChoices.map(({ choice, background }) => (
-          <motion.li
+          <motion.button
             key={choice}
             style={{ background }}
+            disabled={timerStopped}
             onClick={() => clickHandler(choice)}
             whileTap={{ scale: 1.1, transition: { type: 'spring', damping: 5, stiffness: 400 } }}
           >
             {choice}
-          </motion.li>
+          </motion.button>
         ))}
-      </ul>
+      </div>
     </>
   );
 }
