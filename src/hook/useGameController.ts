@@ -38,8 +38,6 @@ const useGameController = () => {
 
         if (prevTimer <= 0) {
           setTimerStopped(true);
-          maxTime.current = 5000;
-          setQuestion(randomQuestion());
           setUser((prevState) => ({
             ...prevState,
                missed: prevState.missed + 1,
@@ -47,7 +45,7 @@ const useGameController = () => {
                choice: '',
           }));
           clearInterval(interval.current);
-          return maxTime.current;
+          return prevTimer;
         }
 
         return prevTimer;
