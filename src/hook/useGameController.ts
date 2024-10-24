@@ -1,35 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { quizItems } from '@/data/quizItems';
-import randomIndex from '@/util/rand';
-
-let quizPool = [...quizItems];
-
-const randomQuestion = () => {
-  if (quizPool.length === 0) {
-    quizPool = [...quizItems];
-  }
-  return quizPool.splice(randomIndex(quizPool.length), 1)[0];
-}
+import User from '@/model/User';
+import Question from '@/model/Question';
 
 const useGameController = () => {
-   const [user, setUser] = useState({
-        choice: '',
-     isCorrect: false,
-         score: 0,
-        solved: 0,
-        missed: 0,
-  });
+  const [user, setUser] = useState(new User());
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [     question,      setQuestion] = useState({ id: '', q: '', a: '', eng: '', ru: ''});
+  const [     question,      setQuestion] = useState(new Question());
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [ timerStopped,  setTimerStopped] = useState(false);
 
-  console.log('QUIZ ITEMS', quizItems.length, 'QUIZ POOL', quizPool.length); // *logData
+  Question.log(); // *logData
 
   const startTimer = () => {
     setTimerStopped(false);
-    setQuestion(randomQuestion());
+    setQuestion(Question.random());
     setTimeRemaining(maxTime.current);
 
     interval.current = setInterval(() => {
