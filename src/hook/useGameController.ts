@@ -40,9 +40,14 @@ const useGameController = () => {
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    const    solved =  isCorrect ? user.solved + 1             : user.solved;
-    const    missed = !isCorrect ? user.missed + 1             : user.missed;
-    const     score =  isCorrect ? user.score  + timeRemaining : user.score;
+    let { solved, missed, score } = user;
+
+    if (isCorrect) {
+      solved += 1
+      score  += timeRemaining
+    } else {
+      missed += 1
+    }
 
     setTimerStopped(true);
     clearInterval(interval.current);

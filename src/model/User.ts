@@ -1,9 +1,9 @@
 export default class User {
-     choice: string;
+     choice:  string;
   isCorrect: boolean;
-      score: number;
-     solved: number;
-     missed: number;
+      score:  number;
+     solved:  number;
+     missed:  number;
 
  constructor() {
    this.choice    = '';

@@ -14,7 +14,7 @@ interface AnswerProps {
 
 export default function Answers({ user, question, timer, handleAnswer }: AnswerProps) {
   const getButtonBackground = (choice: string, background: string) => {
-    if (!timer.isStopped) return background;
+    if (   !timer.isStopped   ) return background;
     if (choice ===  question.a) return '#6F8C2E'; // Green for the correct answer
     if (choice === user.choice) return '#CD5C08'; // Red for the wrong user choice
     return background; // Default for other buttons
