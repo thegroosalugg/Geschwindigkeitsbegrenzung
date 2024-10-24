@@ -7,6 +7,13 @@ export default function Quiz() {
   const { user, question, timeRemaining, timerStopped, maxTime, handleAnswer } =
     useGameController();
 
+  const getButtonBackground = (choice: string, background: string) => {
+    if (!timerStopped) return background;
+    if (choice ===  question.a) return '#6F8C2E'; // Green for the correct answer
+    if (choice === user.choice) return '#CD5C08'; // Red for the wrong user choice
+    return background; // Default for other buttons
+  };
+
   return (
     <>
       <div className={css['question']}>
@@ -18,13 +25,7 @@ export default function Quiz() {
           <motion.button
             key={choice}
             animate={{
-              background: timerStopped
-                ? choice === question.a
-                  ? '#859F3D'
-                  : user.choice === choice
-                  ? '#C5705D'
-                  : background
-                : background,
+              background: getButtonBackground(choice, background),
               filter: `brightness(${
                 timerStopped && user.choice !== choice && choice !== question.a ? 0.8 : 1
               })`,
