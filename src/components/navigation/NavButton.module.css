@@ -1,0 +1,45 @@
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  color: #d8cccc;
+  transition: 0.5s ease-in-out;
+  position: relative;
+  padding: 0.5rem;
+
+  .active-tab {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1px solid #e3a137;
+    transition: border-color 0.5s ease-in-out;
+  }
+
+  &.active {
+    color: #e3a137;
+
+    &:hover {
+      color: #b4802c;
+
+      .active-tab {
+        border-color: #b4802c;
+      }
+    }
+  }
+
+  &:hover {
+    color: #777777;
+  }
+
+  &.mobile {
+    &:hover {
+      color: #e3a137;
+
+      .active-tab {
+        border-color: #e3a137;
+      }
+    }
+  }
+}

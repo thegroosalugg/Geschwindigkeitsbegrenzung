@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRoutes } from 'react-router-dom';
+import RootLayout from './pages/Root';
+import GamePage from './pages/Game';
+import SettingsPage from './pages/Settings';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons'; // import brand icons
+import { fas } from '@fortawesome/free-solid-svg-icons'; // import solid icons
+import { far } from '@fortawesome/free-regular-svg-icons'; // import regular icons
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+library.add(fab, fas, far);
+
+export default function App() {
+  const element = useRoutes(
+    [
+      { path: '/',         element: <GamePage /> },
+      { path: '/settings', element: <SettingsPage /> }
+    ]
+  );
+
+  if (!element) return null;
+
+  return <RootLayout>{element}</RootLayout>;
 }
-
-export default App
