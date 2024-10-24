@@ -17,9 +17,17 @@ export default function Quiz() {
         {userChoices.map(({ choice, background }) => (
           <motion.button
             key={choice}
-            style={{
-              background,
-              filter: `brightness(${timerStopped && user.choice !== choice ? 0.8 : 1})`,
+            animate={{
+              background: timerStopped
+                ? choice === question.a
+                  ? '#859F3D'
+                  : user.choice === choice
+                  ? '#C5705D'
+                  : background
+                : background,
+              filter: `brightness(${
+                timerStopped && user.choice !== choice && choice !== question.a ? 0.8 : 1
+              })`,
             }}
             disabled={timerStopped}
             onClick={() => handleAnswer(choice)}
