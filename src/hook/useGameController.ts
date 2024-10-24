@@ -84,7 +84,13 @@ const useGameController = () => {
     }
   }, [timerStopped]);
 
-  return { maxTime, timeRemaining, timerStopped, user, question, handleAnswer }
-}
+  return {
+    timer: { max: maxTime.current, remaining: timeRemaining, isStopped: timerStopped },
+    user,
+    question,
+    handleAnswer,
+  };
+};
+
 
 export default useGameController;

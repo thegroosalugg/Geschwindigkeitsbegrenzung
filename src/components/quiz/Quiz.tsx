@@ -4,19 +4,19 @@ import useGameController from '@/hook/useGameController';
 import Answers from '../answers/Answers';
 
 export default function Quiz() {
-  const { user, question, timeRemaining, timerStopped, maxTime, handleAnswer } =
+  const { user, question, timer, handleAnswer } =
     useGameController();
 
   return (
     <>
       <div className={css['question']}>
         <h1>{question.q}</h1>
-        <progress value={timeRemaining} max={maxTime.current} />
+        <progress value={timer.remaining} max={timer.max} />
       </div>
       <Answers
             question={question}
                 user={user}
-        timerStopped={timerStopped}
+               timer={timer}
         handleAnswer={handleAnswer}
       />
     </>

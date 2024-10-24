@@ -3,17 +3,18 @@ import { userChoices } from '@/data/userChoices';
 import css from './Answers.module.css';
 import Question from '@/model/Question';
 import User from '@/model/User';
+import Timer from '@/model/Timer';
 
 interface AnswerProps {
       question: Question;
           user: User;
-  timerStopped: boolean;
+         timer: Timer;
   handleAnswer: (choice: string) => void;
 }
 
-export default function Answers({ user, question, timerStopped, handleAnswer }: AnswerProps) {
+export default function Answers({ user, question, timer, handleAnswer }: AnswerProps) {
   const getButtonBackground = (choice: string, background: string) => {
-    if (!timerStopped) return background;
+    if (!timer.isStopped) return background;
     if (choice ===  question.a) return '#6F8C2E'; // Green for the correct answer
     if (choice === user.choice) return '#CD5C08'; // Red for the wrong user choice
     return background; // Default for other buttons
@@ -27,10 +28,10 @@ export default function Answers({ user, question, timerStopped, handleAnswer }: 
           animate={{
             background: getButtonBackground(choice, background),
             filter: `brightness(${
-              timerStopped && user.choice !== choice && choice !== question.a ? 0.8 : 1
+              timer.isStopped && user.choice !== choice && choice !== question.a ? 0.8 : 1
             })`,
           }}
-          disabled={timerStopped}
+          disabled={timer.isStopped}
           onClick={() => handleAnswer(choice)}
           whileTap={{ scale: 1.1, transition: { type: 'spring', damping: 5, stiffness: 400 } }}
         >
