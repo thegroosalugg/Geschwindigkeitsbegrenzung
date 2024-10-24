@@ -25,7 +25,7 @@ const useGameController = () => {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [ timerStopped,  setTimerStopped] = useState(false);
 
-  console.log(quizItems.length, quizPool.length); // *logData
+  console.log('QUIZ ITEMS', quizItems.length, 'QUIZ POOL', quizPool.length); // *logData
 
   const startTimer = () => {
     setTimerStopped(false);
@@ -37,9 +37,16 @@ const useGameController = () => {
         prevTimer -= 100;
 
         if (prevTimer <= 0) {
+          setTimerStopped(true);
           maxTime.current = 5000;
           setQuestion(randomQuestion());
-          setUser((prevState) => ({ ...prevState, missed: prevState.missed + 1 }));
+          setUser((prevState) => ({
+            ...prevState,
+               missed: prevState.missed + 1,
+            isCorrect: false,
+               choice: '',
+          }));
+          clearInterval(interval.current);
           return maxTime.current;
         }
 
@@ -57,19 +64,18 @@ const useGameController = () => {
     setTimerStopped(true);
     clearInterval(interval.current);
     setUser({ choice, isCorrect, solved, missed, score });
-    console.log({ choice, isCorrect, solved, missed, score }); // *logData
+    console.log('USER ACTION', { choice, isCorrect, solved, missed, score }); // *logData
   }
 
   useEffect(() => {
     startTimer();
 
-    return () => {
-      clearInterval(interval.current);
-    };
+    return () => clearInterval(interval.current);
   }, []);
 
   useEffect(() => {
     if (timerStopped) {
+      console.log('TIMER STOPPED', user); // *logData
       const timer = setTimeout(() => {
         startTimer();
       }, 3000);
