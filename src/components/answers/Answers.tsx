@@ -30,6 +30,7 @@ export default function Answers({ user, question, timer, handleAnswer }: AnswerP
             filter: `brightness(${
               timer.isStopped && user.choice !== choice && choice !== question.a ? 0.8 : 1
             })`,
+            transition: { duration: 0.5, ease: 'easeInOut', delay: 0.5 }
           }}
           disabled={timer.isStopped}
           onClick={() => handleAnswer(choice)}
