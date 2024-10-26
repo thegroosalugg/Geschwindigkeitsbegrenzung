@@ -28,6 +28,7 @@ const useGameController = () => {
                missed: prevState.missed + 1,
             isCorrect: false,
                choice: '',
+                score:  0,
           }));
           clearInterval(interval.current);
         }
@@ -39,19 +40,21 @@ const useGameController = () => {
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    let { solved, missed, score } = user;
+    let { solved, missed, score, total } = user;
 
     if (isCorrect) {
-      solved += 1
-      score  += timeRemaining
+      solved += 1;
+      score   = timeRemaining / 100;
+      total  += score;
     } else {
-      missed += 1
+      score   = 0;
+      missed += 1;
     }
 
     setTimerStopped(true);
     clearInterval(interval.current);
-    setUser({ choice, isCorrect, solved, missed, score });
-    console.log('USER ACTION', { choice, isCorrect, solved, missed, score }); // *logData
+    setUser({ choice, isCorrect, solved, missed, score, total });
+    console.log('USER ACTION', { choice, isCorrect, solved, missed, score, total }); // *logData
   }
 
   useEffect(() => {

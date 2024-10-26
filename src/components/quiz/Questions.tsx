@@ -31,7 +31,7 @@ export default function Questions({ user, question, timer }: QuestionProps) {
             <AnimatePresence mode='wait'>
               <motion.span
                     key={timer.isStopped + ''}
-                  style={{ minWidth: 75 }}
+                  style={{ minWidth: 70 }}
                 initial={{  opacity:  0 }}
                    exit={{  opacity:  0 }}
                 animate={{
