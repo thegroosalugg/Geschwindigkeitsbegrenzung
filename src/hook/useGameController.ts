@@ -24,6 +24,7 @@ const useGameController = () => {
 
         if (prevTimer <= 0) {
           setTimerStopped(true);
+          setIsAnimating(true);
           setUser((prevState) => ({
             ...prevState,
                missed: prevState.missed + 1,
@@ -40,6 +41,7 @@ const useGameController = () => {
   }
 
   function handleAnswer(choice: string) {
+    setIsAnimating(true);
     const isCorrect = choice === question.a;
     let { solved, missed, score, total } = user;
 
@@ -70,7 +72,6 @@ const useGameController = () => {
         startTimer();
       }, 3000);
 
-      setIsAnimating(true);
       const animationTimer = setTimeout(() => {
         setIsAnimating(false);
       }, 1200);
