@@ -23,7 +23,7 @@ export default function Score({ user, timer }: ScoreProps) {
         <motion.span>{missed}</motion.span>
       </motion.p>
       <AnimatePresence>
-        {score > 0 && timer.isStopped && <motion.div className={css['pop-up']}>{score}</motion.div>}
+        {score > 0 && timer.isAnimating && <motion.div className={css['pop-up']}>{score}</motion.div>}
       </AnimatePresence>
     </div>
   );

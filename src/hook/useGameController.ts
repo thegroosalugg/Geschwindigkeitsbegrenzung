@@ -7,6 +7,7 @@ const useGameController = () => {
   const interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User());
   const [     question,      setQuestion] = useState(new Question());
+  const [  isAnimating,   setIsAnimating] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [ timerStopped,  setTimerStopped] = useState(false);
 
@@ -59,23 +60,30 @@ const useGameController = () => {
 
   useEffect(() => {
     startTimer();
-
     return () => clearInterval(interval.current);
   }, []);
 
   useEffect(() => {
     if (timerStopped) {
       console.log('TIMER STOPPED', user); // *logData
-      const timer = setTimeout(() => {
+      const intervalTimer = setTimeout(() => {
         startTimer();
       }, 3000);
 
-      return () => clearTimeout(timer);
+      setIsAnimating(true);
+      const animationTimer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 1200);
+
+      return () => {
+        clearTimeout(intervalTimer);
+        clearTimeout(animationTimer);
+      }
     }
   }, [timerStopped]);
 
   return {
-    timer: { max: maxTime.current, remaining: timeRemaining, isStopped: timerStopped },
+    timer: { max: maxTime.current, remaining: timeRemaining, isStopped: timerStopped, isAnimating },
     user,
     question,
     handleAnswer,

@@ -1,16 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import Question from '@/model/Question';
 import Timer from '@/model/Timer';
-import User from '@/model/User';
 import css from './Questions.module.css';
 
 interface QuestionProps {
   question: Question;
-      user: User;
      timer: Timer;
 }
 
-export default function Questions({ user, question, timer }: QuestionProps) {
+export default function Questions({ question, timer }: QuestionProps) {
   const quesArray = question.q.split('___');
 
   return (
@@ -22,7 +20,7 @@ export default function Questions({ user, question, timer }: QuestionProps) {
           initial={{  scaleY:   0 }}
              exit={{  scaleY:   0 }}
           animate={{
-                scaleY: timer.isStopped && user.choice ? [1, 0, 1] : 1,
+                scaleY: 1,
             transition: { scaleY: { delay: 0.2 } },
           }}
         >
