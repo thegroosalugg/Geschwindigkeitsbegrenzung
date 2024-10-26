@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { userChoices } from '@/data/userChoices';
-import css from './Answers.module.css';
 import Question from '@/model/Question';
-import User from '@/model/User';
 import Timer from '@/model/Timer';
+import User from '@/model/User';
+import css from './Answers.module.css';
 
 interface AnswerProps {
       question: Question;

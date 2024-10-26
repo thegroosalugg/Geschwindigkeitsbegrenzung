@@ -29,18 +29,3 @@
     }
   }
 }
-
-.stats {
-  flex: 1;
-  display: flex;
-  align-self: center;
-  justify-content: space-evenly;
-  width: 100%;
-  max-width: 600px;
-  padding: 1rem;
-
-  p {
-    margin-bottom: 25%;
-    margin-top: auto;
-  }
-}
