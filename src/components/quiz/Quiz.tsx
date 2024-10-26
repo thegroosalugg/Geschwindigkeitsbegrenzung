@@ -9,7 +9,7 @@ export default function Quiz() {
   return (
     <>
       <Questions question={question} user={user} timer={timer} />
-      <Score user={user} />
+      <Score user={user} timer={timer} />
       <Answers question={question} user={user} timer={timer} handleAnswer={handleAnswer} />
     </>
   );
