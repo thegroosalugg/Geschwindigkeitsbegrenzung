@@ -1,10 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import css from './Quiz.module.css';
 import useGameController from '@/hook/useGameController';
 import Answers from '../answers/Answers';
+import css from './Quiz.module.css';
 
 export default function Quiz() {
   const { user, question, timer, handleAnswer } = useGameController();
+  const { solved, missed, score } = user;
   const quesArray = question.q.split('___');
 
   return (
@@ -43,6 +44,11 @@ export default function Quiz() {
           <progress value={timer.remaining} max={timer.max} />
         </motion.div>
       </AnimatePresence>
+      <div className={css['stats']}>
+        <p>{solved}</p>
+        <p>{score}</p>
+        <p>{missed}</p>
+      </div>
       <Answers question={question} user={user} timer={timer} handleAnswer={handleAnswer} />
     </>
   );

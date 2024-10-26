@@ -3,9 +3,9 @@ import User from '@/model/User';
 import Question from '@/model/Question';
 
 const useGameController = () => {
-  const [user, setUser] = useState(new User());
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
+  const [         user,          setUser] = useState(new User());
   const [     question,      setQuestion] = useState(new Question());
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [ timerStopped,  setTimerStopped] = useState(false);
@@ -30,7 +30,6 @@ const useGameController = () => {
                choice: '',
           }));
           clearInterval(interval.current);
-          return prevTimer;
         }
 
         return prevTimer;

@@ -25,6 +25,7 @@ export default function Answers({ user, question, timer, handleAnswer }: AnswerP
       {userChoices.map(({ choice, background }) => (
         <motion.button
           key={choice}
+          initial={false}
           animate={{
             background: getButtonBackground(choice, background),
             filter: `brightness(${

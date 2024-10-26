@@ -1,8 +1,7 @@
 .question {
-  flex: 1;
   align-self: center;
-  padding: 0.5rem;
   max-width: 600px;
+  padding: 0.5rem;
 
   h1 {
     padding: 0.5rem;
@@ -28,5 +27,20 @@
     &::-moz-progress-bar {
       background-color: #302b63;
     }
+  }
+}
+
+.stats {
+  flex: 1;
+  display: flex;
+  align-self: center;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+
+  p {
+    margin-bottom: 25%;
+    margin-top: auto;
   }
 }

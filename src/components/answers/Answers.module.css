@@ -1,10 +1,10 @@
 .answers {
   align-self: center;
+  max-width: 600px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.2rem;
-  max-width: 600px;
   padding: 0.5rem;
 
   button {
