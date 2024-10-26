@@ -70,7 +70,7 @@ const useGameController = () => {
       console.log('TIMER STOPPED', user); // *logData
       const intervalTimer = setTimeout(() => {
         startTimer();
-      }, 3000);
+      }, 2500);
 
       const animationTimer = setTimeout(() => {
         setIsAnimating(false);

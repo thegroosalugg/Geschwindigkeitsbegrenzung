@@ -13,14 +13,18 @@
   .pop-up {
     position: absolute;
     z-index: -1;
-    top: 10;
     left: 0;
     right: 0;
+    bottom: 13vh;
     margin: auto;
     padding: 0.5rem 1rem;
     width: fit-content;
     text-align: center;
-    background: #6ba816;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border: 1.5px solid #000;
+    border-radius: 5px;
+    color: #000;
   }
 
   p {

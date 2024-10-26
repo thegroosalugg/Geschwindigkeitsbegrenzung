@@ -43,6 +43,13 @@ export default function Score({ user, timer }: ScoreProps) {
   const { isAnimating, isStopped } = timer;
   const onIsRight =  isCorrect && isStopped;
   const onIsWrong = !isCorrect && isStopped;
+  const direction = (Math.random() > 0.5 ? 1 : -1);
+  const background =
+  score < 10 ? "#aa4834" :
+  score < 20 ? "#adadad" :
+  score < 30 ? "#6ba816" :
+  score < 40 ? "#167ca8" :
+  "#a87316";
 
   return (
     <div className={css['score']}>
@@ -51,7 +58,20 @@ export default function Score({ user, timer }: ScoreProps) {
       <DisplayItem item={missed} shouldAnimate={onIsWrong} isAnimating={isAnimating} />
       <AnimatePresence>
         {onIsRight && isAnimating && (
-          <motion.div className={css['pop-up']}>{score}</motion.div>
+          <motion.div
+            className={css['pop-up']}
+              style={{ background }}
+            initial={{ opacity: 0 , translateY: 0, rotate: 0 }}
+               exit={{ opacity: 0 }}
+            animate={{
+                 opacity:   1,
+              translateY: -40,
+                  rotate:  10 * direction,
+              transition: { type: 'spring', damping: 55, stiffness: 300 }
+            }}
+          >
+            {score}
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
