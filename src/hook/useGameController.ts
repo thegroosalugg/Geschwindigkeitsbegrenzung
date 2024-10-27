@@ -14,6 +14,12 @@ const useGameController = () => {
 
   Question.log(); // *logData
 
+  const stopTimer = () => {
+    setTimerStopped(true);
+    setIsAnimating(true);
+    clearInterval(interval.current);
+  }
+
   const startTimer = useCallback(() => {
     console.log('TIMER STARTED'); // *logData
     if (isGameover) return;
@@ -26,16 +32,14 @@ const useGameController = () => {
         prevTimer -= 100;
 
         if (prevTimer <= 0) {
-          setTimerStopped(true);
-          setIsAnimating(true);
-          setUser((prevState) => ({
-            ...prevState,
-                  missed: prevState.missed + 1,
-               isCorrect: false,
-                  choice: '',
-                   score:  0,
+          setUser((user) => ({
+              ...user,
+               missed: user.missed + 1,
+            isCorrect: false,
+               choice: '',
+                score:  0,
           }));
-          clearInterval(interval.current);
+          stopTimer();
         }
 
         return prevTimer;
@@ -44,8 +48,6 @@ const useGameController = () => {
   }, [isGameover]);
 
   function handleAnswer(choice: string) {
-    setTimerStopped(true);
-    setIsAnimating(true);
     const isCorrect = choice === question.a;
     let { solved, missed, score, total } = user;
 
@@ -59,7 +61,7 @@ const useGameController = () => {
     }
 
     setUser({ choice, isCorrect, solved, missed, score, total });
-    clearInterval(interval.current);
+    stopTimer();
     console.log('USER ACTION', { choice, isCorrect, solved, missed, score, total }); // *logData
   }
 
