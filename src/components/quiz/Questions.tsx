@@ -12,7 +12,7 @@ export default function Questions({ question, timer }: QuestionProps) {
   const quesArray = question.q.split('___');
 
   return (
-    <motion.div className={css['question']} exit={{ y: 100, opacity: 0, transition: { duration: 1 } }}>
+    <motion.div className={css['question']} exit={{ y: 100, rotate: 35, opacity: 0, transition: { duration: 1, delay: 0.6 } }}>
       <AnimatePresence mode='wait'>
         <motion.article
               key={question.id}

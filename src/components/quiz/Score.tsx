@@ -53,7 +53,7 @@ export default function Score({ user, timer }: ScoreProps) {
   "#9B7EBD";
 
   return (
-    <motion.div className={css['score']} exit={{ opacity: 0, y: 100, transition: { duration: 1 } }}>
+    <motion.div className={css['score']} exit={{ opacity: 0, y: 100, transition: { duration: 1, delay: 0.4 } }}>
       <DisplayItem item={solved} shouldAnimate={onIsRight} isAnimating={isAnimating} />
       <DisplayItem item={total}  shouldAnimate={onIsRight} isAnimating={isAnimating} score={score} />
       <DisplayItem item={missed} shouldAnimate={onIsWrong} isAnimating={isAnimating} />
@@ -68,7 +68,7 @@ export default function Score({ user, timer }: ScoreProps) {
                  opacity:   1,
               translateY: -40,
               rotate:  10 * direction.current,
-              transition: { type: 'spring', damping: 55, stiffness: 300 }
+              transition: { type: 'spring', damping: 55, stiffness: 300, delay: 0.2 }
             }}
           >
             {score}

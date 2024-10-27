@@ -11,6 +11,7 @@ const useGameController = () => {
   const [   isGameover,    setIsGameover] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
+  const gameover = user.missed > 0;
 
   Question.log(); // *logData
 
@@ -22,7 +23,6 @@ const useGameController = () => {
 
   const startTimer = useCallback(() => {
     console.log('TIMER STARTED'); // *logData
-    if (isGameover) return;
     setTimerStopped(false);
     setQuestion(Question.random());
     setTimeRemaining(maxTime.current);
@@ -45,7 +45,7 @@ const useGameController = () => {
         return prevTimer;
       });
     }, 100);
-  }, [isGameover]);
+  }, []);
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
@@ -74,8 +74,8 @@ const useGameController = () => {
     if (timerStopped) {
       console.log('TIMER STOPPED'); // *logData
       const intervalTimer = setTimeout(() => {
-        setIsGameover(user.missed > 0);
-        startTimer();
+        setIsGameover(gameover);
+        if (!gameover) startTimer();
       }, 2500);
 
       const animationTimer = setTimeout(() => {
@@ -87,7 +87,7 @@ const useGameController = () => {
         clearTimeout(animationTimer);
       };
     }
-  }, [timerStopped, user.missed, startTimer]);
+  }, [timerStopped, gameover, startTimer]);
 
   return {
     timer: {
