@@ -7,22 +7,20 @@ const useGameController = () => {
   const interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User(4));
   const [     question,      setQuestion] = useState(new Question());
-  const [  isAnimating,   setIsAnimating] = useState(false);
   const [   isGameover,    setIsGameover] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const gameover = user.lives === 0;
 
-  Question.log(); // *logData
+  // Question.log(); // *logData
 
   const stopTimer = () => {
     setTimerStopped(true);
-    setIsAnimating(true);
     clearInterval(interval.current);
   }
 
   const startTimer = useCallback(() => {
-    console.log('TIMER STARTED'); // *logData
+    // console.log('TIMER STARTED'); // *logData
     setTimerStopped(false);
     setQuestion(Question.random());
     setTimeRemaining(maxTime.current);
@@ -62,7 +60,7 @@ const useGameController = () => {
 
     setUser({ choice, isCorrect, solved, lives, score, total });
     stopTimer();
-    console.log('USER ACTION', { choice, isCorrect, solved, lives, score, total }); // *logData
+    // console.log('USER ACTION', { choice, isCorrect, solved, lives, score, total }); // *logData
   }
 
   useEffect(() => {
@@ -72,30 +70,23 @@ const useGameController = () => {
 
   useEffect(() => {
     if (timerStopped) {
-      console.log('TIMER STOPPED'); // *logData
+      // console.log('TIMER STOPPED'); // *logData
       const intervalTimer = setTimeout(() => {
         setIsGameover(gameover);
         if (!gameover) startTimer();
-      }, 2500);
+      }, 3000);
 
-      const animationTimer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 1200);
+      return () => clearTimeout(intervalTimer);
 
-      return () => {
-        clearTimeout(intervalTimer);
-        clearTimeout(animationTimer);
-      };
     }
   }, [timerStopped, gameover, startTimer]);
 
   return {
     timer: {
-              max: maxTime.current,
-        remaining: timeRemaining,
-        isStopped: timerStopped,
-      isAnimating,
-       isGameover,
+      isGameover,
+      isStopped: timerStopped,
+      remaining: timeRemaining,
+            max: maxTime.current,
     },
     user,
     question,
