@@ -5,33 +5,33 @@ import Timer from '@/model/Timer';
 import css from './Score.module.css';
 
 interface DispItemProps {
-          entry: 'solved' | 'total' | 'lives';
-           user: User;
+          entry: { solved?: number, total?: number, score?: number, lives?: number };
   shouldAnimate: boolean;
     isAnimating: boolean;
 }
 
-const DisplayItem = ({ entry, user, shouldAnimate, isAnimating }: DispItemProps) => {
-  const isTotal = entry === 'total';
-  const content = user[entry] + (isTotal ? -user.score : entry === 'solved' ? -1 : 1);
+const DisplayItem = ({ entry, shouldAnimate, isAnimating }: DispItemProps) => {
+  const { total, score, solved, lives } = entry;
+  const baseValue = solved ?? total ?? lives;
+  const content = baseValue! + (total ? -score! : solved ? -1 : 1);
 
   return (
     <motion.p
       initial={false}
       animate={{
-             scale: shouldAnimate && !isTotal ? [1, 1.2, 1] : 1,
+             scale: shouldAnimate && !total ? [1, 1.2, 1] : 1,
         transition: { ease: 'easeInOut', duration: 0.5, delay: 0.07 },
       }}
     >
       <motion.span
         initial={false}
         animate={{
-             opacity: shouldAnimate            ? [1, 0, 1] : 1,
-              scaleY: shouldAnimate && isTotal ? [1, 0, 1] : 1,
-          transition: { ease: 'easeInOut', duration: 0.5, delay: isTotal ? 1.1 : 0.9 },
+             opacity: shouldAnimate          ? [1, 0, 1] : 1,
+              scaleY: shouldAnimate && total ? [1, 0, 1] : 1,
+          transition: { ease: 'easeInOut', duration: 0.5, delay: total ? 1.1 : 0.9 },
         }}
       >
-        {shouldAnimate && isAnimating ? content : user[entry]}
+        {shouldAnimate && isAnimating ? content : baseValue}
       </motion.span>
     </motion.p>
   );
@@ -43,7 +43,7 @@ interface ScoreProps {
 }
 
 export default function Score({ user, timer }: ScoreProps) {
-  const { isCorrect, score } = user;
+  const { isCorrect, solved, lives, score, total } = user;
   const { isAnimating, isStopped } = timer;
   const onIsRight =  isCorrect && isStopped;
   const onIsWrong = !isCorrect && isStopped;
@@ -57,9 +57,9 @@ export default function Score({ user, timer }: ScoreProps) {
 
   return (
     <motion.div className={css['score']} exit={{ opacity: 0, y: 100, transition: { duration: 1, delay: 0.4 } }}>
-      <DisplayItem entry='solved' user={user} shouldAnimate={onIsRight} isAnimating={isAnimating} />
-      <DisplayItem entry='total'  user={user} shouldAnimate={onIsRight} isAnimating={isAnimating} />
-      <DisplayItem entry='lives'  user={user} shouldAnimate={onIsWrong} isAnimating={isAnimating} />
+      <DisplayItem entry={{    solved    }} shouldAnimate={onIsRight} isAnimating={isAnimating} />
+      <DisplayItem entry={{ total, score }} shouldAnimate={onIsRight} isAnimating={isAnimating} />
+      <DisplayItem entry={{    lives     }} shouldAnimate={onIsWrong} isAnimating={isAnimating} />
       <AnimatePresence onExitComplete={() => direction.current = direction.current === 1 ? -1 : 1}>
         {onIsRight && isAnimating && (
           <motion.div
