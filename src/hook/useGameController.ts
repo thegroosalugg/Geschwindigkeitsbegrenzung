@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import User from '@/model/User';
 import Question from '@/model/Question';
 
@@ -8,13 +8,15 @@ const useGameController = () => {
   const [         user,          setUser] = useState(new User());
   const [     question,      setQuestion] = useState(new Question());
   const [  isAnimating,   setIsAnimating] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(0);
-  const [ timerStopped,  setTimerStopped] = useState(false);
   const [   isGameover,    setIsGameover] = useState(false);
+  const [ timerStopped,  setTimerStopped] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(0);
 
   Question.log(); // *logData
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
+    console.log('TIMER STARTED'); // *logData
+    if (isGameover) return;
     setTimerStopped(false);
     setQuestion(Question.random());
     setTimeRemaining(maxTime.current);
@@ -39,9 +41,10 @@ const useGameController = () => {
         return prevTimer;
       });
     }, 100);
-  }
+  }, [isGameover]);
 
   function handleAnswer(choice: string) {
+    setTimerStopped(true);
     setIsAnimating(true);
     const isCorrect = choice === question.a;
     let { solved, missed, score, total } = user;
@@ -55,22 +58,21 @@ const useGameController = () => {
       missed += 1;
     }
 
-    setTimerStopped(true);
-    clearInterval(interval.current);
     setUser({ choice, isCorrect, solved, missed, score, total });
+    clearInterval(interval.current);
     console.log('USER ACTION', { choice, isCorrect, solved, missed, score, total }); // *logData
   }
 
   useEffect(() => {
     startTimer();
     return () => clearInterval(interval.current);
-  }, []);
+  }, [startTimer]);
 
   useEffect(() => {
-    if (timerStopped && !isGameover) {
-      console.log('TIMER STOPPED', user); // *logData
-      setIsGameover(user.missed > 0)
+    if (timerStopped) {
+      console.log('TIMER STOPPED'); // *logData
       const intervalTimer = setTimeout(() => {
+        setIsGameover(user.missed > 0);
         startTimer();
       }, 2500);
 
@@ -81,9 +83,9 @@ const useGameController = () => {
       return () => {
         clearTimeout(intervalTimer);
         clearTimeout(animationTimer);
-      }
+      };
     }
-  }, [timerStopped, isGameover, user.missed]);
+  }, [timerStopped, user.missed, startTimer]);
 
   return {
     timer: {
