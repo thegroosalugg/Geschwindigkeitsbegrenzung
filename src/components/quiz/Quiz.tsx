@@ -1,8 +1,9 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import useGameController from '@/hook/useGameController';
 import Questions from './Questions';
 import Answers from './Answers';
 import Score from './Score';
+import GameOver from './GameOver';
 
 export default function Quiz() {
   const { user, question, timer, handleAnswer } = useGameController();
@@ -11,12 +12,12 @@ export default function Quiz() {
     <AnimatePresence mode='wait'>
       {!timer.isGameover ? (
         <>
-          <Questions question={question} timer={timer} key='question' />
-          <Score user={user} timer={timer} key='score' />
-          <Answers question={question} user={user} timer={timer} handleAnswer={handleAnswer} key='answers' />
+          <Questions key='question' timer={timer}             question={question} />
+          <Score     key='score'    timer={timer} user={user}                     />
+          <Answers    key='answers' timer={timer} user={user} question={question} handleAnswer={handleAnswer} />
         </>
       ) : (
-        <motion.p key='gameover' initial={{ y: -100, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>game over</motion.p>
+        <GameOver key='gameover' user={user} />
       )}
     </AnimatePresence>
   );
