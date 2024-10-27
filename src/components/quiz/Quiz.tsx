@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import useGameController from '@/hook/useGameController';
+import useGameController from '@/hooks/useGameController';
 import Questions from './Questions';
 import Answers from './Answers';
 import Score from './Score';

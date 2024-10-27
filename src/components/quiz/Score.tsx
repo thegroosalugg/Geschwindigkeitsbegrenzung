@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import useDelay from '@/hook/useDelay';
-import User from '@/model/User';
-import Timer from '@/model/Timer';
+import useDelay from '@/hooks/useDelay';
+import User from '@/models/User';
+import Timer from '@/models/Timer';
 import css from './Score.module.css';
 
 interface DispItemProps {

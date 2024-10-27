@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import User from '@/model/User';
-import Question from '@/model/Question';
+import User from '@/models/User';
+import Question from '@/models/Question';
 
 const useGameController = () => {
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(4));
+  const [         user,          setUser] = useState(new User(3));
   const [     question,      setQuestion] = useState(new Question());
   const [   isGameover,    setIsGameover] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);

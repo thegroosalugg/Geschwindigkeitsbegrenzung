@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import Question from '@/model/Question';
-import Timer from '@/model/Timer';
+import Question from '@/models/Question';
+import Timer from '@/models/Timer';
 import css from './Questions.module.css';
 
 interface QuestionProps {

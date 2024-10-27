@@ -1,4 +1,4 @@
-import User from '@/model/User';
+import User from '@/models/User';
 import css from './GameOver.module.css';
 // import { useState } from 'react';
 
