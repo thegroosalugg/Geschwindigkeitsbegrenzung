@@ -21,7 +21,7 @@ export default function Answers({ user, question, timer, handleAnswer }: AnswerP
   };
 
   return (
-    <div className={css['answers']}>
+    <motion.div className={css['answers']} exit={{ opacity: 0, y: 100, transition: { duration: 1 } }}>
       {userChoices.map(({ choice, background }) => (
         <motion.button
           key={choice}
@@ -40,6 +40,6 @@ export default function Answers({ user, question, timer, handleAnswer }: AnswerP
           {choice}
         </motion.button>
       ))}
-    </div>
+    </motion.div>
   );
 }

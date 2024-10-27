@@ -10,6 +10,7 @@ const useGameController = () => {
   const [  isAnimating,   setIsAnimating] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [ timerStopped,  setTimerStopped] = useState(false);
+  const [   isGameover,    setIsGameover] = useState(false);
 
   Question.log(); // *logData
 
@@ -27,10 +28,10 @@ const useGameController = () => {
           setIsAnimating(true);
           setUser((prevState) => ({
             ...prevState,
-               missed: prevState.missed + 1,
-            isCorrect: false,
-               choice: '',
-                score:  0,
+                  missed: prevState.missed + 1,
+               isCorrect: false,
+                  choice: '',
+                   score:  0,
           }));
           clearInterval(interval.current);
         }
@@ -66,8 +67,9 @@ const useGameController = () => {
   }, []);
 
   useEffect(() => {
-    if (timerStopped) {
+    if (timerStopped && !isGameover) {
       console.log('TIMER STOPPED', user); // *logData
+      setIsGameover(user.missed > 0)
       const intervalTimer = setTimeout(() => {
         startTimer();
       }, 2500);
@@ -81,15 +83,20 @@ const useGameController = () => {
         clearTimeout(animationTimer);
       }
     }
-  }, [timerStopped]);
+  }, [timerStopped, isGameover, user.missed]);
 
   return {
-    timer: { max: maxTime.current, remaining: timeRemaining, isStopped: timerStopped, isAnimating },
+    timer: {
+              max: maxTime.current,
+        remaining: timeRemaining,
+        isStopped: timerStopped,
+      isAnimating,
+       isGameover,
+    },
     user,
     question,
     handleAnswer,
   };
 };
-
 
 export default useGameController;
