@@ -5,13 +5,13 @@ import Question from '@/model/Question';
 const useGameController = () => {
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User());
+  const [         user,          setUser] = useState(new User(4));
   const [     question,      setQuestion] = useState(new Question());
   const [  isAnimating,   setIsAnimating] = useState(false);
   const [   isGameover,    setIsGameover] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const gameover = user.missed > 0;
+  const gameover = user.lives === 0;
 
   Question.log(); // *logData
 
@@ -34,7 +34,7 @@ const useGameController = () => {
         if (prevTimer <= 0) {
           setUser((user) => ({
               ...user,
-               missed: user.missed + 1,
+                lives: user.lives - 1,
             isCorrect: false,
                choice: '',
                 score:  0,
@@ -49,7 +49,7 @@ const useGameController = () => {
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    let { solved, missed, score, total } = user;
+    let { solved, lives, score, total } = user;
 
     if (isCorrect) {
       solved += 1;
@@ -57,12 +57,12 @@ const useGameController = () => {
       total  += score;
     } else {
       score   = 0;
-      missed += 1;
+      lives  -= 1;
     }
 
-    setUser({ choice, isCorrect, solved, missed, score, total });
+    setUser({ choice, isCorrect, solved, lives, score, total });
     stopTimer();
-    console.log('USER ACTION', { choice, isCorrect, solved, missed, score, total }); // *logData
+    console.log('USER ACTION', { choice, isCorrect, solved, lives, score, total }); // *logData
   }
 
   useEffect(() => {

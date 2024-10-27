@@ -5,30 +5,33 @@ import Timer from '@/model/Timer';
 import css from './Score.module.css';
 
 interface DispItemProps {
-           item: number;
-         score?: number;
+          entry: 'solved' | 'total' | 'lives';
+           user: User;
   shouldAnimate: boolean;
     isAnimating: boolean;
 }
 
-const DisplayItem = ({ item, score, shouldAnimate, isAnimating }: DispItemProps) => {
+const DisplayItem = ({ entry, user, shouldAnimate, isAnimating }: DispItemProps) => {
+  const isTotal = entry === 'total';
+  const content = user[entry] + (isTotal ? -user.score : entry === 'solved' ? -1 : 1);
+
   return (
     <motion.p
       initial={false}
       animate={{
-             scale: shouldAnimate && !score ? [1, 1.2, 1] : 1,
+             scale: shouldAnimate && !isTotal ? [1, 1.2, 1] : 1,
         transition: { ease: 'easeInOut', duration: 0.5, delay: 0.07 },
       }}
     >
       <motion.span
         initial={false}
         animate={{
-             opacity: shouldAnimate          ? [1, 0, 1] : 1,
-              scaleY: shouldAnimate && score ? [1, 0, 1] : 1,
-          transition: { ease: 'easeInOut', duration: 0.5, delay: score ? 1.1 : 0.9 },
+             opacity: shouldAnimate            ? [1, 0, 1] : 1,
+              scaleY: shouldAnimate && isTotal ? [1, 0, 1] : 1,
+          transition: { ease: 'easeInOut', duration: 0.5, delay: isTotal ? 1.1 : 0.9 },
         }}
       >
-        {shouldAnimate && isAnimating ? (score ? item - score : item - 1) : item}
+        {shouldAnimate && isAnimating ? content : user[entry]}
       </motion.span>
     </motion.p>
   );
@@ -40,7 +43,7 @@ interface ScoreProps {
 }
 
 export default function Score({ user, timer }: ScoreProps) {
-  const { isCorrect, solved, missed, score, total } = user;
+  const { isCorrect, score } = user;
   const { isAnimating, isStopped } = timer;
   const onIsRight =  isCorrect && isStopped;
   const onIsWrong = !isCorrect && isStopped;
@@ -54,9 +57,9 @@ export default function Score({ user, timer }: ScoreProps) {
 
   return (
     <motion.div className={css['score']} exit={{ opacity: 0, y: 100, transition: { duration: 1, delay: 0.4 } }}>
-      <DisplayItem item={solved} shouldAnimate={onIsRight} isAnimating={isAnimating} />
-      <DisplayItem item={total}  shouldAnimate={onIsRight} isAnimating={isAnimating} score={score} />
-      <DisplayItem item={missed} shouldAnimate={onIsWrong} isAnimating={isAnimating} />
+      <DisplayItem entry='solved' user={user} shouldAnimate={onIsRight} isAnimating={isAnimating} />
+      <DisplayItem entry='total'  user={user} shouldAnimate={onIsRight} isAnimating={isAnimating} />
+      <DisplayItem entry='lives'  user={user} shouldAnimate={onIsWrong} isAnimating={isAnimating} />
       <AnimatePresence onExitComplete={() => direction.current = direction.current === 1 ? -1 : 1}>
         {onIsRight && isAnimating && (
           <motion.div
