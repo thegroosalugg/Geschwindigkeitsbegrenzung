@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { isMobile } from 'react-device-detect';
 import useDelay from '@/hooks/useDelay';
 import User from '@/models/User';
 import Timer from '@/models/Timer';
@@ -78,7 +79,11 @@ export default function Score({ user, timer }: ScoreProps) {
   '#9B7EBD';
 
   return (
-    <motion.div className={css['score']} exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}>
+    <motion.div
+      className={css['score']}
+          style={{ paddingTop: !isMobile ? '4rem' : '' }}
+           exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}
+    >
       <DisplayItem entry={{    solved    }} shouldAnimate={onIsRight} delay={2200} condition={isStopped} />
       <DisplayItem entry={{ total, score }} shouldAnimate={onIsRight} delay={1400} condition={isStopped} />
       <DisplayItem entry={{    lives     }} shouldAnimate={onIsWrong} delay={1200} condition={isStopped} />
