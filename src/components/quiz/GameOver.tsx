@@ -2,10 +2,8 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import User from '@/models/User';
 import HighScore from '@/models/HighScore';
-import formatDate from '@/util/formatDate';
+import GameOverEntry from './GameOverEntry';
 import css from './GameOver.module.css';
-
-const background = ['#898121', '#776f1c', '#676018', '#5d5c1c', '#4C4B16'];
 
 export default function GameOver({ user }: { user: User }) {
   const { total, solved } = user;
@@ -62,32 +60,8 @@ export default function GameOver({ user }: { user: User }) {
         >
           Ihre besten Ergebnisse
         </motion.h1>
-        {highscores.map(({ total, solved, date }: HighScore, index: number) => (
-          <motion.li
-                 key={date}
-               style={{ background: background[index] }}
-            variants={{
-               hidden: { opacity: 0, x: 25 * (index % 2 === 0 ? 1 : -1) },
-              visible: { opacity: 1, x: 0 },
-            }}
-            transition={{ duration: 0.6, ease: 'easeIn' }}
-          >
-            <p>
-              <span>{formatDate(date)}</span>
-              <span>
-                {index === 0             && <FontAwesomeIcon icon='crown' />}
-                {date  === newScore.date && <FontAwesomeIcon icon='face-grin-beam-sweat' />}
-              </span>
-            </p>
-            <p>
-              <span>Punktzahl</span>
-              <span>{total}</span>
-            </p>
-            <p>
-              <span>Fragen</span>
-              <span>{solved}</span>
-            </p>
-          </motion.li>
+        {highscores.map((score: HighScore, index: number) => (
+          <GameOverEntry key={score.date} score={score} newScore={newScore} index={index} />
         ))}
       </motion.ul>
     </section>
