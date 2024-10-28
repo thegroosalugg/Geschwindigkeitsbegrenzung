@@ -1,13 +1,72 @@
 .gameover {
   width: 100%;
-  max-width: 600px;
-  flex: 1;
+  max-width: 300px;
+  align-self: center;
+  padding: 1rem;
 
-  ul {
-    margin: auto;
+  > h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    gap: 0.3rem;
+    text-align: center;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #000;
+    border-radius: 2px;
+    box-shadow: 1px 1px 2px #000;
+    text-shadow: 1px 1px 2px #000;
+    background: linear-gradient(to right, #99cddb, #789DBC)
+  }
+
+  ul {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    li {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding: 0.5rem;
+      border: 1px solid #000;
+      border-radius: 2px;
+      box-shadow: 1px 1px 2px #000;
+      text-shadow: 1px 1px 2px #000;
+
+      p {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.1rem;
+        font-family: 'Bebas Neue', sans-serif;
+
+        &:nth-of-type(1) {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+
+          span {
+            display: flex;
+            gap: 0.2rem;
+          }
+        }
+
+        &:nth-of-type(2),
+        &:nth-of-type(3) {
+          span {
+            margin-right: 0.2rem;
+          }
+        }
+      }
+    }
   }
 }

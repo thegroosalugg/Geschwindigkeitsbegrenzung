@@ -14,6 +14,7 @@ export default class HighScore {
   }
 
   save() {
+    if (this.total === 0) return;
     const scoreData = HighScore.getAll();
     scoreData.push(this);
     scoreData.sort(
@@ -28,5 +29,17 @@ export default class HighScore {
     }
 
     localStorage.setItem('high-score', JSON.stringify(scoreData));
+  }
+
+  isHighScore() {
+    if (this.total === 0) return false;
+    const scoreData = HighScore.getAll();
+    for (const score of scoreData) {
+      if (this.date === score.date) continue; // Skip self-comparison
+      if (this.total < score.total || (this.total === score.total && this.solved >= score.solved)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
