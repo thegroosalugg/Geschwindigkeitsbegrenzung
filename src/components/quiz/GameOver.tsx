@@ -42,7 +42,7 @@ export default function GameOver({ user }: { user: User }) {
               {isHighScore ? (
                 `Beantwortete Fragen: ${solved}`
               ) : (
-                `Punkte: ${total} Fragen: ${solved}`
+                `Punkte: ${total}, Fragen: ${solved}`
               )}
             </span>
           </>
