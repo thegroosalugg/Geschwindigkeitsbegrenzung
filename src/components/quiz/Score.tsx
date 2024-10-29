@@ -82,6 +82,8 @@ export default function Score({ user, timer }: ScoreProps) {
     <motion.div
       className={css['score']}
           style={{ paddingTop: !isMobile ? '4rem' : '' }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x:   0, transition: { duration: 0.5 } }}
            exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}
     >
       <DisplayItem entry={{    solved    }} shouldAnimate={onIsRight} delay={2200} timer={timer} />

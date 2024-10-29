@@ -34,7 +34,7 @@ export default function Questions({ question, timer }: QuestionProps) {
                exit={{ scaleY: 0 }}
             animate={{
                   scaleY: 1,
-              transition: { scaleY: { delay: 0.2, duration: 0.5, ease: 'easeInOut' } },
+              transition: { duration: 0.5, ease: 'linear' },
             }}
           >
             <h1>

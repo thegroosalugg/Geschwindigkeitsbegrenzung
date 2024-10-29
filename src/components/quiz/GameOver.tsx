@@ -16,7 +16,7 @@ export default function GameOver({ user, playAgain }: { user: User, playAgain: (
   const highscores = HighScore.getAll();
 
   return (
-    <section className={css['gameover']}>
+    <motion.section className={css['gameover']} exit={{ opacity: 0, y: 100, transition: { duration: 0.5 }}}>
       <motion.h2
         style={{
              originY: 1,
@@ -97,6 +97,6 @@ export default function GameOver({ user, playAgain }: { user: User, playAgain: (
           Wiederholungsversuch
         </motion.button>
       </motion.ul>
-    </section>
+    </motion.section>
   );
 }
