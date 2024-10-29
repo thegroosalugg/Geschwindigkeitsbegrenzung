@@ -17,13 +17,13 @@ const DisplayItem = ({ entry, shouldAnimate, delay, timer }: DispItemProps) => {
   const { isAnimating } = useDelay(delay, timer.isStopped);
   const { total, score, solved, lives } = entry;
   const baseValue = solved ?? total ?? lives ?? 0;
-  const isValid = (n: number | undefined) => n !== undefined;                
+  const isValid = (n: number | undefined) => n !== undefined;
   const content = baseValue + (isValid(total) ? -score! : isValid(solved) ? -1 : timer.isInitial ? 0 : 1);
   const background =
     isValid(lives)
       ? {
           background:
-            lives <= 0 ? '#000000' : lives <= 1 ? '#aa4834' : lives <= 2 ? '#8a692d' : '#1666a8',
+            lives <= 0 ? '#000000' : lives <= 1 ? '#aa4834' : lives <= 2 ? '#d39b3a' : '#1666a8',
         }
       : {};
 

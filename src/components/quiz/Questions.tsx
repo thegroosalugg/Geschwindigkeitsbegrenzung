@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import InitialCountdown from './InitialCountdown';
 import Question from '@/models/Question';
 import Timer from '@/models/Timer';
 import css from './Questions.module.css';
@@ -23,7 +24,9 @@ export default function Questions({ question, timer }: QuestionProps) {
       }}
     >
       <AnimatePresence mode='wait'>
-        {!timer.isInitial && (
+        {timer.isInitial ? (
+          <InitialCountdown key='countdown' />
+        ) : (
           <motion.article
                 key={question.id}
               style={{ originY: 0.2 }}
