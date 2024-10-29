@@ -5,7 +5,7 @@ import Question from '@/models/Question';
 const useGameController = () => {
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(2));
+  const [         user,          setUser] = useState(new User(1));
   const [     question,      setQuestion] = useState(new Question());
   const [    isInitial,     setIsInitial] = useState(true);
   const [   isGameover,    setIsGameover] = useState(false);
@@ -67,8 +67,8 @@ const useGameController = () => {
 
   const playAgain = () => {
     setTimeout(() => {
-      setUser(new User(1));
       setIsGameover(false);
+      setUser(new User(1));
       startTimer();
     }, 700);
   }

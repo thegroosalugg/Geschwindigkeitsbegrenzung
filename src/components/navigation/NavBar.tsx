@@ -5,7 +5,7 @@ import css from './NavBar.module.css';
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const { debounceProps, throttleFn } = useDebounce()
+  const { isDebouncing, throttleFn } = useDebounce()
 
   function navTo(path: string) {
     throttleFn(() => navigate(path), 1200);
@@ -13,8 +13,8 @@ export default function NavBar() {
 
   return (
     <nav className={css['nav']}>
-      <NavButton path='/'         navFn={navTo} debounceProps={debounceProps} />
-      <NavButton path='/settings' navFn={navTo} debounceProps={debounceProps} />
+      <NavButton path='/'         navFn={navTo} isDebouncing={isDebouncing} />
+      <NavButton path='/settings' navFn={navTo} isDebouncing={isDebouncing} />
     </nav>
   );
 }

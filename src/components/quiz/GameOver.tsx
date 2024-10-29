@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isMobile } from 'react-device-detect';
-import useDebounce from '@/hooks/useDebounce';
+import useDebounceRef from '@/hooks/useDebounceRef';
 import User from '@/models/User';
 import HighScore from '@/models/HighScore';
 import GameOverEntry from './GameOverEntry';
 import css from './GameOver.module.css';
 
 export default function GameOver({ user, playAgain }: { user: User, playAgain: () => void }) {
-  const { debounceProps, throttleFn } = useDebounce();
+  const { throttleRefFn } = useDebounceRef();
   const { total, solved } = user;
   const newScore = new HighScore(total, solved);
   const isHighScore = newScore.isHighScore();
@@ -82,8 +82,7 @@ export default function GameOver({ user, playAgain }: { user: User, playAgain: (
           />
         )}
         <motion.button
-          {...debounceProps}
-           onClick={() => throttleFn(playAgain, 1000)}
+           onClick={() => throttleRefFn(playAgain, 1000)}
           whileTap={{ scale: 1.2 }}
         whileHover={isMobile ? {} : { scale: 1.2 }}
           variants={{
