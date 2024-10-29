@@ -23,38 +23,40 @@ export default function Questions({ question, timer }: QuestionProps) {
       }}
     >
       <AnimatePresence mode='wait'>
-        <motion.article
-              key={question.id}
-            style={{ originY: 0.2 }}
-          initial={{  scaleY: 0 }}
-             exit={{  scaleY: 0 }}
-          animate={{
-                scaleY: 1,
-            transition: { scaleY: { delay: 0.2, duration: 0.5, ease: 'easeInOut' } },
-          }}
-        >
-          <h1>
-            {quesArray[0]}
-            <AnimatePresence mode='wait'>
-              <motion.span
-                    key={timer.isStopped + ''}
-                  style={{ minWidth: 72 }}
-                initial={{ opacity:   0 }}
-                   exit={{ opacity:   0 }}
-                animate={{
-                     opacity: 1,
-                       color: timer.isStopped ? '#cd8f2a' : '#42275a',
-                  transition: { delay: 0.3 },
-                }}
-              >
-                {timer.isStopped ? question.a : '_____'}
-              </motion.span>
-            </AnimatePresence>
-            {quesArray[1]}
-          </h1>
-          {/* offset animation time from progress timer */}
-          <progress value={timer.remaining} max={timer.max - 500} />
-        </motion.article>
+        {!timer.isInitial && (
+          <motion.article
+                key={question.id}
+              style={{ originY: 0.2 }}
+            initial={{ scaleY: 0 }}
+               exit={{ scaleY: 0 }}
+            animate={{
+                  scaleY: 1,
+              transition: { scaleY: { delay: 0.2, duration: 0.5, ease: 'easeInOut' } },
+            }}
+          >
+            <h1>
+              {quesArray[0]}
+              <AnimatePresence mode='wait'>
+                <motion.span
+                      key={timer.isStopped + ''}
+                    style={{ minWidth: 72 }}
+                  initial={{ opacity: 0 }}
+                     exit={{ opacity: 0 }}
+                  animate={{
+                       opacity: 1,
+                         color: timer.isStopped ? '#cd8f2a' : '#42275a',
+                    transition: { delay: 0.3 },
+                  }}
+                >
+                  {timer.isStopped ? question.a : '_____'}
+                </motion.span>
+              </AnimatePresence>
+              {quesArray[1]}
+            </h1>
+            {/* offset animation time from progress timer */}
+            <progress value={timer.remaining} max={timer.max - 500} />
+          </motion.article>
+        )}
       </AnimatePresence>
     </motion.div>
   );
