@@ -52,7 +52,8 @@ export default function Questions({ question, timer }: QuestionProps) {
             </AnimatePresence>
             {quesArray[1]}
           </h1>
-          <progress value={timer.remaining} max={timer.max} />
+          {/* offset animation time from progress timer */}
+          <progress value={timer.remaining} max={timer.max - 500} />
         </motion.article>
       </AnimatePresence>
     </motion.div>

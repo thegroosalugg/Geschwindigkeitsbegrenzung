@@ -5,7 +5,7 @@ import Question from '@/models/Question';
 const useGameController = () => {
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(3));
+  const [         user,          setUser] = useState(new User(1));
   const [     question,      setQuestion] = useState(new Question());
   const [   isGameover,    setIsGameover] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);
@@ -63,6 +63,14 @@ const useGameController = () => {
     // console.log('USER ACTION', { choice, isCorrect, solved, lives, score, total }); // *logData
   }
 
+  const playAgain = () => {
+    setTimeout(() => {
+      setUser(new User(1));
+      setIsGameover(false);
+      startTimer();
+    }, 700);
+  }
+
   useEffect(() => {
     startTimer();
     return () => clearInterval(interval.current);
@@ -90,6 +98,7 @@ const useGameController = () => {
     },
     user,
     question,
+    playAgain,
     handleAnswer,
   };
 };

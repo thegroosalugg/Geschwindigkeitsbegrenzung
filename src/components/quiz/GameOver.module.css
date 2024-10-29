@@ -30,5 +30,21 @@
       font-weight: 600;
       text-align: center;
     }
+
+    > img {
+      width: 200px;
+      margin: 1rem;
+    }
+
+    > button {
+      padding: 0.5rem;
+      font-size: 1.1rem;
+      font-family: 'Bebas Neue', sans-serif;
+      border: 1px solid #000;
+      border-radius: 3px;
+      cursor: pointer;
+      color: #cbcbcb;
+      background: linear-gradient(to right, #6A9AB0, #3A6D8C);
+    }
   }
 }

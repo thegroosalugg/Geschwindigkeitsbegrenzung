@@ -6,7 +6,7 @@ import Score from './Score';
 import GameOver from './GameOver';
 
 export default function Quiz() {
-  const { user, question, timer, handleAnswer } = useGameController();
+  const { user, question, timer, handleAnswer, playAgain } = useGameController();
 
   return (
     <AnimatePresence mode='wait'>
@@ -17,7 +17,7 @@ export default function Quiz() {
           <Answers    key='answers' timer={timer} user={user} question={question} handleAnswer={handleAnswer} />
         </>
       ) : (
-        <GameOver key='gameover' user={user} />
+        <GameOver key='gameover' user={user} playAgain={playAgain} />
       )}
     </AnimatePresence>
   );
