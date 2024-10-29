@@ -3,6 +3,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useLocation } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
+import { DebounceProps } from '@/hooks/useDebounce';
 import css from './NavButton.module.css';
 
 const icons = {
@@ -18,10 +19,10 @@ const labels = {
 interface NavProps {
           path: string;
          navFn: (path: string) => void;
-  isDebouncing: boolean
+ debounceProps: DebounceProps;
 }
 
-export default function NavButton({ path, navFn, isDebouncing }: NavProps) {
+export default function NavButton({ path, navFn, debounceProps }: NavProps) {
   const { pathname } = useLocation();
   const isActive = pathname === path;
   const classes = `${css['nav-button']} ${isActive ? css['active'] : ''} ${isMobile ? css['mobile'] : ''}`;
@@ -30,7 +31,7 @@ export default function NavButton({ path, navFn, isDebouncing }: NavProps) {
     <button
       className={classes}
       onClick={() => navFn(path)}
-      style={isDebouncing ? { pointerEvents: 'none', opacity: 0.6 } : {}}
+      {...debounceProps}
     >
       <FontAwesomeIcon icon={icons[path as keyof IconProp]} size='2x' />
       {labels[path as keyof typeof labels]}

@@ -8,7 +8,7 @@ import GameOverEntry from './GameOverEntry';
 import css from './GameOver.module.css';
 
 export default function GameOver({ user, playAgain }: { user: User, playAgain: () => void }) {
-  const { isDebouncing, throttleFn } = useDebounce();
+  const { debounceProps, throttleFn } = useDebounce();
   const { total, solved } = user;
   const newScore = new HighScore(total, solved);
   const isHighScore = newScore.isHighScore();
@@ -82,9 +82,8 @@ export default function GameOver({ user, playAgain }: { user: User, playAgain: (
           />
         )}
         <motion.button
+          {...debounceProps}
            onClick={() => throttleFn(playAgain, 1000)}
-          disabled={isDebouncing}
-             style={isDebouncing ? { pointerEvents: 'none', opacity: 0.6 } : {}}
           whileTap={{ scale: 1.2 }}
         whileHover={isMobile ? {} : { scale: 1.2 }}
           variants={{
