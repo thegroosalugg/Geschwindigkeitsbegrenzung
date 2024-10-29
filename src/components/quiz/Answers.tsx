@@ -21,7 +21,11 @@ export default function Answers({ user, question, timer, handleAnswer }: AnswerP
   };
 
   return (
-    <motion.div className={css['answers']} exit={{ opacity: 0, y: 100, transition: { duration: 1, delay: 0.1 } }}>
+    <motion.div
+      className={css['answers']}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y:   0, transition: { duration: 0.5 } }}
+      exit={{ opacity: 0, y: 100, transition: { duration: 1, delay: 0.1 } }}>
       {userChoices.map(({ choice, background }) => (
         <motion.button
           key={choice}

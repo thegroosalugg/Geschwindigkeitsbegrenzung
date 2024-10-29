@@ -1,21 +1,14 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import useDebounce from '@/hooks/useDebounce';
 import NavButton from './NavButton';
 import css from './NavBar.module.css';
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const [isDebouncing, setIsDebouncing] = useState(false);
+  const { isDebouncing, throttleFn } = useDebounce()
 
   function navTo(path: string) {
-    if (!isDebouncing) {
-      setIsDebouncing(true);
-      navigate(path);
-
-      setTimeout(() => {
-        setIsDebouncing(false);
-      }, 1000);
-    }
+    throttleFn(() => navigate(path), 1200);
   }
 
   return (

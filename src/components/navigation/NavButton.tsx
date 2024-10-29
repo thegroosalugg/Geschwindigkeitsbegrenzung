@@ -18,19 +18,19 @@ const labels = {
 interface NavProps {
           path: string;
          navFn: (path: string) => void;
-  isDebouncing: boolean
+  isDebouncing: boolean;
 }
 
 export default function NavButton({ path, navFn, isDebouncing }: NavProps) {
   const { pathname } = useLocation();
   const isActive = pathname === path;
-  const classes = `${css['nav-button']} ${isActive ? css['active'] : ''} ${isMobile ? css['mobile'] : ''}`;
+  const  classes = `${css['nav-button']} ${isActive ? css['active'] : ''} ${isMobile ? css['mobile'] : ''}`;
 
   return (
     <button
       className={classes}
-      onClick={() => navFn(path)}
-      style={isDebouncing ? { pointerEvents: 'none', opacity: 0.6 } : {}}
+        onClick={() => navFn(path)}
+       disabled={isDebouncing}
     >
       <FontAwesomeIcon icon={icons[path as keyof IconProp]} size='2x' />
       {labels[path as keyof typeof labels]}

@@ -5,10 +5,11 @@ import Question from '@/models/Question';
 const useGameController = () => {
   const  maxTime = useRef(5000);
   const interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(3));
+  const [         user,          setUser] = useState(new User(1));
   const [     question,      setQuestion] = useState(new Question());
+  const [    isInitial,     setIsInitial] = useState(true);
   const [   isGameover,    setIsGameover] = useState(false);
-  const [ timerStopped,  setTimerStopped] = useState(false);
+  const [ timerStopped,  setTimerStopped] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const gameover = user.lives === 0;
 
@@ -21,6 +22,7 @@ const useGameController = () => {
 
   const startTimer = useCallback(() => {
     // console.log('TIMER STARTED'); // *logData
+    setIsInitial(false)
     setTimerStopped(false);
     setQuestion(Question.random());
     setTimeRemaining(maxTime.current);
@@ -63,10 +65,13 @@ const useGameController = () => {
     // console.log('USER ACTION', { choice, isCorrect, solved, lives, score, total }); // *logData
   }
 
-  useEffect(() => {
-    startTimer();
-    return () => clearInterval(interval.current);
-  }, [startTimer]);
+  const playAgain = () => {
+    setTimeout(() => {
+      setIsGameover(false);
+      setUser(new User(1));
+      startTimer();
+    }, 700);
+  }
 
   useEffect(() => {
     if (timerStopped) {
@@ -83,6 +88,7 @@ const useGameController = () => {
 
   return {
     timer: {
+       isInitial,
       isGameover,
       isStopped: timerStopped,
       remaining: timeRemaining,
@@ -90,6 +96,7 @@ const useGameController = () => {
     },
     user,
     question,
+    playAgain,
     handleAnswer,
   };
 };

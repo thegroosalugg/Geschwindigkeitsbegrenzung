@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isMobile } from 'react-device-detect';
+import useDebounceRef from '@/hooks/useDebounceRef';
 import User from '@/models/User';
 import HighScore from '@/models/HighScore';
 import GameOverEntry from './GameOverEntry';
 import css from './GameOver.module.css';
 
-export default function GameOver({ user }: { user: User }) {
+export default function GameOver({ user, playAgain }: { user: User, playAgain: () => void }) {
+  const { throttleRefFn } = useDebounceRef();
   const { total, solved } = user;
   const newScore = new HighScore(total, solved);
   const isHighScore = newScore.isHighScore();
@@ -13,7 +16,7 @@ export default function GameOver({ user }: { user: User }) {
   const highscores = HighScore.getAll();
 
   return (
-    <section className={css['gameover']}>
+    <motion.section className={css['gameover']} exit={{ opacity: 0, y: 100, transition: { duration: 0.5 }}}>
       <motion.h2
         style={{
              originY: 1,
@@ -23,7 +26,7 @@ export default function GameOver({ user }: { user: User }) {
           })`,
         }}
         initial={{ opacity: 0, scaleY: 0.1, x: -30 }}
-        animate={{ opacity: 1, scaleY: 1, x: 0, transition: { delay: 1.8, duration: 0.7 } }}
+        animate={{ opacity: 1, scaleY: 1, x: 0, transition: { duration: 0.5 } }}
       >
         {!total ? (
           'Sie haben null Punkte erreicht'
@@ -54,16 +57,46 @@ export default function GameOver({ user }: { user: User }) {
         transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
       >
         <motion.h1
-             style={{ originX: 0 }}
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+               style={{ originX: 0 }}
+            variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
           transition={{ duration: 0.6, ease: 'easeIn' }}
         >
           Ihre besten Ergebnisse
         </motion.h1>
-        {highscores.map((score: HighScore, index: number) => (
-          <GameOverEntry key={score.date} score={score} newScore={newScore} index={index} />
-        ))}
+        {highscores.length > 0 ? (
+          highscores.map((score: HighScore, index: number) => (
+            <GameOverEntry key={score.date} score={score} newScore={newScore} index={index} />
+          ))
+        ) : (
+          <motion.img
+            src='/mailbox.png'
+            alt='empty mailbox'
+            variants={{
+               hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                originX: 0,
+                transition: { duration: 0.5, ease: 'easeIn' },
+              },
+            }}
+          />
+        )}
+        <motion.button
+           onClick={() => throttleRefFn(playAgain, 1000)}
+          whileTap={{ scale: 1.2 }}
+        whileHover={isMobile ? {} : { scale: 1.2 }}
+          variants={{
+             hidden: { opacity: 0, y: -20 },
+            visible: {
+                 opacity: 1,
+                       y: 0,
+              transition: { duration: 0.5, type: 'spring' },
+            },
+          }}
+        >
+          Wiederholungsversuch
+        </motion.button>
       </motion.ul>
-    </section>
+    </motion.section>
   );
 }
