@@ -33,6 +33,16 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
     ? { background: item ? '#3A6D8C' : '#e6e6e6' }
     : {};
 
+  const color = isTotal ? { color: item ? '#e6e6e6' : '#42275a' } : {};
+
+  const clipPath = isTotal
+    ? {
+        clipPath: item
+          ? 'polygon(71% 0%, 84% 16%, 100% 36%, 86% 58%, 73% 75%, 28% 75%, 0% 75%, 13% 38%, 0% 0%, 29% 0%)'
+          : 'polygon(75% 0%, 100% 0%, 100% 75%, 75% 75%, 45% 75%, 15% 100%, 25% 75%, 0% 75%, 0% 0%, 25% 0%)',
+      }
+    : {};
+
   function clickHandler() {
     if (hasItem && !timer.isStopped) {
       timer.pause();
@@ -46,7 +56,15 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
       onClick={clickHandler}
       animate={{
         ...background,
-             scale: (shouldAnimate && !isTotal) || hasItem ? [1, 1.2, 1] : 1,
+         ...clipPath,
+          ...color,
+             scale:
+              (shouldAnimate && !isTotal) || hasItem
+                ? [1, 1.2, 1]
+                : timer.isPaused && isTotal
+                ? [1, 2, 1]
+                : 1,
+            cursor: hasItem ? 'pointer' : '',
         transition: {
            ease: 'easeInOut',
           scale: {
@@ -55,6 +73,7 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
               repeat: hasItem && Infinity,
           },
           background: { duration: 0.8, delay: isLives ? 1.5 : 0 },
+            clipPath: { duration: 0.5, ease: 'easeInOut' }
         },
       }}
     >

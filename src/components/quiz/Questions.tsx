@@ -37,7 +37,12 @@ export default function Questions({ question, timer }: QuestionProps) {
               transition: { duration: 0.5, ease: 'linear' },
             }}
           >
-            <h1>
+            <motion.h1
+              animate={{
+                     color: timer.isPaused ? '#e6e6e6' : '#42275a',
+                background: timer.isPaused ? '#3A6D8C' : '#e6e6e6'
+              }}
+            >
               {quesArray[0]}
               <AnimatePresence mode='wait'>
                 <motion.span
@@ -55,7 +60,7 @@ export default function Questions({ question, timer }: QuestionProps) {
                 </motion.span>
               </AnimatePresence>
               {quesArray[1]}
-            </h1>
+            </motion.h1>
             {/* offset animation time from progress timer */}
             <progress value={timer.remaining} max={timer.max - 500} />
           </motion.article>

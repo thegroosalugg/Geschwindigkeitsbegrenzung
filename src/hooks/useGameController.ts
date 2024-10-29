@@ -3,10 +3,10 @@ import User from '@/models/User';
 import Question from '@/models/Question';
 
 const useGameController = () => {
-  const   maxTime = useRef(5000);
-  const pauseTime = useRef(3000);
+  const       maxTime = useRef(5000);
+  const     pauseTime = useRef(3000);
   const requiredScore = useRef(0);
-  const interval = useRef<number | undefined>(undefined);
+  const      interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User(3));
   const [     question,      setQuestion] = useState(new Question());
   const [    isInitial,     setIsInitial] = useState(true);
