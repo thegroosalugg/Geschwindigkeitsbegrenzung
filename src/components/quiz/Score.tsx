@@ -9,11 +9,12 @@ import css from './Score.module.css';
 interface DispItemProps {
           entry: { solved?: number, total?: number, score?: number, lives?: number };
   shouldAnimate: boolean;
+          item?: boolean;
           delay: number;
           timer: Timer;
 }
 
-const DisplayItem = ({ entry, shouldAnimate, delay, timer }: DispItemProps) => {
+const DisplayItem = ({ entry, shouldAnimate, delay, timer, item }: DispItemProps) => {
   const { isAnimating } = useDelay(delay, timer.isStopped);
   const { total, score, solved, lives } = entry;
   const baseValue = solved ?? total ?? lives ?? 0;
@@ -27,9 +28,17 @@ const DisplayItem = ({ entry, shouldAnimate, delay, timer }: DispItemProps) => {
         }
       : {};
 
+  function clickHandler() {
+    if (item && !timer.isStopped) {
+      timer.pause();
+      console.log('item used')
+    }
+  }
+
   return (
     <motion.p
       initial={false}
+      onClick={clickHandler}
       animate={{
         ...background,
              scale: shouldAnimate && !isValid(total) ? [1, 1.2, 1] : 1,
@@ -66,7 +75,7 @@ interface ScoreProps {
 
 export default function Score({ user, timer }: ScoreProps) {
   const { isStopped } = timer;
-  const { isCorrect, solved, lives, score, total } = user;
+  const { isCorrect, solved, lives, score, total, item } = user;
   const { isAnimating } = useDelay(1200, isStopped);
   const onIsRight =  isCorrect && isStopped;
   const onIsWrong = !isCorrect && isStopped;
@@ -87,7 +96,7 @@ export default function Score({ user, timer }: ScoreProps) {
            exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}
     >
       <DisplayItem entry={{    solved    }} shouldAnimate={onIsRight} delay={2200} timer={timer} />
-      <DisplayItem entry={{ total, score }} shouldAnimate={onIsRight} delay={1400} timer={timer} />
+      <DisplayItem entry={{ total, score }} shouldAnimate={onIsRight} delay={1400} timer={timer} item={item} />
       <DisplayItem entry={{    lives     }} shouldAnimate={onIsWrong} delay={1200} timer={timer} />
       <AnimatePresence onExitComplete={() => direction.current = direction.current === 1 ? -1 : 1}>
         {onIsRight && isAnimating && (

@@ -14,7 +14,7 @@ export default function Quiz() {
         <>
           <Questions key='question' timer={timer}             question={question} />
           <Score     key='score'    timer={timer} user={user}                     />
-          <Answers    key='answers' timer={timer} user={user} question={question} handleAnswer={handleAnswer} />
+          <Answers   key='answers'  timer={timer} user={user} question={question} handleAnswer={handleAnswer} />
         </>
       ) : (
         <GameOver key='gameover' user={user} playAgain={playAgain} />

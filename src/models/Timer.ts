@@ -4,6 +4,7 @@ export default class Timer {
     isInitial: boolean;
     isStopped: boolean;
    isGameover: boolean;
+        pause: () => void;
 
   constructor() {
     this.max         = 0
@@ -11,5 +12,6 @@ export default class Timer {
     this.isInitial   = true;
     this.isStopped   = true;
     this.isGameover  = false;
+    this.pause       = () => {}
   }
 }

@@ -5,6 +5,7 @@ export default class User {
       total:  number;
      solved:  number;
       lives:  number;
+       item: boolean;
 
  constructor(lives: number) {
    this.choice    = '';
@@ -13,5 +14,6 @@ export default class User {
    this.total     = 0;
    this.solved    = 0;
    this.lives     = lives;
+   this.item      = false;
  }
 }
