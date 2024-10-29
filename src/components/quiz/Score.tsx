@@ -7,31 +7,33 @@ import Timer from '@/models/Timer';
 import css from './Score.module.css';
 
 interface DispItemProps {
-          entry: { solved?: number, total?: number, score?: number, lives?: number };
+      isSolved?: boolean;
+       isTotal?: boolean;
+       isLives?: boolean;
   shouldAnimate: boolean;
-          item?: boolean;
           delay: number;
           timer: Timer;
+           user: User;
 }
 
-const DisplayItem = ({ entry, shouldAnimate, delay, timer, item }: DispItemProps) => {
+const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, user }: DispItemProps) => {
   const { isAnimating } = useDelay(delay, timer.isStopped);
-  const { total, score, solved, lives } = entry;
-  const baseValue = solved ?? total ?? lives ?? 0;
-  const isValid = (n: number | undefined) => n !== undefined;
-  const content = baseValue + (isValid(total) ? -score! : isValid(solved) ? -1 : timer.isInitial ? 0 : 1);
-  const background =
-    isValid(lives)
-      ? {
-          background:
-            lives <= 0 ? '#000000' : lives <= 1 ? '#aa4834' : lives <= 2 ? '#d39b3a' : '#1666a8',
-        }
-      : {};
+  const { total, score, solved, lives, item } = user;
+  const baseValue = isSolved ? solved : isTotal ? total : lives;
+
+  let content;
+  if (isSolved) content = baseValue - 1;
+  if (isTotal)  content = baseValue - score;
+  if (isLives)  content = baseValue + (timer.isInitial ? 0 : 1);
+
+  const background = isLives
+    ? { background: lives <= 0 ? '#000000' : lives <= 1 ? '#aa4834' : lives <= 2 ? '#d39b3a' : '#1666a8' }
+    : {};
 
   function clickHandler() {
-    if (item && !timer.isStopped) {
+    if (isTotal && item && !timer.isStopped) {
       timer.pause();
-      console.log('item used')
+      console.log('item used'); // *logData
     }
   }
 
@@ -41,24 +43,24 @@ const DisplayItem = ({ entry, shouldAnimate, delay, timer, item }: DispItemProps
       onClick={clickHandler}
       animate={{
         ...background,
-             scale: shouldAnimate && !isValid(total) ? [1, 1.2, 1] : 1,
+             scale: shouldAnimate && !isTotal ? [1, 1.2, 1] : 1,
         transition: {
                ease: 'easeInOut',
-              scale: { duration: 0.5, delay: isValid(solved) ? 1.8 : 0.2 },
-         background: { duration: 0.8, delay: isValid(lives)  ? 1.5 :   0 },
+              scale: { duration: 0.5, delay: isSolved ? 1.8 : 0.2 },
+         background: { duration: 0.8, delay: isLives  ? 1.5 :   0 },
         },
       }}
     >
       <motion.span
         initial={false}
         animate={{
-             opacity: shouldAnimate                    ? [1, 0, 1] : 1,
-              scaleY: shouldAnimate &&  isValid(total) ? [1, 0, 1] : 1,
-              scaleX: shouldAnimate && !isValid(total) ? [1, 0, 1] : 1,
+             opacity: shouldAnimate             ? [1, 0, 1] : 1,
+              scaleY: shouldAnimate &&  isTotal ? [1, 0, 1] : 1,
+              scaleX: shouldAnimate && !isTotal ? [1, 0, 1] : 1,
           transition: {
                  ease: 'easeInOut',
              duration: 0.5,
-                delay: isValid(total) ? 1.3 : isValid(solved) ? 2.2 : 1
+                delay: isTotal ? 1.3 : isSolved ? 2.2 : 1
           },
         }}
       >
@@ -75,7 +77,7 @@ interface ScoreProps {
 
 export default function Score({ user, timer }: ScoreProps) {
   const { isStopped } = timer;
-  const { isCorrect, solved, lives, score, total, item } = user;
+  const { isCorrect, score } = user;
   const { isAnimating } = useDelay(1200, isStopped);
   const onIsRight =  isCorrect && isStopped;
   const onIsWrong = !isCorrect && isStopped;
@@ -95,9 +97,9 @@ export default function Score({ user, timer }: ScoreProps) {
         animate={{ opacity: 1, x:   0, transition: { duration: 0.5 } }}
            exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}
     >
-      <DisplayItem entry={{    solved    }} shouldAnimate={onIsRight} delay={2200} timer={timer} />
-      <DisplayItem entry={{ total, score }} shouldAnimate={onIsRight} delay={1400} timer={timer} item={item} />
-      <DisplayItem entry={{    lives     }} shouldAnimate={onIsWrong} delay={1200} timer={timer} />
+      <DisplayItem user={user} shouldAnimate={onIsRight} delay={2200} timer={timer} isSolved />
+      <DisplayItem user={user} shouldAnimate={onIsRight} delay={1400} timer={timer} isTotal  />
+      <DisplayItem user={user} shouldAnimate={onIsWrong} delay={1200} timer={timer} isLives  />
       <AnimatePresence onExitComplete={() => direction.current = direction.current === 1 ? -1 : 1}>
         {onIsRight && isAnimating && (
           <motion.div
