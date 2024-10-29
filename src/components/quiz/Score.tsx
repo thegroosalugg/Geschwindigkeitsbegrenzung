@@ -19,6 +19,7 @@ interface DispItemProps {
 const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, user }: DispItemProps) => {
   const { isAnimating } = useDelay(delay, timer.isStopped);
   const { total, score, solved, lives, item } = user;
+  const hasItem = isTotal && item;
   const baseValue = isSolved ? solved : isTotal ? total : lives;
 
   let content;
@@ -28,10 +29,12 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
 
   const background = isLives
     ? { background: lives <= 0 ? '#000000' : lives <= 1 ? '#aa4834' : lives <= 2 ? '#d39b3a' : '#1666a8' }
+    : isTotal
+    ? { background: item ? '#3A6D8C' : '#e6e6e6' }
     : {};
 
   function clickHandler() {
-    if (isTotal && item && !timer.isStopped) {
+    if (hasItem && !timer.isStopped) {
       timer.pause();
       console.log('item used'); // *logData
     }
@@ -43,11 +46,15 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
       onClick={clickHandler}
       animate={{
         ...background,
-             scale: shouldAnimate && !isTotal ? [1, 1.2, 1] : 1,
+             scale: (shouldAnimate && !isTotal) || hasItem ? [1, 1.2, 1] : 1,
         transition: {
-               ease: 'easeInOut',
-              scale: { duration: 0.5, delay: isSolved ? 1.8 : 0.2 },
-         background: { duration: 0.8, delay: isLives  ? 1.5 :   0 },
+           ease: 'easeInOut',
+          scale: {
+               delay: isSolved ? 1.8 : 0.2,
+            duration: hasItem  ?   2 : 0.5,
+              repeat: hasItem && Infinity,
+          },
+          background: { duration: 0.8, delay: isLives ? 1.5 : 0 },
         },
       }}
     >
