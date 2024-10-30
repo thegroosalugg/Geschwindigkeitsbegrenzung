@@ -3,17 +3,32 @@ import User from '@/models/User';
 import Question from '@/models/Question';
 
 const useGameController = () => {
-  const  maxTime = useRef(5000);
-  const interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(1));
+  const       maxTime = useRef(5000);
+  const     pauseTime = useRef(3000);
+  const requiredScore = useRef(0);
+  const      interval = useRef<number | undefined>(undefined);
+  const [         user,          setUser] = useState(new User(3));
   const [     question,      setQuestion] = useState(new Question());
   const [    isInitial,     setIsInitial] = useState(true);
   const [   isGameover,    setIsGameover] = useState(false);
+  const [  timerPaused,   setTimerPaused] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const gameover = user.lives === 0;
 
   // Question.log(); // *logData
+
+  const pauseTimer = () => {
+    setTimerPaused(true);
+    clearInterval(interval.current);
+    setUser((user) => ({ ...user, item: false }))
+    pauseTime.current = 6000;
+  }
+
+  const resumeTimer = () => {
+    setTimerPaused(false)
+    pauseTime.current = 3000;
+  }
 
   const stopTimer = () => {
     setTimerStopped(true);
@@ -21,11 +36,16 @@ const useGameController = () => {
   }
 
   const startTimer = useCallback(() => {
-    // console.log('TIMER STARTED'); // *logData
+    console.log('TIMER STARTED, timerPaused', timerPaused); // *logData
     setIsInitial(false)
     setTimerStopped(false);
-    setQuestion(Question.random());
-    setTimeRemaining(maxTime.current);
+
+    if (timerPaused) {
+      resumeTimer();
+    } else {
+      setQuestion(Question.random());
+      setTimeRemaining(maxTime.current);
+    }
 
     interval.current = setInterval(() => {
       setTimeRemaining((prevTimer) => {
@@ -38,6 +58,7 @@ const useGameController = () => {
             isCorrect: false,
                choice: '',
                 score:  0,
+               streak:  0,
           }));
           stopTimer();
         }
@@ -45,54 +66,70 @@ const useGameController = () => {
         return prevTimer;
       });
     }, 100);
-  }, []);
+  }, [timerPaused]);
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    let { solved, lives, score, total } = user;
+    let { solved, lives, score, total, streak, item } = user;
 
     if (isCorrect) {
       solved += 1;
-      score   = timeRemaining / 100;
+      streak += 1;
+      score   = Math.round(timeRemaining / 100 / (timerPaused ? 2 : 1) * (Math.min((streak * 0.1 + 0.9), 2)));
       total  += score;
+
+      const threshold = 50;
+      console.log('REQUIRED SCORE', requiredScore.current); // *logData
+      if (total > requiredScore.current + threshold) {
+        console.log('Item check passed', total > requiredScore.current + threshold); // *logData
+        item = true;
+        requiredScore.current += threshold;
+      }
     } else {
       score   = 0;
+      streak  = 0;
       lives  -= 1;
     }
 
-    setUser({ choice, isCorrect, solved, lives, score, total });
+    if (timerPaused) {
+      resumeTimer();
+    }
+    setUser({ choice, isCorrect, solved, streak, lives, score, total, item });
     stopTimer();
-    // console.log('USER ACTION', { choice, isCorrect, solved, lives, score, total }); // *logData
+    console.log('USER ACTION', 'item', item); // *logData
   }
 
   const playAgain = () => {
     setTimeout(() => {
       setIsGameover(false);
       setUser(new User(1));
+      requiredScore.current = 0;
       startTimer();
     }, 700);
   }
 
   useEffect(() => {
-    if (timerStopped) {
-      // console.log('TIMER STOPPED'); // *logData
+    console.log('PAUSE TIME', pauseTime.current); // *logData
+    if (timerStopped || timerPaused) {
       const intervalTimer = setTimeout(() => {
         setIsGameover(gameover);
         if (!gameover) startTimer();
-      }, 3000);
+      }, pauseTime.current);
 
       return () => clearTimeout(intervalTimer);
 
     }
-  }, [timerStopped, gameover, startTimer]);
+  }, [timerStopped, timerPaused, gameover, startTimer]);
 
   return {
     timer: {
        isInitial,
       isGameover,
+       isPaused: timerPaused,
       isStopped: timerStopped,
       remaining: timeRemaining,
             max: maxTime.current,
+          pause: pauseTimer,
     },
     user,
     question,
