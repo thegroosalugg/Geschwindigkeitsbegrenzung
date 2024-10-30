@@ -58,6 +58,7 @@ const useGameController = () => {
             isCorrect: false,
                choice: '',
                 score:  0,
+               streak:  0,
           }));
           stopTimer();
         }
@@ -69,11 +70,12 @@ const useGameController = () => {
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    let { solved, lives, score, total, item } = user;
+    let { solved, lives, score, total, streak, item } = user;
 
     if (isCorrect) {
       solved += 1;
-      score   = Math.floor(timeRemaining / 100 / (timerPaused ? 2 : 1));
+      streak += 1;
+      score   = Math.round(timeRemaining / 100 / (timerPaused ? 2 : 1) * (Math.min((streak * 0.1 + 0.9), 2)));
       total  += score;
 
       const threshold = 50;
@@ -85,13 +87,14 @@ const useGameController = () => {
       }
     } else {
       score   = 0;
+      streak  = 0;
       lives  -= 1;
     }
 
     if (timerPaused) {
       resumeTimer();
     }
-    setUser({ choice, isCorrect, solved, lives, score, total, item });
+    setUser({ choice, isCorrect, solved, streak, lives, score, total, item });
     stopTimer();
     console.log('USER ACTION', 'item', item); // *logData
   }
