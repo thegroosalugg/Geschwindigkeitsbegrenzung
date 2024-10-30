@@ -137,12 +137,12 @@ const useGameController = () => {
       isStopped: timerStopped,
       remaining: timeRemaining,
             max: maxTime.current,
-          pause: pauseTimer,
           start: startGame,
+          pause: pauseTimer,
+         replay: playAgain,
     },
     user,
     question,
-    playAgain,
     handleAnswer,
   };
 };

@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isMobile } from 'react-device-detect';
 import useDebounceRef from '@/hooks/useDebounceRef';
 import User from '@/models/User';
+import Timer from '@/models/Timer';
 import HighScore from '@/models/HighScore';
 import GameOverEntry from './GameOverEntry';
 import css from './GameOver.module.css';
 
-export default function GameOver({ user, playAgain }: { user: User, playAgain: () => void }) {
+export default function GameOver({ user, timer }: { user: User, timer: Timer }) {
   const { throttleRefFn } = useDebounceRef();
   const { total, solved } = user;
   const newScore = new HighScore(total, solved);
@@ -82,7 +83,7 @@ export default function GameOver({ user, playAgain }: { user: User, playAgain: (
           />
         )}
         <motion.button
-           onClick={() => throttleRefFn(playAgain, 1000)}
+           onClick={() => throttleRefFn(timer.replay, 1000)}
           whileTap={{ scale: 1.2 }}
         whileHover={isMobile ? {} : { scale: 1.2 }}
           variants={{
