@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { isMobile } from 'react-device-detect';
 import useDelay from '@/hooks/useDelay';
 import User from '@/models/User';
 import Timer from '@/models/Timer';
@@ -83,6 +82,8 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
              opacity: shouldAnimate             ? [1, 0, 1] : 1,
               scaleY: shouldAnimate &&  isTotal ? [1, 0, 1] : 1,
               scaleX: shouldAnimate && !isTotal ? [1, 0, 1] : 1,
+          translateY: isTotal ? -6 : isSolved ? -5 : -2,
+          translateX: isTotal ? -2 : 0,
           transition: {
                  ease: 'easeInOut',
              duration: 0.5,
@@ -118,7 +119,6 @@ export default function Score({ user, timer }: ScoreProps) {
   return (
     <motion.div
       className={css['score']}
-          style={{ paddingTop: !isMobile ? '4rem' : '' }}
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x:   0, transition: { duration: 0.5 } }}
            exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}

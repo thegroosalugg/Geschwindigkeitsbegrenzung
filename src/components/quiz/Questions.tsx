@@ -11,6 +11,7 @@ interface QuestionProps {
 
 export default function Questions({ question, timer }: QuestionProps) {
   const quesArray = question.q.split('___');
+  const { isInitial, isStopped, isPaused, max, remaining } = timer;
 
   return (
     <motion.div
@@ -24,7 +25,7 @@ export default function Questions({ question, timer }: QuestionProps) {
       }}
     >
       <AnimatePresence mode='wait'>
-        {timer.isInitial ? (
+        {isInitial ? (
           <InitialCountdown key='countdown' />
         ) : (
           <motion.article
@@ -39,30 +40,30 @@ export default function Questions({ question, timer }: QuestionProps) {
           >
             <motion.h1
               animate={{
-                     color: timer.isPaused ? '#e6e6e6' : '#42275a',
-                background: timer.isPaused ? '#3A6D8C' : '#e6e6e6'
+                     color: isPaused ? '#e6e6e6' : '#42275a',
+                background: isPaused ? '#3A6D8C' : '#e6e6e6'
               }}
             >
               {quesArray[0]}
               <AnimatePresence mode='wait'>
                 <motion.span
-                      key={timer.isStopped + ''}
+                      key={isStopped + ''}
                     style={{ minWidth: 72 }}
                   initial={{ opacity: 0 }}
                      exit={{ opacity: 0 }}
                   animate={{
                        opacity: 1,
-                         color: timer.isStopped ? '#cd8f2a' : '#42275a',
-                    transition: { delay: 0.3 },
+                         color: isStopped ? '#cd8f2a' : isPaused ? '#e6e6e6' : '#42275a',
+                    transition: { delay: isPaused ? 0 : 0.3 },
                   }}
                 >
-                  {timer.isStopped ? question.a : '_____'}
+                  {isStopped ? question.a : '_____'}
                 </motion.span>
               </AnimatePresence>
               {quesArray[1]}
             </motion.h1>
             {/* offset animation time from progress timer */}
-            <progress value={timer.remaining} max={timer.max - 500} />
+            <progress value={remaining} max={max - 500} />
           </motion.article>
         )}
       </AnimatePresence>

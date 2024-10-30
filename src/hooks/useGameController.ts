@@ -109,7 +109,7 @@ const useGameController = () => {
   }
 
   useEffect(() => {
-    console.log('PAUSE TIME', pauseTime.current)
+    console.log('PAUSE TIME', pauseTime.current); // *logData
     if (timerStopped || timerPaused) {
       const intervalTimer = setTimeout(() => {
         setIsGameover(gameover);
