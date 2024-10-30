@@ -9,14 +9,21 @@ const useGameController = () => {
   const      interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User(3));
   const [     question,      setQuestion] = useState(new Question());
-  const [    isInitial,     setIsInitial] = useState(true);
+  const [    isInitial,     setIsInitial] = useState(false);
+  const [  gameStarted,   setGameStarted] = useState(false);
   const [   isGameover,    setIsGameover] = useState(false);
   const [  timerPaused,   setTimerPaused] = useState(false);
-  const [ timerStopped,  setTimerStopped] = useState(true);
+  const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const gameover = user.lives === 0;
 
-  // Question.log(); // *logData
+  Question.log(); // *logData
+
+  function startGame() {
+    setGameStarted(true);
+    setIsInitial(true);
+    setTimerStopped(true);
+  }
 
   const pauseTimer = () => {
     setTimerPaused(true);
@@ -125,11 +132,13 @@ const useGameController = () => {
     timer: {
        isInitial,
       isGameover,
+      isStarted: gameStarted,
        isPaused: timerPaused,
       isStopped: timerStopped,
       remaining: timeRemaining,
             max: maxTime.current,
           pause: pauseTimer,
+          start: startGame,
     },
     user,
     question,

@@ -1,5 +1,27 @@
-import Quiz from '@/components/quiz/Quiz';
+import { AnimatePresence } from 'framer-motion';
+import useGameController from '@/hooks/useGameController';
+import Questions from '@/components/quiz/Questions';
+import Answers from '@/components/quiz/Answers';
+import Score from '@/components/quiz/Score';
+import GameOver from '@/components/quiz/GameOver';
+import StartScreen from '@/components/quiz/StartScreen';
 
 export default function GamePage() {
-  return <Quiz />;
+  const { user, question, timer, handleAnswer, playAgain } = useGameController();
+
+  return (
+    <AnimatePresence mode='wait'>
+      {!timer.isStarted ? (
+        <StartScreen timer={timer} />
+      ) : !timer.isGameover ? (
+        <>
+          <Questions key='question' timer={timer}             question={question} />
+          <Score     key='score'    timer={timer} user={user}                     />
+          <Answers   key='answers'  timer={timer} user={user} question={question} handleAnswer={handleAnswer} />
+        </>
+      ) : (
+        <GameOver key='gameover' user={user} playAgain={playAgain} />
+      )}
+    </AnimatePresence>
+  );
 }
