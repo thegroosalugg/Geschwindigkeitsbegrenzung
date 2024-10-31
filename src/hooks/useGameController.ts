@@ -3,12 +3,12 @@ import User from '@/models/User';
 import Question from '@/models/Question';
 
 const useGameController = () => {
-  const { value } = User.getDifficulty();
+  const level = User.getDifficulty();
   const       maxTime = useRef(5000);
   const     pauseTime = useRef(3000);
   const requiredScore = useRef(0);
   const      interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(value));
+  const [         user,          setUser] = useState(new User(level));
   const [     question,      setQuestion] = useState(new Question());
   const [    isInitial,     setIsInitial] = useState(false);
   const [  gameStarted,   setGameStarted] = useState(false);
@@ -81,7 +81,7 @@ const useGameController = () => {
   const playAgain = () => {
     setTimeout(() => {
       setIsGameover(false);
-      setUser(new User(value));
+      setUser(new User(level));
       requiredScore.current = 0;
       startTimer();
     }, 700);

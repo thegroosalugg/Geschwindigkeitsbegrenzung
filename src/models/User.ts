@@ -1,5 +1,3 @@
-import { Level } from "@/components/settings/SelectButton";
-
 export default class User {
      choice:  string;
   isCorrect: boolean;
@@ -23,11 +21,11 @@ export default class User {
    this.lives     = 20 - (5 * level); // einfash: 15, mittel: 10, schwer: 5
  }
 
- static setDifficulty(level: Level, value: number) {
-  localStorage.setItem('difficulty', JSON.stringify({ level, value }));
+ static setDifficulty(level: number) {
+  localStorage.setItem('difficulty', JSON.stringify({ level }));
  }
 
  static getDifficulty() {
-  return JSON.parse(localStorage['difficulty'] || '{ "level": "einfach", "value": 1 }');
+  return JSON.parse(localStorage['difficulty'] || '{ "level": 1 }').level;
  }
 }

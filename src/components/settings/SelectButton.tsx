@@ -4,43 +4,41 @@ import css from './SelectButton.module.css';
 import User from '@/models/User';
 
 const config = {
-  einfach: {
-    img: 'uter',
-      c: '#659999',
-      b: '#a8c6dc',
-    lvl: 1,
+  1: {
+     mode: 'einfach',
+    image: 'uter',
+    color: '#659999',
+      hex: '#a8c6dc',
   },
-   mittel: {
-    img: 'nelson',
-      c: '#f4791f',
-      b: '#82afd1',
-    lvl: 2,
+  2: {
+     mode: 'mittel',
+    image: 'nelson',
+    color: '#f4791f',
+      hex: '#82afd1',
   },
-   schwer: {
-    img: 'ranier',
-      c: '#aa4533',
-      b: '#5999c9',
-    lvl: 3,
+  3: {
+     mode: 'schwer',
+    image: 'ranier',
+    color: '#aa4533',
+      hex: '#5999c9',
   },
 };
 
-export type Level = 'einfach' | 'mittel' | 'schwer';
-
 interface ButtonProps {
-  level: Level;
-  state: { isActive: Level; setIsActive: Dispatch<SetStateAction<Level>> };
+  level: number;
+  state: { isActive: number; setIsActive: Dispatch<SetStateAction<number>> };
 }
 
 export default function SelectButton({ level, state }: ButtonProps) {
+  const { mode, image, color, hex } = config[level as keyof typeof config];
   const activeTab = state.isActive === level;
-  const image = config[level].img;
   const opac = activeTab ? 50 : 88;
   const background =
-    `linear-gradient(to right, #ffffff${opac}, #c4e1f6${opac}, ${config[level].b + opac})`;
+    `linear-gradient(to right, #ffffff${opac}, #c4e1f6${opac}, ${hex + opac})`;
 
   function clickhandler() {
     state.setIsActive(level);
-    User.setDifficulty(level, config[level].lvl);
+    User.setDifficulty(level);
   }
 
   return (
@@ -52,14 +50,14 @@ export default function SelectButton({ level, state }: ButtonProps) {
         >
       <motion.span
         animate={{
+           color,
           filter: `brightness(${activeTab ? 1.5 : 1})`,
-           color: config[level].c,
         }}
       >
-        {level}
+        {mode}
       </motion.span>
       {activeTab && <motion.div layoutId='difficulty' className={css['diffuclty-tab']} />}
-      <img src={`/${image}.png`} alt={`${image}`}     className={css[level]} />
+      <img src={`/${image}.png`} alt={`${image}`}     className={css[mode]} />
     </motion.button>
   );
 }

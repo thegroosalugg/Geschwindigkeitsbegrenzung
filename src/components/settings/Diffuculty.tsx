@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import SelectButton, { Level } from './SelectButton';
+import SelectButton from './SelectButton';
 import User from '@/models/User';
 import css from './Diffuculty.module.css';
 
 export default function DiffucultySelect() {
-  const difficulty = User.getDifficulty();
-  const [isActive, setIsActive] = useState<Level>(difficulty.level);
+  const level = User.getDifficulty();
+  const [isActive, setIsActive] = useState(level);
 
   return (
     <motion.section
@@ -17,9 +17,9 @@ export default function DiffucultySelect() {
       <motion.h2 variants={{ animate: { opacity: [0, 1], transition: { duration: 1 } } }}>
         Schwierigkeitsgrad
       </motion.h2>
-      <SelectButton level='einfach' state={{ isActive, setIsActive }} />
-      <SelectButton level='mittel'  state={{ isActive, setIsActive }} />
-      <SelectButton level='schwer'  state={{ isActive, setIsActive }} />
+      <SelectButton level={1} state={{ isActive, setIsActive }} />
+      <SelectButton level={2} state={{ isActive, setIsActive }} />
+      <SelectButton level={3} state={{ isActive, setIsActive }} />
     </motion.section>
   );
 }
