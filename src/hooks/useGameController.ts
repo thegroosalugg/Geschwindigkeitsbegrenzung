@@ -20,9 +20,11 @@ const useGameController = () => {
   Question.log(); // *logData
 
   function startGame() {
-    setGameStarted(true);
-    setIsInitial(true);
-    setTimerStopped(true);
+    setTimeout(() => {
+      setGameStarted(true);
+      setIsInitial(true);
+      setTimerStopped(true);
+    }, 700);
   }
 
   const pauseTimer = () => {
@@ -75,6 +77,15 @@ const useGameController = () => {
     }, 100);
   }, [timerPaused]);
 
+  const playAgain = () => {
+    setTimeout(() => {
+      setIsGameover(false);
+      setUser(new User(1));
+      requiredScore.current = 0;
+      startTimer();
+    }, 700);
+  }
+
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
     let { solved, lives, score, total, streak, item } = user;
@@ -104,15 +115,6 @@ const useGameController = () => {
     setUser({ choice, isCorrect, solved, streak, lives, score, total, item });
     stopTimer();
     console.log('USER ACTION', 'item', item); // *logData
-  }
-
-  const playAgain = () => {
-    setTimeout(() => {
-      setIsGameover(false);
-      setUser(new User(1));
-      requiredScore.current = 0;
-      startTimer();
-    }, 700);
   }
 
   useEffect(() => {

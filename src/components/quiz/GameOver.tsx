@@ -91,7 +91,7 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
             visible: {
                  opacity: 1,
                        y: 0,
-              transition: { duration: 0.5, type: 'spring' },
+              transition: { duration: 0.6, type: 'easeIn' },
             },
           }}
         >

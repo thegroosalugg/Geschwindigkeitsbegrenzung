@@ -16,7 +16,11 @@ const NumberSpan = ({ num }: { num: number }) => {
 
 export default function InitialCountdown() {
   return (
-    <motion.div className={css['countdown']} exit={{ opacity: 0 }}>
+    <motion.div
+      className={css['countdown']}
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x:  0, transition: { duration: 0.5 } }}
+         exit={{ opacity: 0 }}>
       <NumberSpan num={3} />
       <NumberSpan num={2} />
       <NumberSpan num={1} />
