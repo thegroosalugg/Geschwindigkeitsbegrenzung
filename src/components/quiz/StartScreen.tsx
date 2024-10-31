@@ -31,7 +31,10 @@ export default function StartScreen({ timer }: { timer: Timer }) {
              opacity: [0, 1],
                scale: [1.2, 1],
           background: ['#898121', '#859F3D', '#C4E1F6', '#789DBC', '#257180'],
-          transition: { background: { duration: 8, repeat: Infinity, repeatType: 'mirror' } },
+          transition: {
+            background: { duration: 8, repeat: Infinity, repeatType: 'mirror' },
+              duration: 0.7,
+          },
         }}
       >
         Präpositionen

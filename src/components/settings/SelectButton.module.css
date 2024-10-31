@@ -1,0 +1,54 @@
+.button {
+  position: relative;
+  width: 200px;
+  height: 70px;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  color: #e6e6e6;
+  font-family: "Unlock", serif;
+
+  > span {
+    position: absolute;
+    left: 10px;
+    top: 25px;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    text-shadow: -0.6px -0.6px 0 #000;
+    text-shadow:  0.6px -0.6px 0 #000;
+    text-shadow: -0.6px  0.6px 0 #000;
+    text-shadow:  0.6px  0.6px 0 #000;
+  }
+
+  > img {
+    position: absolute;
+    right: 10px;
+    z-index: 2;
+
+    &.einfach {
+      width: 48px;
+      bottom: 12px;
+    }
+    &.mittel {
+      width: 52px;
+      bottom: 5px;
+    }
+    &.schwer {
+      z-index: 0;
+      width: 68px;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  .diffuclty-tab {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border: 2px solid #e6e6e6;
+    border-radius: 3px;
+  }
+}
