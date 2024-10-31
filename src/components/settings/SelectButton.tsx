@@ -1,41 +1,46 @@
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 import css from './SelectButton.module.css';
+import User from '@/models/User';
 
 const config = {
   einfach: {
     img: 'uter',
       c: '#659999',
       b: '#a8c6dc',
+    lvl: 1,
   },
    mittel: {
     img: 'nelson',
       c: '#f4791f',
       b: '#82afd1',
+    lvl: 2,
   },
    schwer: {
     img: 'ranier',
       c: '#aa4533',
       b: '#5999c9',
+    lvl: 3,
   },
 };
 
-export type Label = 'einfach' | 'mittel' | 'schwer';
+export type Level = 'einfach' | 'mittel' | 'schwer';
 
 interface ButtonProps {
-  label: Label;
-  state: { isActive: Label; setIsActive: Dispatch<SetStateAction<Label>> };
+  level: Level;
+  state: { isActive: Level; setIsActive: Dispatch<SetStateAction<Level>> };
 }
 
-export default function SelectButton({ label, state }: ButtonProps) {
-  const activeTab = state.isActive === label;
-  const image = config[label].img;
+export default function SelectButton({ level, state }: ButtonProps) {
+  const activeTab = state.isActive === level;
+  const image = config[level].img;
   const opac = activeTab ? 50 : 88;
   const background =
-    `linear-gradient(to right, #ffffff${opac}, #c4e1f6${opac}, ${config[label].b + opac})`;
+    `linear-gradient(to right, #ffffff${opac}, #c4e1f6${opac}, ${config[level].b + opac})`;
 
   function clickhandler() {
-    state.setIsActive(label);
+    state.setIsActive(level);
+    User.setDifficulty(level, config[level].lvl);
   }
 
   return (
@@ -48,13 +53,13 @@ export default function SelectButton({ label, state }: ButtonProps) {
       <motion.span
         animate={{
           filter: `brightness(${activeTab ? 1.5 : 1})`,
-           color: config[label].c,
+           color: config[level].c,
         }}
       >
-        {label}
+        {level}
       </motion.span>
       {activeTab && <motion.div layoutId='difficulty' className={css['diffuclty-tab']} />}
-      <img src={`/${image}.png`} alt={`${image}`}     className={css[label]} />
+      <img src={`/${image}.png`} alt={`${image}`}     className={css[level]} />
     </motion.button>
   );
 }

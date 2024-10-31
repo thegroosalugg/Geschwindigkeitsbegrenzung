@@ -3,11 +3,12 @@ import User from '@/models/User';
 import Question from '@/models/Question';
 
 const useGameController = () => {
+  const { value } = User.getDifficulty();
   const       maxTime = useRef(5000);
   const     pauseTime = useRef(3000);
   const requiredScore = useRef(0);
   const      interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(3));
+  const [         user,          setUser] = useState(new User(value));
   const [     question,      setQuestion] = useState(new Question());
   const [    isInitial,     setIsInitial] = useState(false);
   const [  gameStarted,   setGameStarted] = useState(false);
@@ -15,7 +16,7 @@ const useGameController = () => {
   const [  timerPaused,   setTimerPaused] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const gameover = user.lives === 0;
+  const gameover = user.lives <= 0;
 
   Question.log(); // *logData
 
@@ -80,7 +81,7 @@ const useGameController = () => {
   const playAgain = () => {
     setTimeout(() => {
       setIsGameover(false);
-      setUser(new User(1));
+      setUser(new User(value));
       requiredScore.current = 0;
       startTimer();
     }, 700);
@@ -88,7 +89,8 @@ const useGameController = () => {
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    let { solved, lives, score, total, streak, item } = user;
+    const { level } = user;
+    let { lives, solved, streak, score, total, item } = user;
 
     if (isCorrect) {
       solved += 1;
@@ -112,9 +114,9 @@ const useGameController = () => {
     if (timerPaused) {
       resumeTimer();
     }
-    setUser({ choice, isCorrect, solved, streak, lives, score, total, item });
+    setUser({ level, choice, isCorrect, solved, streak, lives, score, total, item });
     stopTimer();
-    console.log('USER ACTION', 'item', item); // *logData
+    console.log('USER ACTION', 'level', level); // *logData
   }
 
   useEffect(() => {
