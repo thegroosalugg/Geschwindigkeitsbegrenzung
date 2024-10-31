@@ -30,7 +30,7 @@ interface ButtonProps {
 export default function SelectButton({ label, state }: ButtonProps) {
   const activeTab = state.isActive === label;
   const image = config[label].img;
-  const opac = activeTab ? 60 : 88;
+  const opac = activeTab ? 50 : 88;
   const background =
     `linear-gradient(to right, #ffffff${opac}, #c4e1f6${opac}, ${config[label].b + opac})`;
 
@@ -43,7 +43,8 @@ export default function SelectButton({ label, state }: ButtonProps) {
       className={css['button']}
         onClick={clickhandler}
         animate={{ background }}
-    >
+       variants={{ animate: { opacity: [0, 1], scale: [1.1, 1], transition: { duration: 0.5 } } }}
+        >
       <motion.span
         animate={{
           filter: `brightness(${activeTab ? 1.5 : 1})`,
