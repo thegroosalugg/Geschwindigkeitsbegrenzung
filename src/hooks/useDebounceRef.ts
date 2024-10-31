@@ -14,5 +14,5 @@ export default function useDebounceRef() {
     }
   };
 
-  return { isThrottling: isThrottling.current, throttleRefFn }
+  return { throttleRefFn }
 }

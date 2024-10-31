@@ -9,14 +9,23 @@ const useGameController = () => {
   const      interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User(3));
   const [     question,      setQuestion] = useState(new Question());
-  const [    isInitial,     setIsInitial] = useState(true);
+  const [    isInitial,     setIsInitial] = useState(false);
+  const [  gameStarted,   setGameStarted] = useState(false);
   const [   isGameover,    setIsGameover] = useState(false);
   const [  timerPaused,   setTimerPaused] = useState(false);
-  const [ timerStopped,  setTimerStopped] = useState(true);
+  const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const gameover = user.lives === 0;
 
-  // Question.log(); // *logData
+  Question.log(); // *logData
+
+  function startGame() {
+    setTimeout(() => {
+      setGameStarted(true);
+      setIsInitial(true);
+      setTimerStopped(true);
+    }, 700);
+  }
 
   const pauseTimer = () => {
     setTimerPaused(true);
@@ -68,6 +77,15 @@ const useGameController = () => {
     }, 100);
   }, [timerPaused]);
 
+  const playAgain = () => {
+    setTimeout(() => {
+      setIsGameover(false);
+      setUser(new User(1));
+      requiredScore.current = 0;
+      startTimer();
+    }, 700);
+  }
+
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
     let { solved, lives, score, total, streak, item } = user;
@@ -99,15 +117,6 @@ const useGameController = () => {
     console.log('USER ACTION', 'item', item); // *logData
   }
 
-  const playAgain = () => {
-    setTimeout(() => {
-      setIsGameover(false);
-      setUser(new User(1));
-      requiredScore.current = 0;
-      startTimer();
-    }, 700);
-  }
-
   useEffect(() => {
     console.log('PAUSE TIME', pauseTime.current); // *logData
     if (timerStopped || timerPaused) {
@@ -125,15 +134,17 @@ const useGameController = () => {
     timer: {
        isInitial,
       isGameover,
+      isStarted: gameStarted,
        isPaused: timerPaused,
       isStopped: timerStopped,
       remaining: timeRemaining,
             max: maxTime.current,
+          start: startGame,
           pause: pauseTimer,
+         replay: playAgain,
     },
     user,
     question,
-    playAgain,
     handleAnswer,
   };
 };

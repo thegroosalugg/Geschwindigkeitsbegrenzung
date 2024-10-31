@@ -34,6 +34,10 @@ span {
   display: inline-block;
 }
 
+button {
+  cursor: pointer;
+}
+
 #root, #__next {
   isolation: isolate;
 }
