@@ -3,11 +3,12 @@ import User from '@/models/User';
 import Question from '@/models/Question';
 
 const useGameController = () => {
-  const       maxTime = useRef(5000);
-  const     pauseTime = useRef(3000);
-  const requiredScore = useRef(0);
-  const      interval = useRef<number | undefined>(undefined);
-  const [         user,          setUser] = useState(new User(3));
+  const          level = User.getDifficulty();
+  const        maxTime = useRef(1000 * (20 - level * 5)); // 15 / 10 / 5 secs
+  const      pauseTime = useRef(3000);
+  const  requiredScore = useRef(0);
+  const       interval = useRef<number | undefined>(undefined);
+  const [         user,          setUser] = useState(new User(level));
   const [     question,      setQuestion] = useState(new Question());
   const [    isInitial,     setIsInitial] = useState(false);
   const [  gameStarted,   setGameStarted] = useState(false);
@@ -15,9 +16,7 @@ const useGameController = () => {
   const [  timerPaused,   setTimerPaused] = useState(false);
   const [ timerStopped,  setTimerStopped] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const gameover = user.lives === 0;
-
-  Question.log(); // *logData
+  const       gameover = user.lives <= 0;
 
   function startGame() {
     setTimeout(() => {
@@ -30,7 +29,7 @@ const useGameController = () => {
   const pauseTimer = () => {
     setTimerPaused(true);
     clearInterval(interval.current);
-    setUser((user) => ({ ...user, item: false }))
+    setUser((user) => ({ ...user, item: false, penalty: 2 }))
     pauseTime.current = 6000;
   }
 
@@ -45,7 +44,7 @@ const useGameController = () => {
   }
 
   const startTimer = useCallback(() => {
-    console.log('TIMER STARTED, timerPaused', timerPaused); // *logData
+    // console.log('TIMER STARTED', 'PAUSE TIME', pauseTime.current, 'timerPaused', timerPaused); // *logData
     setIsInitial(false)
     setTimerStopped(false);
 
@@ -68,6 +67,7 @@ const useGameController = () => {
                choice: '',
                 score:  0,
                streak:  0,
+               penalty: 1,
           }));
           stopTimer();
         }
@@ -80,7 +80,7 @@ const useGameController = () => {
   const playAgain = () => {
     setTimeout(() => {
       setIsGameover(false);
-      setUser(new User(1));
+      setUser(new User(level));
       requiredScore.current = 0;
       startTimer();
     }, 700);
@@ -88,37 +88,41 @@ const useGameController = () => {
 
   function handleAnswer(choice: string) {
     const isCorrect = choice === question.a;
-    let { solved, lives, score, total, streak, item } = user;
+    const { level } = user;
+    let { lives, solved, streak, penalty, score, total, item } = user;
 
     if (isCorrect) {
       solved += 1;
       streak += 1;
-      score   = Math.round(timeRemaining / 100 / (timerPaused ? 2 : 1) * (Math.min((streak * 0.1 + 0.9), 2)));
+      score   = User.getScore(level, streak, penalty, timeRemaining)
       total  += score;
 
-      const threshold = 50;
-      console.log('REQUIRED SCORE', requiredScore.current); // *logData
+      const threshold = 100;
       if (total > requiredScore.current + threshold) {
-        console.log('Item check passed', total > requiredScore.current + threshold); // *logData
         item = true;
-        requiredScore.current += threshold;
+        requiredScore.current += threshold + solved + streak + level * 3;
+        console.log('Item check passed REQUIRED SCORE', requiredScore.current + threshold); // *logData
       }
+
     } else {
       score   = 0;
       streak  = 0;
       lives  -= 1;
     }
 
+    penalty = 1;
+
     if (timerPaused) {
       resumeTimer();
     }
-    setUser({ choice, isCorrect, solved, streak, lives, score, total, item });
+
+    setUser({ level, choice, isCorrect, solved, streak, penalty, lives, score, total, item });
     stopTimer();
-    console.log('USER ACTION', 'item', item); // *logData
+    // console.log('USER ACTION', 'level', level, 'maxTime', maxTime.current); // *logData
+    // console.log('USER ACTION', { level, choice, isCorrect, solved, streak, penalty, lives, score, total, item }); // *logData
   }
 
   useEffect(() => {
-    console.log('PAUSE TIME', pauseTime.current); // *logData
     if (timerStopped || timerPaused) {
       const intervalTimer = setTimeout(() => {
         setIsGameover(gameover);
