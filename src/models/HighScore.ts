@@ -1,12 +1,14 @@
 export default class HighScore {
     date: string;
-  solved: number;
    total: number;
+  solved: number;
+   level: number;
 
-  constructor(total: number, solved: number) {
+  constructor(total: number, solved: number, level: number) {
     this.date   = new Date().toISOString();
     this.total  = total;
     this.solved = solved;
+    this.level  = level;
   }
 
   static getAll() {
@@ -21,6 +23,7 @@ export default class HighScore {
       (a: HighScore, b: HighScore) =>
         b.total  - a.total  ||
         a.solved - b.solved ||
+        b.level  - a.level  ||
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
