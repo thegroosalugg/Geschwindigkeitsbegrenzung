@@ -76,7 +76,7 @@ const useGameController = () => {
   }
 
   function handleAnswer(choice: string) {
-    const isCorrect = choice === question.a;
+    const isCorrect = choice === question.ans;
     setUser((user) => User.update(user, choice, isCorrect, timeRemaining));
 
     if (timerPaused) resumeTimer();
