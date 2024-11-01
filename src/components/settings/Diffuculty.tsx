@@ -12,9 +12,9 @@ export default function DiffucultySelect() {
     <motion.section
        className={css['select']}
          animate='animate'
-      transition={{ staggerChildren: 0.2 }}
+      transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
     >
-      <motion.h2 variants={{ animate: { opacity: [0, 1], transition: { duration: 1 } } }}>
+      <motion.h2 animate={{ opacity: [0, 1], transition: { duration: 1.5, ease: 'easeIn' } }}>
         Schwierigkeitsgrad
       </motion.h2>
       <SelectButton level={1} state={{ isActive, setIsActive }} />

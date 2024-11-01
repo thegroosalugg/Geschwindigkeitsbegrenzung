@@ -22,10 +22,12 @@
     &.ranier {
       transform: scaleX(-1) translateY(-2px);
       border: 0.6px solid #000;
-      border-top-color: #838383;
-      border-bottom-color: #444444;
+      border-top-color: #838383be;
+      border-bottom-color: #444444c7;
       border-left-color: #6c6c6c;
       border-radius: 3px;
+      box-shadow: 1px 1px 2px #000;
+      background: linear-gradient(to bottom, #527288, #e8e8e8);
     }
   }
 

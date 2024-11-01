@@ -82,7 +82,7 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
         <motion.button
            onClick={() => throttleRefFn(timer.replay, 1000)}
           whileTap={{ scale: 1.2 }}
-        whileHover={isMobile ? {} : { scale: 1.2 }}
+        whileHover={isMobile ? {} : { scale: 1.1 }}
           variants={{ animate: { opacity: [0, 1], y: [-20, 0], transition: { duration: 0.6, type: 'easeIn' } } }}
         >
           Wiederholungsversuch
