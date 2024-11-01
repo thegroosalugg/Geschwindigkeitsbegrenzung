@@ -106,10 +106,10 @@ const useGameController = () => {
           start: startGame,
           pause: pauseTimer,
          replay: playAgain,
+         answer: handleAnswer,
     },
     user,
     question,
-    handleAnswer,
   };
 };
 

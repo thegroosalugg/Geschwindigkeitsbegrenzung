@@ -7,7 +7,7 @@ import Answers from '@/components/quiz/Answers';
 import GameOver from '@/components/quiz/GameOver';
 
 export default function GamePage() {
-  const { user, question, timer, handleAnswer } = useGameController();
+  const { user, question, timer } = useGameController();
 
   return (
     <AnimatePresence mode='wait'>
@@ -17,7 +17,7 @@ export default function GamePage() {
         <>
           <Questions key='question' timer={timer}             question={question} />
           <Score     key='score'    timer={timer} user={user}                     />
-          <Answers   key='answers'  timer={timer} user={user} question={question} handleAnswer={handleAnswer} />
+          <Answers   key='answers'  timer={timer} user={user} question={question} />
         </>
       ) : (
         <GameOver    key='gameover' timer={timer} user={user} />

@@ -9,10 +9,9 @@ interface AnswerProps {
       question: Question;
           user: User;
          timer: Timer;
-  handleAnswer: (choice: string) => void;
 }
 
-export default function Answers({ user, question, timer, handleAnswer }: AnswerProps) {
+export default function Answers({ user, question, timer }: AnswerProps) {
   const getButtonBackground = (choice: string, background: string) => {
     if (   !timer.isStopped   ) return background;
     if (choice ===  question.a) return '#6F8C2E'; // Green for the correct answer
@@ -38,7 +37,7 @@ export default function Answers({ user, question, timer, handleAnswer }: AnswerP
             transition: { duration: 0.5, ease: 'easeInOut', delay: 0.5 }
           }}
           disabled={timer.isStopped}
-          onClick={() => handleAnswer(choice)}
+          onClick={() => timer.answer(choice)}
           whileTap={{ scale: 1.1, transition: { type: 'spring', damping: 5, stiffness: 400 } }}
         >
           {choice}
