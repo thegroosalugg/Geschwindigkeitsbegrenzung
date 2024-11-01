@@ -43,10 +43,7 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
     : {};
 
   function clickHandler() {
-    if (hasItem && !timer.isStopped) {
-      timer.pause();
-      console.log('item used'); // *logData
-    }
+    if (hasItem && !timer.isStopped) timer.pause();
   }
 
   return (

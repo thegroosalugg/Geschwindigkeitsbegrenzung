@@ -6,7 +6,6 @@ const useGameController = () => {
   const          level = User.getDifficulty();
   const        maxTime = useRef(1000 * (20 - level * 5)); // 15 / 10 / 5 secs
   const      pauseTime = useRef(3000);
-  const  requiredScore = useRef(0);
   const       interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User(level));
   const [     question,      setQuestion] = useState(new Question());
@@ -44,7 +43,6 @@ const useGameController = () => {
   }
 
   const startTimer = useCallback(() => {
-    // console.log('TIMER STARTED', 'PAUSE TIME', pauseTime.current, 'timerPaused', timerPaused); // *logData
     setIsInitial(false)
     setTimerStopped(false);
 
@@ -60,15 +58,7 @@ const useGameController = () => {
         prevTimer -= 100;
 
         if (prevTimer <= 0) {
-          setUser((user) => ({
-              ...user,
-                lives: user.lives - 1,
-            isCorrect: false,
-               choice: '',
-                score:  0,
-               streak:  0,
-               penalty: 1,
-          }));
+          setUser((user) => User.update(user, '', false, prevTimer));
           stopTimer();
         }
 
@@ -81,45 +71,16 @@ const useGameController = () => {
     setTimeout(() => {
       setIsGameover(false);
       setUser(new User(level));
-      requiredScore.current = 0;
       startTimer();
     }, 700);
   }
 
   function handleAnswer(choice: string) {
-    const isCorrect = choice === question.a;
-    const { level } = user;
-    let { lives, solved, streak, penalty, score, total, item } = user;
+    const isCorrect = choice === question.ans;
+    setUser((user) => User.update(user, choice, isCorrect, timeRemaining));
 
-    if (isCorrect) {
-      solved += 1;
-      streak += 1;
-      score   = User.getScore(level, streak, penalty, timeRemaining)
-      total  += score;
-
-      const threshold = 100;
-      if (total > requiredScore.current + threshold) {
-        item = true;
-        requiredScore.current += threshold + solved + streak + level * 3;
-        console.log('Item check passed REQUIRED SCORE', requiredScore.current + threshold); // *logData
-      }
-
-    } else {
-      score   = 0;
-      streak  = 0;
-      lives  -= 1;
-    }
-
-    penalty = 1;
-
-    if (timerPaused) {
-      resumeTimer();
-    }
-
-    setUser({ level, choice, isCorrect, solved, streak, penalty, lives, score, total, item });
+    if (timerPaused) resumeTimer();
     stopTimer();
-    // console.log('USER ACTION', 'level', level, 'maxTime', maxTime.current); // *logData
-    // console.log('USER ACTION', { level, choice, isCorrect, solved, streak, penalty, lives, score, total, item }); // *logData
   }
 
   useEffect(() => {
@@ -130,7 +91,6 @@ const useGameController = () => {
       }, pauseTime.current);
 
       return () => clearTimeout(intervalTimer);
-
     }
   }, [timerStopped, timerPaused, gameover, startTimer]);
 
@@ -146,10 +106,10 @@ const useGameController = () => {
           start: startGame,
           pause: pauseTimer,
          replay: playAgain,
+         answer: handleAnswer,
     },
     user,
     question,
-    handleAnswer,
   };
 };
 

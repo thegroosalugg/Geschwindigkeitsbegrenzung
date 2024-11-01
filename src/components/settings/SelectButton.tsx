@@ -57,7 +57,7 @@ export default function SelectButton({ level, state }: ButtonProps) {
         {mode}
       </motion.span>
       {activeTab && <motion.div layoutId='difficulty' className={css['diffuclty-tab']} />}
-      <img src={`/${image}.png`} alt={`${image}`}     className={css[mode]} />
+      <img src={`/${image}.png`} alt={image}          className={css[mode]} />
     </motion.button>
   );
 }

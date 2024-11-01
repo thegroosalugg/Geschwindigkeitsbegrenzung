@@ -1,4 +1,4 @@
-export default class Timer {
+type Timer = {
           max: number;
     remaining: number;
     isInitial: boolean;
@@ -9,17 +9,7 @@ export default class Timer {
         start: () => void;
         pause: () => void;
        replay: () => void;
+       answer: (choice: string) => void;
+};
 
-  constructor() {
-    this.max         = 0
-    this.remaining   = 0
-    this.isInitial   = false;
-    this.isStarted   = false;
-    this.isPaused    = false;
-    this.isStopped   = false;
-    this.isGameover  = false;
-    this.start       = () => {};
-    this.pause       = () => {};
-    this.replay      = () => {};
-  }
-}
+export default Timer;

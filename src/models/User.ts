@@ -5,6 +5,7 @@ export default class User {
     penalty:  number;
       score:  number;
       total:  number;
+   reqScore:  number;
      solved:  number;
      streak:  number;
       level:  number;
@@ -17,6 +18,7 @@ export default class User {
     this.penalty   = 1;
     this.score     = 0;
     this.total     = 0;
+    this.reqScore  = 100;
     this.solved    = 0;
     this.streak    = 0;
     this.level     = level;
@@ -36,5 +38,35 @@ export default class User {
     const  baseScore = timeRemaining / divider; // 1: 30, 2: 40, 3: 50 max
     const multiplier = Math.min(streak * 0.1 + 0.9, 2) // 1.0 - 2.0
     return Math.round(baseScore * multiplier / penalty);
+  }
+
+  static update(user: User, choice: string, isCorrect: boolean, timeRemaining: number) {
+    const { level } = user;
+    let { lives, solved, streak, penalty, score, reqScore, total, item } = user;
+
+    if (isCorrect) {
+      solved += 1;
+      streak += 1;
+      score   = User.getScore(level, streak, penalty, timeRemaining)
+      total  += score;
+
+      if (total > reqScore) {
+        item = true;
+        reqScore += 100 + solved + streak + level * 3;
+        console.log('Item check passed REQUIRED SCORE', reqScore); // *logData
+      }
+
+    } else {
+      score   = 0;
+      streak  = 0;
+      lives  -= 1;
+    }
+
+    penalty = 1;
+
+    const updatedUser = { choice, isCorrect, item, penalty, score, total, reqScore, solved, streak, level, lives };
+    console.log('UPDATE USER', updatedUser); // *logData
+
+    return updatedUser;
   }
 }

@@ -10,7 +10,7 @@ interface QuestionProps {
 }
 
 export default function Questions({ question, timer }: QuestionProps) {
-  const quesArray = question.q.split('___');
+  const questParts = question.body.split('___');
   const { isInitial, isStopped, isPaused, max, remaining } = timer;
 
   return (
@@ -44,7 +44,7 @@ export default function Questions({ question, timer }: QuestionProps) {
                 background: isPaused ? '#3A6D8C' : '#e6e6e6'
               }}
             >
-              {quesArray[0]}
+              {questParts[0]}
               <AnimatePresence mode='wait'>
                 <motion.span
                       key={isStopped + ''}
@@ -57,10 +57,10 @@ export default function Questions({ question, timer }: QuestionProps) {
                     transition: { delay: isPaused ? 0 : 0.3 },
                   }}
                 >
-                  {isStopped ? question.a : '_____'}
+                  {isStopped ? question.ans : '_____'}
                 </motion.span>
               </AnimatePresence>
-              {quesArray[1]}
+              {questParts[1]}
             </motion.h1>
             {/* offset animation time from progress timer */}
             <progress value={remaining} max={max - 500} />
