@@ -22,7 +22,7 @@ export default class User {
     this.solved    = 0;
     this.streak    = 0;
     this.level     = level;
-    this.lives     = Math.floor(10 / level); // einfash: 10, mittel: 5, schwer: 3
+    this.lives     = Math.min(Math.floor(10 / level), 7); // einfash: 7, mittel: 5, schwer: 3
   }
 
   static setDifficulty(level: number) {
