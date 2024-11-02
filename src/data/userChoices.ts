@@ -1,21 +1,16 @@
 export const userChoices = [
-  { choice: 'an',    background: '#d8d1d1' }, // at, on
-  { choice: 'auf',   background: '#7fb2df' }, // on, upon
-  { choice: 'aus',   background: '#02b6ca' }, // from, out of
-  { choice: 'bei',   background: '#c4bfbf' }, // at, near, with
-  { choice: 'bis',   background: '#72a1c9' }, // until
-  { choice: 'durch', background: '#00a0b2' }, // through
-  { choice: 'für',   background: '#aaa9a9' }, // for
-  { choice: 'gegen', background: '#638baf' }, // against
-  { choice: 'in',    background: '#008796' }, // in, into
-  { choice: 'mit',   background: '#858484' }, // with
-  { choice: 'nach',  background: '#517290' }, // after, to
-  { choice: 'ohne',  background: '#007b89' }, // without
-  { choice: 'seit',  background: '#6c6c6c' }, // since, for (time)
-  { choice: 'über',  background: '#46627d' }, // over, about
-  { choice: 'unter', background: '#015761' }, // under
-  { choice: 'um',    background: '#515253' }, // around, at (time)
-  { choice: 'von',   background: '#34495E' }, // from, of
-  { choice: 'vor',   background: '#003C43' }, // before, in front of
-  { choice: 'zu',    background: '#394047' }, // to
+  { choice: 'an',    background: '#927cbf' }, // at, on
+  { choice: 'auf',   background: '#9f8ac9' }, // on, upon
+  { choice: 'aus',   background: '#9682be' }, // from, out of
+  { choice: 'bei',   background: '#816da8' }, // at, near, with
+  { choice: 'für',   background: '#907db7' }, // for
+  { choice: 'in',    background: '#8d7db0' }, // in, into
+  { choice: 'mit',   background: '#766599' }, // with
+  { choice: 'über',  background: '#8271a5' }, // over, about
+  { choice: 'um',    background: '#8375a2' }, // around, at (time)
+  { choice: 'von',   background: '#665785' }, // from, of
+  { choice: 'vor',   background: '#70628f' }, // before, in front of
+  { choice: 'zu',    background: '#71658d' }, // to
+  { choice: 'nach',  background: '#605678' }, // after, to
+  { choice: 'gegen', background: '#605678' }, // against
 ];
