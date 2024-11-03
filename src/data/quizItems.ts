@@ -1,17 +1,3 @@
-// ***SEPARABLE
-// abhängen von + Dat
-// aufpassen auf + Akk
-// hinweisen auf + Akk
-// nachdenken über + Akk
-// teilnehmen an + Dat
-// umgehen mit + Dat
-
-// ***SEPARABLE && REFLEXIVE
-// aufregen sich über + Akk
-// auskennen sich mit + Dat
-// einarbeiten sich in + Akk
-// vorbereiten sich auf + Akk
-
 // ***STATIVE
 // eifersüchtig sein auf + Akk
 // einverstanden sein mit + Dat
@@ -133,16 +119,20 @@ type Verb = {
      body: string;
      prep: string;
      case: string;
+     end?: string;
   reflex?: boolean;
     //  mod?: { e?: string, st?: string, t?: string, en?: string };
      mod?: object;
 }
 
-const reflex = true;
-const    mod = { st: 'est', t: 'et', Ihr: 'et' };
+const     reflex = true;
+const        mod =            { st: 'est',   t: 'et',                Ihr: 'et'   };
+const   zweifeln = { e: 'le',   st: 'elst',  t: 'elt',  en: 'eln'                };
+const  verlassen = { e: 'asse', st: 'ässt',  t: 'ässt', en: 'assen', Ihr: 'asst' };
+const teilNehmen = { e: 'ehme', st: 'immst', t: 'immt', en: 'ehmen', Ihr: 'ehmt' };
 // prettier-ignore
 const verbs = [
-  // REGULAR VERBS
+  // ***REGULAR VERBS
   { body: 'beginn'/*en*/,      prep: 'mit',   case: 'dat' },
   { body: 'bericht'/*en*/,     prep: 'von',   case: 'dat', mod },
   { body: 'besteh'/*en*/,      prep: 'aus',   case: 'dat' },
@@ -163,8 +153,8 @@ const verbs = [
   { body: 'such'/*en*/,        prep: 'nach',  case: 'dat' },
   { body: 'träum'/*en*/,       prep: 'von',   case: 'dat' },
   { body: 'wart'/*en*/,        prep: 'auf',   case: 'akk', mod },
-  { body: 'zweif'/*eln*/,      prep: 'an',    case: 'dat', mod: { e: 'le', st: 'elst', t: 'elt', en: 'eln' } },
-  // REFLEXIVE VERBS
+  { body: 'zweif'/*eln*/,      prep: 'an',    case: 'dat', mod: zweifeln },
+  // ***REFLEXIVE VERBS
   { body: 'amüsier'/*en*/,     prep: 'über',  case: 'akk', reflex },
   { body: 'ängstig'/*en*/,     prep: 'vor',   case: 'dat', reflex },
   // { body: 'bedank'/*en*/,      prep: 'für',   case: 'akk', reflex },
@@ -193,11 +183,23 @@ const verbs = [
   // { body: 'streit'/*en*/,      prep: 'mit',   case: 'dat', reflex },
   { body: 'trenn'/*en*/,       prep: 'von',   case: 'dat', reflex },
   { body: 'verlieb'/*en*/,     prep: 'in',    case: 'akk', reflex },
-  { body: 'verl'/*assen*/,     prep: 'auf',   case: 'akk', reflex, mod: { e: 'asse', st: 'ässt', t: 'ässt', en: 'assen', Ihr: 'asst' } },
+  { body: 'verl'/*assen*/,     prep: 'auf',   case: 'akk', reflex, mod: verlassen },
   { body: 'wend'/*en*/,        prep: 'an',    case: 'akk', reflex, mod },
   { body: 'überred'/*en*/,     prep: 'zu',    case: 'dat', reflex, mod },
   { body: 'überzeug'/*en*/,    prep: 'von',   case: 'dat', reflex },
   { body: 'warn'/*en*/,        prep: 'vor',   case: 'dat', reflex },
+  // ***SEPARABLE VERBS
+  { body: 'häng'/*en*/,        prep: 'von',   case: 'dat', end: 'ab' },
+  { body: 'pass'/*en*/,        prep: 'auf',   case: 'akk', end: 'auf' },
+  { body: 'weis'/*en*/,        prep: 'auf',   case: 'akk', end: 'hin' },
+  { body: 'denk'/*en*/,        prep: 'über',  case: 'akk', end: 'nach' },
+  { body: 'n'/*ehmen*/,        prep: 'an',    case: 'dat', end: 'teil', mod: teilNehmen },
+  { body: 'geh'/*en*/,         prep: 'mit',   case: 'dat', end: 'um' },
+  // ***SEPARABLE REFLEXIVE VERBS
+  { body: 'reg'/*en*/,         prep: 'über',  case: 'akk', end: 'auf', reflex },
+  { body: 'kenn'/*en*/,        prep: 'mit',   case: 'dat', end: 'aus', reflex },
+  { body: 'arbeit'/*en*/,      prep: 'in',    case: 'akk', end: 'ein', reflex, mod },
+  { body: 'bereit'/*en*/,      prep: 'auf',   case: 'akk', end: 'vor', reflex, mod},
 ];
 
 const reflexes = {
@@ -246,7 +248,9 @@ const question = () => {
   const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
   const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
 
-  return `${subject.body} ${verb.body} ${verb.reflex} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
+  return `${subject.body} ${verb.body} ${verb.reflex} ${adverb} ${
+    verb.prep
+  } ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
 };
 
 for (let i = 0; i < 7; i++) {

@@ -7,6 +7,7 @@ type Verb = {
      body: string;
      prep: string;
      case: string;
+     end?: string;
   reflex?: boolean;
      mod?: object;
     //  mod?: { e?: string, st?: string, t?: string, en?: string };
@@ -56,7 +57,9 @@ export default class Question {
     const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
     const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
 
-    const body = `${subject.body} ${verb.body} ${verb.reflex} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
+    const body = `${subject.body} ${verb.body} ${
+      verb.reflex
+    } ${adverb} ___ ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
     return { body, ans: verb.prep };
   };
 }
