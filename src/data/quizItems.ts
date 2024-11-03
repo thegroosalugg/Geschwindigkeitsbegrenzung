@@ -10,59 +10,7 @@
 // aufregen sich über + Akk
 // auskennen sich mit + Dat
 // einarbeiten sich in + Akk
-
-// ***REFLEXIVE
-// amüsieren sich über + Akk
-// ängstigen sich vor + Dat
-// bedanken sich für + Akk && bei + Dat
-// beschäftigen sich mit + Dat
-// beklagen sich bei + Dat && über + Akk
-// bemühen sich um + Akk
-// beschweren sich bei + Dat
-// bewerben sich um + Akk
-// einigen sich auf + Akk
-// engagieren sich für + Akk
-// entschließen sich zu + Dat
-// entschuldigen sich bei + Dat
-// erinnern sich an + Akk
-// erkundigen sich nach && bei + Dat
-// freuen sich auf && über + Akk
-// fürchten sich vor + Dat
-// interessieren sich für + Akk
-// konzentrieren sich auf + Akk
-// kümmern sich um + Akk
-// sehnen sich nach + Dat
-// streiten sich um + Akk && mit + Dat
-// trennen sich von + Dat
-// verlieben sich in + Akk
-// verlassen sich auf + Akk
 // vorbereiten sich auf + Akk
-// wenden sich an + Akk
-// ***REFLEXIVE AT OBJECT
-// überreden sich zu + Dat
-// überzeugen sich von + Dat
-// warnen sich vor + Dat
-
-// ***REGULAR
-// beginnen mit + Dat
-// berichten von + Dat
-// bestehen aus + Dat
-// bitten um + Akk
-// denken an + Akk
-// erkennen an + Dat
-// fragen nach + Dat
-// glauben an + Akk
-// hoffen auf + Akk
-// kämpfen für && um && gegen + Akk
-// protestieren gegen + Akk
-// rechnen mit + Dat
-// riechen nach + Dat
-// schmecken nach +	Dat
-// sorgen für + Akk
-// suchen nach + Dat
-// traümen von + Dat
-// warten auf + Akk
-// zweifeln an + Dat
 
 // ***STATIVE
 // eifersüchtig sein auf + Akk
@@ -179,30 +127,77 @@ const objects = [
   { body: 'Kollegen',     gend: 'p' }
 ];
 
+const reflex = true;
+const   mod = { st: 'est', t: 'et' };
 // prettier-ignore
-const regVerbs = [
-  { body: 'beginn'/*en*/,     prep: 'mit',   case: 'dat' },
-  { body: 'bericht'/*en*/,    prep: 'von',   case: 'dat', mod: { st: 'est', t: 'et' } },
-  { body: 'besteh'/*en*/,     prep: 'aus',   case: 'dat' },
-  { body: 'bitt'/*en*/,       prep: 'um',    case: 'akk', mod: { st: 'est', t: 'et' } },
-  { body: 'denk'/*en*/,       prep: 'an',    case: 'akk' },
-  { body: 'erkenn'/*en*/,     prep: 'an',    case: 'dat' },
-  { body: 'frag'/*en*/,       prep: 'nach',  case: 'dat' },
-  { body: 'glaub'/*en*/,      prep: 'an',    case: 'akk' },
-  { body: 'hoff'/*en*/,       prep: 'auf',   case: 'akk' },
-  // { body: 'kämpfen',          prep: 'für',   case: 'akk' },
-  // { body: 'kämpfen',          prep: 'gegen', case: 'akk' },
-  // { body: 'kämpfen',          prep: 'um',    case: 'akk' },
-  { body: 'protestier'/*en*/, prep: 'gegen', case: 'akk' },
-  { body: 'rechn'/*en*/,      prep: 'mit',   case: 'dat', mod: { st: 'est', t: 'et' } },
-  { body: 'riech'/*en*/,      prep: 'nach',  case: 'dat' },
-  { body: 'schmeck'/*en*/,    prep: 'nach',  case: 'dat' },
-  { body: 'sorg'/*en*/,       prep: 'für',   case: 'akk' },
-  { body: 'such'/*en*/,       prep: 'nach',  case: 'dat' },
-  { body: 'träum'/*en*/,      prep: 'von',   case: 'dat' },
-  { body: 'wart'/*en*/,       prep: 'auf',   case: 'akk', mod: { st: 'est', t: 'et' } },
-  { body: 'zweif'/*eln*/,     prep: 'an',    case: 'dat', mod: { e: 'le', st: 'elst', t: 'elt', en: 'eln' } },
+const verbs = [
+  // REGULAR VERBS
+  { body: 'beginn'/*en*/,      prep: 'mit',   case: 'dat' },
+  { body: 'bericht'/*en*/,     prep: 'von',   case: 'dat', mod },
+  { body: 'besteh'/*en*/,      prep: 'aus',   case: 'dat' },
+  { body: 'bitt'/*en*/,        prep: 'um',    case: 'akk', mod },
+  { body: 'denk'/*en*/,        prep: 'an',    case: 'akk' },
+  { body: 'erkenn'/*en*/,      prep: 'an',    case: 'dat' },
+  { body: 'frag'/*en*/,        prep: 'nach',  case: 'dat' },
+  { body: 'glaub'/*en*/,       prep: 'an',    case: 'akk' },
+  { body: 'hoff'/*en*/,        prep: 'auf',   case: 'akk' },
+  // { body: 'kämpfen',           prep: 'für',   case: 'akk' },
+  // { body: 'kämpfen',           prep: 'gegen', case: 'akk' },
+  // { body: 'kämpfen',           prep: 'um',    case: 'akk' },
+  { body: 'protestier'/*en*/,  prep: 'gegen', case: 'akk' },
+  { body: 'rechn'/*en*/,       prep: 'mit',   case: 'dat', mod },
+  { body: 'riech'/*en*/,       prep: 'nach',  case: 'dat' },
+  { body: 'schmeck'/*en*/,     prep: 'nach',  case: 'dat' },
+  { body: 'sorg'/*en*/,        prep: 'für',   case: 'akk' },
+  { body: 'such'/*en*/,        prep: 'nach',  case: 'dat' },
+  { body: 'träum'/*en*/,       prep: 'von',   case: 'dat' },
+  { body: 'wart'/*en*/,        prep: 'auf',   case: 'akk', mod },
+  { body: 'zweif'/*eln*/,      prep: 'an',    case: 'dat', mod: { e: 'le', st: 'elst', t: 'elt', en: 'eln' } },
+  // REFLEXIVE VERBS
+  { body: 'amüsier'/*en*/,     prep: 'über',  case: 'akk', reflex },
+  { body: 'ängstig'/*en*/,     prep: 'vor',   case: 'dat', reflex },
+  // { body: 'bedank'/*en*/,      prep: 'für',   case: 'akk', reflex },
+  // { body: 'bedank'/*en*/,      prep: 'bei',   case: 'dat', reflex },
+  { body: 'beschäftig'/*en*/,  prep: 'mit',   case: 'dat', reflex },
+  // { body: 'beklag'/*en*/,      prep: 'bei',   case: 'dat', reflex },
+  // { body: 'beklag'/*en*/,      prep: 'über',  case: 'akk', reflex },
+  { body: 'bemüh'/*en*/,       prep: 'um',    case: 'akk', reflex },
+  { body: 'beschwer'/*en*/,    prep: 'bei',   case: 'dat', reflex },
+  { body: 'bewerb'/*en*/,      prep: 'um',    case: 'akk', reflex },
+  { body: 'einig'/*en*/,       prep: 'auf',   case: 'akk', reflex },
+  { body: 'engagier'/*en*/,    prep: 'für',   case: 'akk', reflex },
+  { body: 'entschließ'/*en*/,  prep: 'zu',    case: 'dat', reflex, mod: { st: 'ßt' } },
+  { body: 'entschuldig'/*en*/, prep: 'bei',   case: 'dat', reflex },
+  { body: 'erinner'/*n*/,      prep: 'an',    case: 'akk', reflex },
+  // { body: 'erkundig'/*en*/,    prep: 'nach',  case: 'dat', reflex },
+  // { body: 'erkundig'/*en*/,    prep: 'bei',   case: 'dat', reflex },
+  // { body: 'freu'/*en*/,        prep: 'auf',   case: 'akk', reflex },
+  // { body: 'freu'/*en*/,        prep: 'über',  case: 'akk', reflex },
+  { body: 'fürcht'/*en*/,      prep: 'vor',   case: 'dat', reflex, mod },
+  { body: 'interessier'/*en*/, prep: 'für',   case: 'akk', reflex },
+  { body: 'konzentrier'/*en*/, prep: 'auf',   case: 'akk', reflex },
+  { body: 'kümmer'/*n*/,       prep: 'um',    case: 'akk', reflex },
+  { body: 'sehn'/*en*/,        prep: 'nach',  case: 'dat', reflex },
+  // { body: 'streit'/*en*/,      prep: 'um',    case: 'akk', reflex },
+  // { body: 'streit'/*en*/,      prep: 'mit',   case: 'dat', reflex },
+  { body: 'trenn'/*en*/,       prep: 'von',   case: 'dat', reflex },
+  { body: 'verlieb'/*en*/,     prep: 'in',    case: 'akk', reflex },
+  // { body: 'verlass'/*en*/,     prep: 'auf',   case: 'akk', reflex }, // to be continued
+  // { body: 'verl'/*assen*/,     prep: 'auf',   case: 'akk', reflex, mod: { e: 'asse', st: 'ässt', t: 'ässt', en: 'assen' } },
+  { body: 'wend'/*en*/,        prep: 'an',    case: 'akk', reflex, mod },
+  { body: 'überred'/*en*/,     prep: 'zu',    case: 'dat', reflex, mod },
+  { body: 'überzeug'/*en*/,    prep: 'von',   case: 'dat', reflex },
+  { body: 'warn'/*en*/,        prep: 'vor',   case: 'dat', reflex },
 ];
+
+const reflexes = {
+  e:   'mich',
+  st:  'dich',
+  t:   'sich',
+  en:  'sich',
+  Wir: 'uns',
+  Ihr: 'euch',
+}
 
 const rand = (max: number) => Math.floor(Math.random() * max);
 
@@ -226,16 +221,26 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
 const question = () => {
   const    subject = subjects[rand(subjects.length)];
   const     object =  objects[rand( objects.length)];
-  const       verb = regVerbs[rand(regVerbs.length)];
+  const       verb =    verbs[rand(   verbs.length)];
   const     adverb =  adverbs[rand( adverbs.length)];
   const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
   const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
   const     modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
   const modifyVerb = verb.body + (modEnd ? modEnd : subject.end);
+  const     reflex = verb.reflex
+    ? reflexes[
+        (['Wir', 'Ihr'].includes(subject.body)
+          ? subject.body
+          : subject.end) as keyof typeof reflexes
+      ]
+    : '';
 
-  return `${subject.body} ${modifyVerb} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
+  return `${subject.body} ${modifyVerb} ${reflex} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
 };
 
-console.log(question());
+for (let i = 0; i < 7; i++) {
+  console.log(question());
+}
 
-export { subjects, objects, regVerbs, adverbs, adjectives, possessives };
+
+export { subjects, objects, verbs, reflexes, adverbs, adjectives, possessives };

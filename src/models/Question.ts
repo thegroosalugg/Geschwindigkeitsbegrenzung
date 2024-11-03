@@ -1,4 +1,4 @@
-import { subjects, objects, regVerbs, adverbs, adjectives, possessives } from '@/data/quizItems';
+import { subjects, objects, verbs, reflexes, adverbs, adjectives, possessives } from '@/data/quizItems';
 import rand from '@/util/rand';
 
 const getAdjective = (adj: string, CASE: string, gend: string) =>
@@ -30,14 +30,21 @@ export default class Question {
   static random() {
     const    subject = subjects[rand(subjects.length)];
     const     object =  objects[rand( objects.length)];
-    const       verb = regVerbs[rand(regVerbs.length)];
+    const       verb =    verbs[rand(   verbs.length)];
     const     adverb =  adverbs[rand( adverbs.length)];
     const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
     const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
     const     modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
     const modifyVerb = verb.body + (modEnd ? modEnd : subject.end);
+    const     reflex = verb.reflex
+      ? reflexes[
+          (['Wir', 'Ihr'].includes(subject.body)
+            ? subject.body
+            : subject.end) as keyof typeof reflexes
+        ]
+      : '';
 
-    const body = `${subject.body} ${modifyVerb} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
+    const body = `${subject.body} ${modifyVerb} ${reflex} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
     return { body, ans: verb.prep };
   };
 }
