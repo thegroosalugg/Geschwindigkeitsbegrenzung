@@ -8,7 +8,8 @@ type Verb = {
      prep: string;
      case: string;
   reflex?: boolean;
-     mod?: { e?: string, st?: string, t?: string, en?: string };
+     mod?: object;
+    //  mod?: { e?: string, st?: string, t?: string, en?: string };
 }
 
 const getAdjective = (adj: string, CASE: string, gend: string) =>
@@ -29,15 +30,11 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
 }
 
 const getVerb = (verb: Verb, subject: Subject) => {
-  const modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
+  const modKey = subject.body === 'Ihr' ? 'Ihr' : subject.end;
+  const modEnd = verb.mod?.[modKey as keyof typeof verb.mod];
   const   body = verb.body + (modEnd ? modEnd : subject.end);
-  const reflex = verb.reflex
-    ? reflexes[
-        (['Wir', 'Ihr'].includes(subject.body)
-          ? subject.body
-          : subject.end) as keyof typeof reflexes
-      ]
-    : '';
+  const refKey = ['Wir', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
+  const reflex = verb.reflex ? reflexes[refKey as keyof typeof reflexes] : '';
 
   return { ...verb, body, reflex };
 }

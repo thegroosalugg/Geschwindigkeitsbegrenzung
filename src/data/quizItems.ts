@@ -134,11 +134,12 @@ type Verb = {
      prep: string;
      case: string;
   reflex?: boolean;
-     mod?: { e?: string, st?: string, t?: string, en?: string };
+    //  mod?: { e?: string, st?: string, t?: string, en?: string };
+     mod?: object;
 }
 
 const reflex = true;
-const    mod = { st: 'est', t: 'et' };
+const    mod = { st: 'est', t: 'et', Ihr: 'et' };
 // prettier-ignore
 const verbs = [
   // REGULAR VERBS
@@ -192,8 +193,7 @@ const verbs = [
   // { body: 'streit'/*en*/,      prep: 'mit',   case: 'dat', reflex },
   { body: 'trenn'/*en*/,       prep: 'von',   case: 'dat', reflex },
   { body: 'verlieb'/*en*/,     prep: 'in',    case: 'akk', reflex },
-  // { body: 'verlass'/*en*/,     prep: 'auf',   case: 'akk', reflex }, // to be continued
-  // { body: 'verl'/*assen*/,     prep: 'auf',   case: 'akk', reflex, mod: { e: 'asse', st: 'ässt', t: 'ässt', en: 'assen' } },
+  { body: 'verl'/*assen*/,     prep: 'auf',   case: 'akk', reflex, mod: { e: 'asse', st: 'ässt', t: 'ässt', en: 'assen', Ihr: 'asst' } },
   { body: 'wend'/*en*/,        prep: 'an',    case: 'akk', reflex, mod },
   { body: 'überred'/*en*/,     prep: 'zu',    case: 'dat', reflex, mod },
   { body: 'überzeug'/*en*/,    prep: 'von',   case: 'dat', reflex },
@@ -229,15 +229,11 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
 }
 
 const getVerb = (verb: Verb, subject: Subject) => {
-  const modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
+  const modKey = subject.body === 'Ihr' ? 'Ihr' : subject.end;
+  const modEnd = verb.mod?.[modKey as keyof typeof verb.mod];
   const   body = verb.body + (modEnd ? modEnd : subject.end);
-  const reflex = verb.reflex
-    ? reflexes[
-        (['Wir', 'Ihr'].includes(subject.body)
-          ? subject.body
-          : subject.end) as keyof typeof reflexes
-      ]
-    : '';
+  const refKey = ['Wir', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
+  const reflex = verb.reflex ? reflexes[refKey as keyof typeof reflexes] : '';
 
   return { ...verb, body, reflex };
 }
