@@ -12,6 +12,7 @@ interface QuestionProps {
 export default function Questions({ question, timer }: QuestionProps) {
   const questParts = question.body.split('___');
   const { isInitial, isStopped, isPaused, max, remaining } = timer;
+  const longString =  question.ans.length > 4;
 
   return (
     <motion.div
@@ -48,7 +49,10 @@ export default function Questions({ question, timer }: QuestionProps) {
               <AnimatePresence mode='wait'>
                 <motion.span
                       key={isStopped + ''}
-                    style={{ minWidth: 72 }}
+                    style={{
+                      minWidth: longString ? 90 : 72,
+                      fontSize: longString ? '1.7rem' : '1.8.rem',
+                    }}
                   initial={{ opacity: 0 }}
                      exit={{ opacity: 0 }}
                   animate={{
