@@ -6,15 +6,15 @@ export default class Question {
     id: string;
   body: string;
    ans: string;
-   eng: string;
-    ru: string;
+  //  eng: string;
+    // ru: string;
 
   constructor() {
     this.id   = '';
     this.body = '';
     this.ans  = '';
-    this.eng  = '';
-    this.ru   = '';
+    // this.eng  = '';
+    // this.ru   = '';
   }
 
   static random() {
