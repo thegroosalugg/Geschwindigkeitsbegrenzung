@@ -34,7 +34,8 @@ export default class Question {
     const     adverb =  adverbs[rand( adverbs.length)];
     const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
     const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
-    const modifyVerb = verb.verb + (verb.mod && ['t', 'st'].includes(subject.end) ? verb.mod : '') + subject.end;
+    const     modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
+    const modifyVerb = verb.body + (modEnd ? modEnd : subject.end);
 
     const body = `${subject.body} ${modifyVerb} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
     return { body, ans: verb.prep };

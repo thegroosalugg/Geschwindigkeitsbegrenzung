@@ -181,27 +181,27 @@ const objects = [
 
 // prettier-ignore
 const regVerbs = [
-  { verb: 'beginn'/*en*/,     prep: 'mit',   case: 'dat' },
-  { verb: 'bericht'/*en*/,    prep: 'von',   case: 'dat', mod: 'e' }, // add E
-  { verb: 'besteh'/*en*/,     prep: 'aus',   case: 'dat' },
-  { verb: 'bitt'/*en*/,       prep: 'um',    case: 'akk', mod: 'e' }, // E
-  { verb: 'denk'/*en*/,       prep: 'an',    case: 'akk' },
-  { verb: 'erkenn'/*en*/,     prep: 'an',    case: 'dat' },
-  { verb: 'frag'/*en*/,       prep: 'nach',  case: 'dat' },
-  { verb: 'glaub'/*en*/,      prep: 'an',    case: 'akk' },
-  { verb: 'hoff'/*en*/,       prep: 'auf',   case: 'akk' },
-  // { verb: 'kämpfen',       prep: 'für',   case: 'akk' },
-  // { verb: 'kämpfen',       prep: 'gegen', case: 'akk' },
-  // { verb: 'kämpfen',       prep: 'um',    case: 'akk' },
-  { verb: 'protestier'/*en*/, prep: 'gegen', case: 'akk' },
-  { verb: 'rechn'/*en*/,      prep: 'mit',   case: 'dat', mod: 'e' }, // E
-  { verb: 'riech'/*en*/,      prep: 'nach',  case: 'dat' },
-  { verb: 'schmeck'/*en*/,    prep: 'nach',  case: 'dat' },
-  { verb: 'sorg'/*en*/,       prep: 'für',   case: 'akk' },
-  { verb: 'such'/*en*/,       prep: 'nach',  case: 'dat' },
-  { verb: 'träum'/*en*/,      prep: 'von',   case: 'dat' },
-  { verb: 'wart'/*en*/,       prep: 'auf',   case: 'akk' },
-  // { verb: 'zweifel'/*n*/,     prep: 'an',    case: 'dat' }, // fix later
+  { body: 'beginn'/*en*/,     prep: 'mit',   case: 'dat' },
+  { body: 'bericht'/*en*/,    prep: 'von',   case: 'dat', mod: { st: 'est', t: 'et' } },
+  { body: 'besteh'/*en*/,     prep: 'aus',   case: 'dat' },
+  { body: 'bitt'/*en*/,       prep: 'um',    case: 'akk', mod: { st: 'est', t: 'et' } },
+  { body: 'denk'/*en*/,       prep: 'an',    case: 'akk' },
+  { body: 'erkenn'/*en*/,     prep: 'an',    case: 'dat' },
+  { body: 'frag'/*en*/,       prep: 'nach',  case: 'dat' },
+  { body: 'glaub'/*en*/,      prep: 'an',    case: 'akk' },
+  { body: 'hoff'/*en*/,       prep: 'auf',   case: 'akk' },
+  // { body: 'kämpfen',          prep: 'für',   case: 'akk' },
+  // { body: 'kämpfen',          prep: 'gegen', case: 'akk' },
+  // { body: 'kämpfen',          prep: 'um',    case: 'akk' },
+  { body: 'protestier'/*en*/, prep: 'gegen', case: 'akk' },
+  { body: 'rechn'/*en*/,      prep: 'mit',   case: 'dat', mod: { st: 'est', t: 'et' } },
+  { body: 'riech'/*en*/,      prep: 'nach',  case: 'dat' },
+  { body: 'schmeck'/*en*/,    prep: 'nach',  case: 'dat' },
+  { body: 'sorg'/*en*/,       prep: 'für',   case: 'akk' },
+  { body: 'such'/*en*/,       prep: 'nach',  case: 'dat' },
+  { body: 'träum'/*en*/,      prep: 'von',   case: 'dat' },
+  { body: 'wart'/*en*/,       prep: 'auf',   case: 'akk', mod: { st: 'est', t: 'et' } },
+  { body: 'zweif'/*eln*/,     prep: 'an',    case: 'dat', mod: { e: 'le', st: 'elst', t: 'elt', en: 'eln' } },
 ];
 
 const rand = (max: number) => Math.floor(Math.random() * max);
@@ -230,7 +230,8 @@ const question = () => {
   const     adverb =  adverbs[rand( adverbs.length)];
   const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
   const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
-  const modifyVerb = verb.verb + (verb.mod && ['t', 'st'].includes(subject.end) ? verb.mod : '') + subject.end;
+  const     modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
+  const modifyVerb = verb.body + (modEnd ? modEnd : subject.end);
 
   return `${subject.body} ${modifyVerb} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
 };
