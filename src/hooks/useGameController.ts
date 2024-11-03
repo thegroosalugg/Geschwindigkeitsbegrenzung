@@ -4,7 +4,7 @@ import Question from '@/models/Question';
 
 const useGameController = () => {
   const          level = User.getDifficulty();
-  const        maxTime = useRef(1000 * (20 - level * 5)); // 15 / 10 / 5 secs
+  const        maxTime = useRef(1000 * (14 - 3 * level)); // 11 / 8 / 5 secs
   const      pauseTime = useRef(3000);
   const       interval = useRef<number | undefined>(undefined);
   const [         user,          setUser] = useState(new User(level));
