@@ -29,6 +29,8 @@
 // helfen jemandem bei + Dat
 // passen zu + Dat
 
+type Subject = { body: string, end: string };
+
 // prettier-ignore
 const subjects = [
   { body: 'Ich',            end: 'e'  },
@@ -127,8 +129,16 @@ const objects = [
   { body: 'Kollegen',     gend: 'p' }
 ];
 
+type Verb = {
+     body: string;
+     prep: string;
+     case: string;
+  reflex?: boolean;
+     mod?: { e?: string, st?: string, t?: string, en?: string };
+}
+
 const reflex = true;
-const   mod = { st: 'est', t: 'et' };
+const    mod = { st: 'est', t: 'et' };
 // prettier-ignore
 const verbs = [
   // REGULAR VERBS
@@ -218,16 +228,10 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
   return possesive + ending;
 }
 
-const question = () => {
-  const    subject = subjects[rand(subjects.length)];
-  const     object =  objects[rand( objects.length)];
-  const       verb =    verbs[rand(   verbs.length)];
-  const     adverb =  adverbs[rand( adverbs.length)];
-  const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
-  const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
-  const     modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
-  const modifyVerb = verb.body + (modEnd ? modEnd : subject.end);
-  const     reflex = verb.reflex
+const getVerb = (verb: Verb, subject: Subject) => {
+  const modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
+  const   body = verb.body + (modEnd ? modEnd : subject.end);
+  const reflex = verb.reflex
     ? reflexes[
         (['Wir', 'Ihr'].includes(subject.body)
           ? subject.body
@@ -235,12 +239,22 @@ const question = () => {
       ]
     : '';
 
-  return `${subject.body} ${modifyVerb} ${reflex} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
+  return { ...verb, body, reflex };
+}
+
+const question = () => {
+  const    subject = subjects[rand(subjects.length)];
+  const     object =  objects[rand( objects.length)];
+  const     adverb =  adverbs[rand( adverbs.length)];
+  const       verb =      getVerb(      verbs[rand(    verbs.length)],  subject);
+  const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
+  const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+
+  return `${subject.body} ${verb.body} ${verb.reflex} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
 };
 
 for (let i = 0; i < 7; i++) {
   console.log(question());
 }
-
 
 export { subjects, objects, verbs, reflexes, adverbs, adjectives, possessives };

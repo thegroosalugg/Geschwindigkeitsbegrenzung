@@ -1,6 +1,16 @@
 import { subjects, objects, verbs, reflexes, adverbs, adjectives, possessives } from '@/data/quizItems';
 import rand from '@/util/rand';
 
+type Subject = { body: string, end: string };
+
+type Verb = {
+     body: string;
+     prep: string;
+     case: string;
+  reflex?: boolean;
+     mod?: { e?: string, st?: string, t?: string, en?: string };
+}
+
 const getAdjective = (adj: string, CASE: string, gend: string) =>
   adj + (CASE === 'dat' || gend === 'm' ? 'en' : gend === 'n' ? 'es' : 'e');
 
@@ -18,6 +28,20 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
   return possesive + ending;
 }
 
+const getVerb = (verb: Verb, subject: Subject) => {
+  const modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
+  const   body = verb.body + (modEnd ? modEnd : subject.end);
+  const reflex = verb.reflex
+    ? reflexes[
+        (['Wir', 'Ihr'].includes(subject.body)
+          ? subject.body
+          : subject.end) as keyof typeof reflexes
+      ]
+    : '';
+
+  return { ...verb, body, reflex };
+}
+
 export default class Question {
   body: string;
    ans: string;
@@ -30,21 +54,12 @@ export default class Question {
   static random() {
     const    subject = subjects[rand(subjects.length)];
     const     object =  objects[rand( objects.length)];
-    const       verb =    verbs[rand(   verbs.length)];
     const     adverb =  adverbs[rand( adverbs.length)];
+    const       verb =      getVerb(      verbs[rand(    verbs.length)],  subject);
     const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
     const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
-    const     modEnd = verb.mod?.[subject.end as keyof typeof verb.mod]
-    const modifyVerb = verb.body + (modEnd ? modEnd : subject.end);
-    const     reflex = verb.reflex
-      ? reflexes[
-          (['Wir', 'Ihr'].includes(subject.body)
-            ? subject.body
-            : subject.end) as keyof typeof reflexes
-        ]
-      : '';
 
-    const body = `${subject.body} ${modifyVerb} ${reflex} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
+    const body = `${subject.body} ${verb.body} ${verb.reflex} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
     return { body, ans: verb.prep };
   };
 }
