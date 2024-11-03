@@ -1,30 +1,41 @@
-import { quizItems } from '@/data/quizItems';
-import randomIndex from '@/util/rand';
+import { subjects, objects, regVerbs, adverbs, adjectives, possessives } from '@/data/quizItems';
+import rand from '@/util/rand';
 
-let quizPool = [...quizItems];
+const getAdjective = (adj: string, CASE: string, gend: string) =>
+  adj + (CASE === 'dat' || gend === 'm' ? 'en' : gend === 'n' ? 'es' : 'e');
+
+const getPossesive = (possesive: string, CASE: string, gend: string) => {
+  let ending = '';
+  if (CASE === 'dat') {
+    if (gend === 'm' || gend === 'n') ending = 'em';
+    if (gend === 'w'                ) ending = 'er';
+    if (gend === 'p'                ) ending = 'en';
+  } else {
+    if (gend === 'w' || gend === 'p') ending = 'e';
+    if (gend === 'm'                ) ending = 'en';
+  }
+
+  return possesive + ending;
+}
+
 export default class Question {
-    id: string;
   body: string;
    ans: string;
-  //  eng: string;
-    // ru: string;
 
   constructor() {
-    this.id   = '';
     this.body = '';
     this.ans  = '';
-    // this.eng  = '';
-    // this.ru   = '';
   }
 
   static random() {
-    if (quizPool.length === 0) {
-      quizPool = [...quizItems];
-    }
-    return quizPool.splice(randomIndex(quizPool.length), 1)[0];
-  }
+    const   subject = subjects[rand(subjects.length)];
+    const    object =  objects[rand( objects.length)];
+    const      verb = regVerbs[rand(regVerbs.length)];
+    const    adverb =  adverbs[rand( adverbs.length)];
+    const adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
+    const possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
 
-  static log() {
-   console.log('QUIZ ITEMS', quizItems.length, 'QUIZ POOL', quizPool.length); // *logData
-  }
+    const body = `${subject.body} ${verb.verb} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
+    return { body, ans: verb.prep };
+  };
 }

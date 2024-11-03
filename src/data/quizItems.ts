@@ -235,3 +235,5 @@ const question = () => {
 };
 
 console.log(question());
+
+export { subjects, objects, regVerbs, adverbs, adjectives, possessives };

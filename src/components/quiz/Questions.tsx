@@ -29,7 +29,7 @@ export default function Questions({ question, timer }: QuestionProps) {
           <InitialCountdown key='countdown' />
         ) : (
           <motion.article
-                key={question.id}
+                key={question.body}
               style={{ originY: 0.2 }}
             initial={{ scaleY: 0 }}
                exit={{ scaleY: 0 }}
