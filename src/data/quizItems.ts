@@ -89,7 +89,7 @@ const subjects = [
   { body: 'Sie',            end: 't'  },
   { body: 'Es',             end: 't'  },
   { body: 'Wir',            end: 'en' },
-  { body: 'Ihr',            end: '-t' },
+  { body: 'Ihr',            end: 't' },
   { body: 'Sie',            end: 'en' },
   { body: 'Der Lehrer',     end: 't'  },
   { body: 'Das Kind',       end: 't'  },
@@ -181,27 +181,27 @@ const objects = [
 
 // prettier-ignore
 const regVerbs = [
-  { verb: 'beginnen',      prep: 'mit',   case: 'dat' },
-  { verb: 'berichten',     prep: 'von',   case: 'dat' },
-  { verb: 'bestehen',      prep: 'aus',   case: 'dat' },
-  { verb: 'bitten',        prep: 'um',    case: 'akk' },
-  { verb: 'denken',        prep: 'an',    case: 'akk' },
-  { verb: 'erkennen',      prep: 'an',    case: 'dat' },
-  { verb: 'fragen',        prep: 'nach',  case: 'dat' },
-  { verb: 'glauben',       prep: 'an',    case: 'akk' },
-  { verb: 'hoffen',        prep: 'auf',   case: 'akk' },
+  { verb: 'beginn'/*en*/,     prep: 'mit',   case: 'dat' },
+  { verb: 'bericht'/*en*/,    prep: 'von',   case: 'dat', mod: 'e' }, // add E
+  { verb: 'besteh'/*en*/,     prep: 'aus',   case: 'dat' },
+  { verb: 'bitt'/*en*/,       prep: 'um',    case: 'akk', mod: 'e' }, // E
+  { verb: 'denk'/*en*/,       prep: 'an',    case: 'akk' },
+  { verb: 'erkenn'/*en*/,     prep: 'an',    case: 'dat' },
+  { verb: 'frag'/*en*/,       prep: 'nach',  case: 'dat' },
+  { verb: 'glaub'/*en*/,      prep: 'an',    case: 'akk' },
+  { verb: 'hoff'/*en*/,       prep: 'auf',   case: 'akk' },
   // { verb: 'kämpfen',       prep: 'für',   case: 'akk' },
   // { verb: 'kämpfen',       prep: 'gegen', case: 'akk' },
   // { verb: 'kämpfen',       prep: 'um',    case: 'akk' },
-  { verb: 'protestieren',  prep: 'gegen', case: 'akk' },
-  { verb: 'rechnen',       prep: 'mit',   case: 'dat' },
-  { verb: 'riechen',       prep: 'nach',  case: 'dat' },
-  { verb: 'schmecken',     prep: 'nach',  case: 'dat' },
-  { verb: 'sorgen',        prep: 'für',   case: 'akk' },
-  { verb: 'suchen',        prep: 'nach',  case: 'dat' },
-  { verb: 'träumen',       prep: 'von',   case: 'dat' },
-  { verb: 'warten',        prep: 'auf',   case: 'akk' },
-  { verb: 'zweifeln',      prep: 'an',    case: 'dat' },
+  { verb: 'protestier'/*en*/, prep: 'gegen', case: 'akk' },
+  { verb: 'rechn'/*en*/,      prep: 'mit',   case: 'dat', mod: 'e' }, // E
+  { verb: 'riech'/*en*/,      prep: 'nach',  case: 'dat' },
+  { verb: 'schmeck'/*en*/,    prep: 'nach',  case: 'dat' },
+  { verb: 'sorg'/*en*/,       prep: 'für',   case: 'akk' },
+  { verb: 'such'/*en*/,       prep: 'nach',  case: 'dat' },
+  { verb: 'träum'/*en*/,      prep: 'von',   case: 'dat' },
+  { verb: 'wart'/*en*/,       prep: 'auf',   case: 'akk' },
+  // { verb: 'zweifel'/*n*/,     prep: 'an',    case: 'dat' }, // fix later
 ];
 
 const rand = (max: number) => Math.floor(Math.random() * max);
@@ -224,14 +224,15 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
 }
 
 const question = () => {
-  const   subject = subjects[rand(subjects.length)];
-  const    object =  objects[rand( objects.length)];
-  const      verb = regVerbs[rand(regVerbs.length)];
-  const    adverb =  adverbs[rand( adverbs.length)];
-  const adjective = getAdjective(adjectives[rand(adjectives.length)], verb.case, object.gend);
-  const possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+  const    subject = subjects[rand(subjects.length)];
+  const     object =  objects[rand( objects.length)];
+  const       verb = regVerbs[rand(regVerbs.length)];
+  const     adverb =  adverbs[rand( adverbs.length)];
+  const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
+  const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+  const modifyVerb = verb.verb + (verb.mod && ['t', 'st'].includes(subject.end) ? verb.mod : '') + subject.end;
 
-  return `${subject.body} ${verb.verb} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
+  return `${subject.body} ${modifyVerb} ${adverb} ${verb.prep} ${possesive} ${adjective} ${object.body}`;
 };
 
 console.log(question());

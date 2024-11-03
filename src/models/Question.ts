@@ -28,14 +28,15 @@ export default class Question {
   }
 
   static random() {
-    const   subject = subjects[rand(subjects.length)];
-    const    object =  objects[rand( objects.length)];
-    const      verb = regVerbs[rand(regVerbs.length)];
-    const    adverb =  adverbs[rand( adverbs.length)];
-    const adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
-    const possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+    const    subject = subjects[rand(subjects.length)];
+    const     object =  objects[rand( objects.length)];
+    const       verb = regVerbs[rand(regVerbs.length)];
+    const     adverb =  adverbs[rand( adverbs.length)];
+    const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
+    const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+    const modifyVerb = verb.verb + (verb.mod && ['t', 'st'].includes(subject.end) ? verb.mod : '') + subject.end;
 
-    const body = `${subject.body} ${verb.verb} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
+    const body = `${subject.body} ${modifyVerb} ${adverb} ___ ${possesive} ${adjective} ${object.body}`;
     return { body, ans: verb.prep };
   };
 }
