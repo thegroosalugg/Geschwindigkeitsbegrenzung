@@ -1,4 +1,4 @@
-import { subjects, objects, verbs, reflexes, adverbs, adjectives, possessives } from '@/data/quizItems';
+import { subjects, objects, verbs, reflexes, states, adverbs, adjectives, possessives } from '@/data/quizItems';
 import rand from '@/util/rand';
 
 type Subject = { body: string, end: string };
@@ -9,6 +9,7 @@ type Verb = {
      case: string;
      end?: string;
   reflex?: boolean;
+ stative?: boolean;
      mod?: object;
     //  mod?: { e?: string, st?: string, t?: string, en?: string };
 }
@@ -33,7 +34,7 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
 const getVerb = (verb: Verb, subject: Subject) => {
   const modKey = subject.body === 'Ihr' ? 'Ihr' : subject.end;
   const modEnd = verb.mod?.[modKey as keyof typeof verb.mod];
-  const   body = verb.body + (modEnd ? modEnd : subject.end);
+  const   body = verb.stative ? verb.body : verb.body + (modEnd ? modEnd : subject.end);
   const refKey = ['Wir', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
   const reflex = verb.reflex ? reflexes[refKey as keyof typeof reflexes] : '';
 
@@ -56,10 +57,12 @@ export default class Question {
     const       verb =      getVerb(      verbs[rand(    verbs.length)],  subject);
     const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
     const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+    const   stateKey = ['Ich', 'Du', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
+    const      state = verb.stative ? states[stateKey as keyof typeof states] : '';
 
-    const body = `${subject.body} ${verb.body} ${
-      verb.reflex
-    } ${adverb} ___ ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
+    const body = `${subject.body} ${state} ${state ? adverb : ''} ${verb.body} ${verb.reflex} ${
+      !state ? adverb : ''
+    } ___ ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
     return { body, ans: verb.prep };
   };
 }

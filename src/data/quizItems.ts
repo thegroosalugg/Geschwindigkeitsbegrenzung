@@ -121,11 +121,13 @@ type Verb = {
      case: string;
      end?: string;
   reflex?: boolean;
+ stative?: boolean;
     //  mod?: { e?: string, st?: string, t?: string, en?: string };
      mod?: object;
 }
 
 const     reflex = true;
+const    stative = true;
 const        mod =            { st: 'est',   t: 'et',                Ihr: 'et'   };
 const   zweifeln = { e: 'le',   st: 'elst',  t: 'elt',  en: 'eln'                };
 const  verlassen = { e: 'asse', st: 'ässt',  t: 'ässt', en: 'assen', Ihr: 'asst' };
@@ -200,6 +202,14 @@ const verbs = [
   { body: 'kenn'/*en*/,        prep: 'mit',   case: 'dat', end: 'aus', reflex },
   { body: 'arbeit'/*en*/,      prep: 'in',    case: 'akk', end: 'ein', reflex, mod },
   { body: 'bereit'/*en*/,      prep: 'auf',   case: 'akk', end: 'vor', reflex, mod},
+  // ***STATIVE VERBS
+  { body: 'eifersüchtig',      prep: 'auf',   case: 'akk', stative },
+  { body: 'einverstanden',     prep: 'mit',   case: 'dat', stative },
+  { body: 'erstaunt',          prep: 'über',  case: 'akk', stative },
+  { body: 'enttäuscht',        prep: 'von',   case: 'dat', stative },
+  { body: 'neidisch',          prep: 'auf',   case: 'akk', stative },
+  { body: 'stolz',             prep: 'auf',   case: 'akk', stative },
+  { body: 'zuständig',         prep: 'für',   case: 'akk', stative }
 ];
 
 const reflexes = {
@@ -209,6 +219,14 @@ const reflexes = {
   en:  'sich',
   Wir: 'uns',
   Ihr: 'euch',
+}
+
+const states = {
+  Ich: 'bin',
+   Du: 'bist',
+  Ihr: 'seid',
+    t: 'ist',
+   en: 'sind',
 }
 
 const rand = (max: number) => Math.floor(Math.random() * max);
@@ -233,7 +251,7 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
 const getVerb = (verb: Verb, subject: Subject) => {
   const modKey = subject.body === 'Ihr' ? 'Ihr' : subject.end;
   const modEnd = verb.mod?.[modKey as keyof typeof verb.mod];
-  const   body = verb.body + (modEnd ? modEnd : subject.end);
+  const   body = verb.stative ? verb.body : verb.body + (modEnd ? modEnd : subject.end);
   const refKey = ['Wir', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
   const reflex = verb.reflex ? reflexes[refKey as keyof typeof reflexes] : '';
 
@@ -247,14 +265,16 @@ const question = () => {
   const       verb =      getVerb(      verbs[rand(    verbs.length)],  subject);
   const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
   const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+  const   stateKey = ['Ich', 'Du', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
+  const      state = verb.stative ? states[stateKey as keyof typeof states] : '';
 
-  return `${subject.body} ${verb.body} ${verb.reflex} ${adverb} ${
-    verb.prep
-  } ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
+  return `${subject.body} ${state} ${state ? adverb : ''} ${verb.body} ${verb.reflex} ${
+    !state ? adverb : ''
+  } ${verb.prep} ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
 };
 
 for (let i = 0; i < 7; i++) {
   console.log(question());
 }
 
-export { subjects, objects, verbs, reflexes, adverbs, adjectives, possessives };
+export { subjects, objects, verbs, reflexes, states, adverbs, adjectives, possessives };
