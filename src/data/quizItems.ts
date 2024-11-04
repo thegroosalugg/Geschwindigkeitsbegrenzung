@@ -232,7 +232,7 @@ const states = {
 const rand = (max: number) => Math.floor(Math.random() * max);
 
 const getAdjective = (adj: string, CASE: string, gend: string) =>
-  adj + (CASE === 'dat' || gend === 'm' ? 'en' : gend === 'n' ? 'es' : 'e');
+  adj + (CASE === 'dat' || ['m', 'p'].includes(gend) ? 'en' : gend === 'n' ? 'es' : 'e');
 
 const getPossesive = (possesive: string, CASE: string, gend: string) => {
   let ending = '';
