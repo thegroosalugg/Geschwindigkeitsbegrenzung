@@ -59,6 +59,7 @@ export default class Question {
     const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
     const   stateKey = ['Ich', 'Du', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
     const      state = verb.stative ? states[stateKey as keyof typeof states] : '';
+    const  pluralDat = verb.case === 'dat' ? (/n$/.test(object.body) ? '' : 'n') : '';
 
     const body = [
       subject.body,
@@ -70,7 +71,7 @@ export default class Question {
       '___',
       possesive,
       adjective,
-      object.body,
+      object.body + pluralDat,
       verb.end ?? ''
     ].filter(part => part).join(' ');
 

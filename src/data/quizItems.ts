@@ -1,12 +1,3 @@
-// ***STATIVE
-// eifersüchtig sein auf + Akk
-// einverstanden sein mit + Dat
-// erstaunt sein über + Akk
-// enttäuscht sein von + Dat
-// neidisch sein auf + Akk
-// stolz sein auf + Akk
-// zuständig sein für + Akk
-
 // ***CONTEXTUAL
 // es geht um + Akk
 // es handelt sich um + Akk
@@ -79,7 +70,7 @@ const adjectives = [
   'zukünftig', // future
   'frisch', // fresh
   'süß', // sweet
-  'höh', // high
+  'hoh', // high
   'verloren', // lost
   'schön', // beautiful
   'wichtig', // important
@@ -88,31 +79,31 @@ const adjectives = [
 
 // prettier-ignore
 const objects = [
+  { body: 'Anruf',        gend: 'm' },
+  { body: 'Besuch',       gend: 'm' },
+  { body: 'Erfolg',       gend: 'm' },
+  { body: 'Komfort',      gend: 'm' },
+  { body: 'Stil',         gend: 'm' },
+  { body: 'Platz',        gend: 'm' },
+  { body: 'Rat',          gend: 'm' },
+  { body: 'Schlüssel',    gend: 'm' },
+  { body: 'Traum',        gend: 'm' },
+  { body: 'Vorschlag',    gend: 'm' },
+  { body: 'Zweifel',      gend: 'm' },
+  { body: 'Parfum',       gend: 'n' },
   { body: 'Projekt',      gend: 'n' },
-  { body: 'Reise',        gend: 'w' },
+  { body: 'Wissen',       gend: 'n' },
   { body: 'Erfahrung',    gend: 'w' },
   { body: 'Hilfe',        gend: 'w' },
-  { body: 'Vorschlag',    gend: 'm' },
-  { body: 'Stil',         gend: 'm' },
-  { body: 'Rat',          gend: 'm' },
-  { body: 'Erfolg',       gend: 'm' },
-  { body: 'Besuch',       gend: 'm' },
-  { body: 'Traum',        gend: 'm' },
-  { body: 'Zweifel',      gend: 'm' },
-  { body: 'Platz',        gend: 'm' },
+  { body: 'Reise',        gend: 'w' },
   { body: 'Entscheidung', gend: 'w' },
-  { body: 'Schlüssel',    gend: 'm' },
-  { body: 'Parfum',       gend: 'n' },
   { body: 'Rezept',       gend: 'n' },
-  { body: 'Komfort',      gend: 'm' },
   { body: 'Haus',         gend: 'n' },
-  { body: 'Anruf',        gend: 'm' },
-  { body: 'Wissen',       gend: 'n' },
+  { body: 'Erinnerungen', gend: 'p' },
   { body: 'Bücher',       gend: 'p' },
   { body: 'Kinder',       gend: 'p' },
   { body: 'Projekte',     gend: 'p' },
-  { body: 'Erinnerungen', gend: 'p' },
-  { body: 'Kollegen',     gend: 'p' }
+  { body: 'Kollegen',     gend: 'p' },
 ];
 
 type Verb = {
@@ -267,6 +258,7 @@ const question = () => {
   const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
   const   stateKey = ['Ich', 'Du', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
   const      state = verb.stative ? states[stateKey as keyof typeof states] : '';
+  const  pluralDat = verb.case === 'dat' ? (/n$/.test(object.body) ? '' : 'n') : '';
 
   const body = [
     subject.body,
@@ -278,7 +270,7 @@ const question = () => {
     verb.prep,
     possesive,
     adjective,
-    object.body,
+    object.body + pluralDat,
     verb.end ?? ''
   ].filter(part => part).join(' ');
 
