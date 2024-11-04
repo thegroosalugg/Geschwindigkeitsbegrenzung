@@ -7,6 +7,7 @@ type Verb = {
       body: string;
       prep: string;
       case: string;
+       cat: number[];
       end?: string;
   stative?: object;
    reflex?: object;
@@ -51,13 +52,15 @@ export default class Question {
   }
 
   static random() {
-    const   subject = subjects[rand(subjects.length)];
-    const    object =  objects[rand( objects.length)];
-    const    adverb =  adverbs[rand( adverbs.length)];
-    const      verb = getVerb(verbs[rand(verbs.length)], subject);
-    const adjective = getAdjective( adjectives[rand(adjectives.length)], verb.case, object.gend);
-    const possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
-    const pluralDat =
+    const    subject = subjects[rand(subjects.length)];
+    const     adverb =  adverbs[rand( adverbs.length)];
+    const       verb = getVerb(verbs[rand(verbs.length)], subject);
+    const  randomCat = verb.cat[rand(verb.cat.length)]
+    const objectPool = objects[randomCat];
+    const     object = objectPool[rand(objectPool.length)];
+    const  adjective = getAdjective( adjectives[rand(adjectives.length)], verb.case, object.gend);
+    const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+    const  pluralDat =
       verb.case === 'dat' && object.gend === 'p' && !object.body.endsWith('n') ? 'n' : '';
 
     const body = [
