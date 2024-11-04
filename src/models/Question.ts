@@ -60,9 +60,20 @@ export default class Question {
     const   stateKey = ['Ich', 'Du', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
     const      state = verb.stative ? states[stateKey as keyof typeof states] : '';
 
-    const body = `${subject.body} ${state} ${state ? adverb : ''} ${verb.body} ${verb.reflex} ${
-      !state ? adverb : ''
-    } ___ ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
+    const body = [
+      subject.body,
+      state,
+      state ? adverb : '',
+      verb.body,
+      verb.reflex,
+      !state ? adverb : '',
+      '___',
+      possesive,
+      adjective,
+      object.body,
+      verb.end ?? ''
+    ].filter(part => part).join(' ');
+
     return { body, ans: verb.prep };
   };
 }

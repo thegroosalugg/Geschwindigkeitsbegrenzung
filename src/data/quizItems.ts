@@ -268,9 +268,21 @@ const question = () => {
   const   stateKey = ['Ich', 'Du', 'Ihr'].includes(subject.body) ? subject.body : subject.end;
   const      state = verb.stative ? states[stateKey as keyof typeof states] : '';
 
-  return `${subject.body} ${state} ${state ? adverb : ''} ${verb.body} ${verb.reflex} ${
-    !state ? adverb : ''
-  } ${verb.prep} ${possesive} ${adjective} ${object.body} ${verb.end ?? ''}`;
+  const body = [
+    subject.body,
+    state,
+    state ? adverb : '',
+    verb.body,
+    verb.reflex,
+    !state ? adverb : '',
+    verb.prep,
+    possesive,
+    adjective,
+    object.body,
+    verb.end ?? ''
+  ].filter(part => part).join(' ');
+
+  return body;
 };
 
 for (let i = 0; i < 7; i++) {
