@@ -10,15 +10,18 @@ import { adjectives } from "./adjectives";
 import { adverbs } from "./adverbs";
 import { objects } from "./objects";
 import { subjects, Subject } from "./subjects";
-import { verbs, Verb } from "./verbs";
+import { verbs } from "./verbs";
 
 const rand = (max: number) => Math.floor(Math.random() * max);
 
-const getAdjective = (adj: string, CASE: string, gend: string) =>
-  adj + (CASE === 'dat' || ['m', 'p'].includes(gend) ? 'en' : gend === 'n' ? 'es' : 'e');
+const getAdjective = (CASE: string, gend: string) => {
+  const adj = adjectives[rand(adjectives.length)];
+  return adj + (CASE === 'dat' || ['m', 'p'].includes(gend) ? 'en' : gend === 'n' ? 'es' : 'e');
+}
 
 const possessives = ['mein', 'dein', 'ihr', 'sein', 'unser', 'Ihr'];
-const getPossesive = (possesive: string, CASE: string, gend: string) => {
+const getPossesive = (CASE: string, gend: string) => {
+  const possesive = possessives[rand(possessives.length)];
   let ending = '';
   if (CASE === 'dat') {
     if (gend === 'm' || gend === 'n') ending = 'em';
@@ -32,7 +35,8 @@ const getPossesive = (possesive: string, CASE: string, gend: string) => {
   return possesive + ending;
 }
 
-const getVerb = (verb: Verb, subject: Subject) => {
+const getVerb = (subject: Subject) => {
+  const     verb = verbs[rand(verbs.length)];
   const   modKey = subject.body === 'Ihr' ? 'Ihr' : subject.end;
   const   modEnd = verb.mod?.[modKey as keyof typeof verb.mod];
   const     body = verb.stative ? verb.body : verb.body + (modEnd ? modEnd : subject.end);
@@ -44,15 +48,20 @@ const getVerb = (verb: Verb, subject: Subject) => {
   return { ...verb, body, reflex, stative };
 }
 
-const question = () => {
-  const    subject = subjects[rand(subjects.length)];
-  const     adverb =  adverbs[rand( adverbs.length)];
-  const       verb = getVerb(verbs[rand(verbs.length)], subject);
-  const  randomCat = verb.cat[rand(verb.cat.length)]
+const getObject = (cat: number[]) => {
+  const  randomCat = cat[rand(cat.length)]
   const objectPool = objects[randomCat];
   const     object = objectPool[rand(objectPool.length)];
-  const  adjective = getAdjective( adjectives[rand(adjectives.length)],  verb.case, object.gend);
-  const  possesive = getPossesive(possessives[rand(possessives.length)], verb.case, object.gend);
+  return object;
+}
+
+const question = () => {
+  const   subject = subjects[rand(subjects.length)];
+  const    adverb =  adverbs[rand( adverbs.length)];
+  const      verb = getVerb(subject);
+  const    object = getObject(verb.cat);
+  const adjective = getAdjective(verb.case, object.gend);
+  const possesive = getPossesive(verb.case, object.gend);
   const pluralDat =
     verb.case === 'dat' && object.gend === 'p' && !object.body.endsWith('n') ? 'n' : '';
 
@@ -77,4 +86,4 @@ for (let i = 0; i < 7; i++) {
   console.log(question());
 }
 
-export { subjects, objects, verbs, adverbs, adjectives, possessives, getAdjective, getPossesive, getVerb };
+export { subjects, adverbs, getAdjective, getPossesive, getVerb, getObject, rand };
