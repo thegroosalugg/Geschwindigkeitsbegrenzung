@@ -1,5 +1,3 @@
-export type Object = { body: string; gend: string };
-
 // prettier-ignore
 export const objects = [
   [ // 0: Individuals

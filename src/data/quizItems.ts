@@ -1,11 +1,3 @@
-// ***CONTEXTUAL
-// es geht um + Akk
-// es handelt sich um + Akk
-// machen sich Sorgen um + Akk
-// gratulieren jemandem zu + Dat
-// helfen jemandem bei + Dat
-// passen zu + Dat
-
 import { adjectives } from "./adjectives";
 import { adverbs } from "./adverbs";
 import { objects } from "./objects";
