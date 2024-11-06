@@ -1,30 +1,38 @@
-import { quizItems } from '@/data/quizItems';
-import randomIndex from '@/util/rand';
+import { subjects, adverbs, getAdjective, getPossesive, getVerb, getObject, rand } from '@/data/quizItems';
 
-let quizPool = [...quizItems];
 export default class Question {
-    id: string;
   body: string;
    ans: string;
-   eng: string;
-    ru: string;
 
   constructor() {
-    this.id   = '';
     this.body = '';
     this.ans  = '';
-    this.eng  = '';
-    this.ru   = '';
   }
 
   static random() {
-    if (quizPool.length === 0) {
-      quizPool = [...quizItems];
-    }
-    return quizPool.splice(randomIndex(quizPool.length), 1)[0];
-  }
+    const   subject = subjects[rand(subjects.length)];
+    const    adverb =  adverbs[rand( adverbs.length)];
+    const      verb = getVerb(subject);
+    const    object = getObject(verb.cat);
+    const adjective = getAdjective(verb.case, object.gend);
+    const possesive = getPossesive(verb.case, object.gend);
+    const pluralDat =
+      verb.case === 'dat' && object.gend === 'p' && !object.body.endsWith('n') ? 'n' : '';
 
-  static log() {
-   console.log('QUIZ ITEMS', quizItems.length, 'QUIZ POOL', quizPool.length); // *logData
-  }
+    const body = [
+      subject.body,
+      verb.stative,
+      verb.stative ? adverb : '',
+      verb.body,
+      verb.reflex,
+      !verb.stative ? adverb : '',
+      '___',
+      possesive,
+      adjective,
+      object.body + pluralDat,
+      verb.end ?? '',
+    ].filter((part) => part).join(' ');
+
+    return { body, ans: verb.prep };
+  };
 }

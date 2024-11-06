@@ -22,7 +22,7 @@ export default class User {
     this.solved    = 0;
     this.streak    = 0;
     this.level     = level;
-    this.lives     = Math.floor(10 / level); // einfash: 10, mittel: 5, schwer: 3
+    this.lives     = Math.ceil(5 / level); // einfash: 5, mittel: 3, schwer: 2
   }
 
   static setDifficulty(level: number) {
@@ -53,7 +53,6 @@ export default class User {
       if (total > reqScore) {
         item = true;
         reqScore += 100 + solved + streak + level * 3;
-        console.log('Item check passed REQUIRED SCORE', reqScore); // *logData
       }
 
     } else {
@@ -64,9 +63,7 @@ export default class User {
 
     penalty = 1;
 
-    const updatedUser = { choice, isCorrect, item, penalty, score, total, reqScore, solved, streak, level, lives };
-    console.log('UPDATE USER', updatedUser); // *logData
-
+     const updatedUser = { choice, isCorrect, item, penalty, score, total, reqScore, solved, streak, level, lives };
     return updatedUser;
   }
 }

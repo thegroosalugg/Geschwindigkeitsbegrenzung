@@ -5,27 +5,28 @@ import css from './StartScreen.module.css';
 
 export default function StartScreen({ timer }: { timer: Timer }) {
   const { isDebouncing, throttleFn } = useDebounce();
-  const tapHover = { scale: 1.2, color: '#FFFFFF', textShadow: '2px 2px 4px #4B0082', borderColor: '#e6e6e6' };
+  const mouseEvent = (scale: number) =>
+    ({ scale, color: '#FFFFFF', textShadow: '2px 2px 4px #4B0082', borderColor: '#e6e6e6' });
 
   return (
     <section className={css['start-screen']}>
       <motion.h1
-        animate={{ opacity: [0, 1], transition: { duration: 2 } }}
-        exit={{ scaleY: 0, transition: { duration: 0.5 } }}
+        animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}
+           exit={{  scaleY:      0, transition: { duration: 0.5 } }}
       >
         Geschwindigkeitsbegrenzung
       </motion.h1>
       <motion.img
             src='/skeletons.png'
             alt='skeletons playing instruments'
-        animate={{ opacity: [0, 1], transition: { duration: 2 } }}
+        animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}
            exit={{ opacity: 0 }}
       />
       <motion.button
           disabled={isDebouncing}
            onClick={() => throttleFn(timer.start, 700)}
-        whileHover={tapHover}
-          whileTap={tapHover}
+        whileHover={mouseEvent(1.1)}
+          whileTap={mouseEvent(1.2)}
               exit={{ scale: 0, opacity: 0, transition: { duration: 0.5 } }}
            animate={{
              opacity: [0, 1],

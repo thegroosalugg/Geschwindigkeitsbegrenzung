@@ -46,14 +46,9 @@ export default function SelectButton({ level, state }: ButtonProps) {
       className={css['button']}
         onClick={clickhandler}
         animate={{ background }}
-       variants={{ animate: { opacity: [0, 1], scale: [1.1, 1], transition: { duration: 0.5 } } }}
+       variants={{ animate: { opacity: [0, 1], scale: [1.1, 1], transition: { duration: 0.5, type: 'spring' } } }}
         >
-      <motion.span
-        animate={{
-           color,
-          filter: `brightness(${activeTab ? 1.5 : 1})`,
-        }}
-      >
+      <motion.span animate={{ color, filter: `brightness(${activeTab ? 1.5 : 1})` }}>
         {mode}
       </motion.span>
       {activeTab && <motion.div layoutId='difficulty' className={css['diffuclty-tab']} />}
