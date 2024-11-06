@@ -9,17 +9,15 @@ export default function DiffucultySelect() {
   const [isActive, setIsActive] = useState(level);
 
   return (
-    <motion.section
-       className={css['select']}
-         animate='animate'
-      transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
-    >
+    <section className={css['difficulty']}>
       <motion.h2 animate={{ opacity: [0, 1], transition: { duration: 1.5, ease: 'easeIn' } }}>
         Schwierigkeitsgrad
       </motion.h2>
-      <SelectButton level={1} state={{ isActive, setIsActive }} />
-      <SelectButton level={2} state={{ isActive, setIsActive }} />
-      <SelectButton level={3} state={{ isActive, setIsActive }} />
-    </motion.section>
+      <motion.section animate='animate' transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}>
+        <SelectButton level={1} state={{ isActive, setIsActive }} />
+        <SelectButton level={2} state={{ isActive, setIsActive }} />
+        <SelectButton level={3} state={{ isActive, setIsActive }} />
+      </motion.section>
+    </section>
   );
 }

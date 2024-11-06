@@ -5,3 +5,8 @@
   overflow-x: scroll;
   background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
 }
+@media screen and (pointer: coarse) and (orientation: landscape) {
+  .nav {
+    flex-direction: column;
+  }
+}
