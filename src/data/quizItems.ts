@@ -47,6 +47,7 @@ const getObject = (cat: number[]) => {
   return object;
 }
 
+// for testing
 const question = () => {
   const   subject = subjects[rand(subjects.length)];
   const    adverb =  adverbs[rand( adverbs.length)];
@@ -77,5 +78,6 @@ const question = () => {
 for (let i = 0; i < 7; i++) {
   console.log(question());
 }
+// end
 
 export { subjects, adverbs, getAdjective, getPossesive, getVerb, getObject, rand };
