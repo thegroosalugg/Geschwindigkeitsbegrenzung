@@ -58,3 +58,31 @@
     }
   }
 }
+
+@media screen and (pointer: coarse) and (orientation: landscape) {
+  .score {
+    padding: 4rem 1rem 1rem;
+
+    .pop-up {
+      font-size: 1rem;
+      bottom: 30%;
+    }
+
+    p {
+      height: 2.6rem;
+      font-size: 1.2rem;
+
+      &:nth-of-type(1) {
+        width: 3.5rem;
+      }
+
+      &:nth-of-type(2) {
+        width: 4.2rem;
+      }
+
+      &:nth-of-type(3) {
+        width: 3.8rem;
+      }
+    }
+  }
+}
