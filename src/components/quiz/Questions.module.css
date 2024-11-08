@@ -1,7 +1,7 @@
 .question {
   flex: 1;
   align-self: center;
-  max-width: 600px;
+  max-width: 960px;
   padding: 0.5rem;
 
   article {
@@ -28,6 +28,18 @@
 
       &::-moz-progress-bar {
         background-color: #302b63;
+      }
+    }
+  }
+}
+
+@media screen and (pointer: coarse) and (orientation: landscape) {
+  .question {
+    max-width: 100%;
+
+    article {
+      h1 {
+        font-size: 1.3rem;
       }
     }
   }
