@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { isMobile } from 'react-device-detect';
 import HighScore from '@/models/HighScore';
 import formatDate from '@/util/formatDate';
 import css from './GameOverEntry.module.css';
@@ -40,14 +41,17 @@ export default function GameOverEntry({score, newScore, index}: ScoreProps) {
   const icons = [index === 0 && 'crown', date === newScore.date && 'face-grin-beam-sweat'].filter(
     Boolean
   ) as IconProp[];
-  const direction = index % 2 === 0 ? 1 : -1;
+  const   direction = index % 2 === 0 ? -1 : 1;
+  const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+  const x = !(isMobile && isLandscape) ? [ 25 * direction, 0] : 0;
+  const y =   isMobile && isLandscape  ? [-20,             0] : 0;
   const background = backgrounds[index];
-  const image = images[level as keyof typeof images];
+  const      image = images[level as keyof typeof images];
 
   return (
     <motion.li
        className={css['item']}
-        variants={{ animate: { background, opacity: [0, 1], x: [25 * direction, 0] } }}
+        variants={{ animate: { background, opacity: [0, 1], x, y } }}
       transition={{ duration: 0.6, ease: 'easeIn' }}
     >
       <DetailRow title={formatDate(date)} info={icons} image={image} />
