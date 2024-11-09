@@ -47,27 +47,25 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
               )}
             </span>
             <span>
-              {isHighScore ? (
-                `Beantwortete Fragen: ${solved}`
-              ) : (
-                `Punkte: ${total}, Fragen: ${solved}`
-              )}
+              {isHighScore
+                ? `Beantwortete Fragen: ${solved}`
+                : `Punkte: ${total}, Fragen: ${solved}`}
             </span>
           </>
         )}
       </motion.h2>
+      <motion.h1
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1], transition: { duration: 0.6, delay: 0.2, ease: 'easeIn' } }}
+      >
+        {hasHighScores ? 'Ihre besten Ergebnisse' : 'Hier ist nichts zu finden'}
+      </motion.h1>
       <motion.ul
-          variants={{ hidden: { opacity: 0 }, animate: { opacity: 1} }}
+          variants={{ hidden: { opacity: 0 }, animate: { opacity: 1 } }}
            initial='hidden'
            animate='animate'
-        transition={{ staggerChildren: 0.2, delayChildren: 0.2 }}
+        transition={{ staggerChildren: 0.2, delayChildren: 0.4 }}
       >
-        <motion.h1
-            variants={{ animate: { opacity: [0, 1] } }}
-          transition={{ duration: 0.6, ease: 'easeIn' }}
-        >
-          {hasHighScores ? 'Ihre besten Ergebnisse' : 'Hier ist nichts zu finden'}
-        </motion.h1>
         {hasHighScores ? (
           highscores.map((score: HighScore, index: number) => (
             <GameOverEntry key={score.date} score={score} newScore={newScore} index={index} />
@@ -79,15 +77,20 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
             variants={{ animate: { opacity: [0, 1], transition: { duration: 0.6, ease: 'easeIn' } } }}
           />
         )}
-        <motion.button
+      </motion.ul>
+      <motion.button
            onClick={() => throttleRefFn(timer.replay, 1000)}
           whileTap={{ scale: 1.2 }}
         whileHover={isMobile ? {} : { scale: 1.1 }}
-          variants={{ animate: { opacity: [0, 1], y: [-20, 0], transition: { duration: 0.6, type: 'easeIn' } } }}
-        >
-          Wiederholungsversuch
-        </motion.button>
-      </motion.ul>
+           initial={{ opacity: 0 }}
+           animate={{
+               opacity: [  0, 1],
+                     y: [-20, 0],
+            transition: { duration: 0.6, delay: 0.4 + highscores.length * 0.2, type: 'easeIn' },
+          }}
+      >
+        Wiederholungsversuch
+      </motion.button>
     </motion.section>
   );
 }
