@@ -48,36 +48,36 @@ const getObject = (cat: number[]) => {
 }
 
 // for testing
-const question = () => {
-  const   subject = subjects[rand(subjects.length)];
-  const    adverb =  adverbs[rand( adverbs.length)];
-  const      verb = getVerb(subject);
-  const    object = getObject(verb.cat);
-  const adjective = getAdjective(verb.case, object.gend);
-  const possesive = getPossesive(verb.case, object.gend);
-  const pluralDat =
-    verb.case === 'dat' && object.gend === 'p' && !object.body.endsWith('n') ? 'n' : '';
+// const question = () => {
+//   const   subject = subjects[rand(subjects.length)];
+//   const    adverb =  adverbs[rand( adverbs.length)];
+//   const      verb = getVerb(subject);
+//   const    object = getObject(verb.cat);
+//   const adjective = getAdjective(verb.case, object.gend);
+//   const possesive = getPossesive(verb.case, object.gend);
+//   const pluralDat =
+//     verb.case === 'dat' && object.gend === 'p' && !object.body.endsWith('n') ? 'n' : '';
 
-  const body = [
-    subject.body,
-       verb.stative,
-       verb.stative ? adverb : '',
-       verb.body,
-       verb.reflex,
-      !verb.stative ? adverb : '',
-       verb.prep,
-       possesive,
-       adjective,
-     object.body + pluralDat,
-       verb.end ?? ''
-  ].filter(part => part).join(' ');
+//   const body = [
+//     subject.body,
+//        verb.stative,
+//        verb.stative ? adverb : '',
+//        verb.body,
+//        verb.reflex,
+//       !verb.stative ? adverb : '',
+//        verb.prep,
+//        possesive,
+//        adjective,
+//      object.body + pluralDat,
+//        verb.end ?? ''
+//   ].filter(part => part).join(' ');
 
-  return body;
-};
+//   return body;
+// };
 
-for (let i = 0; i < 7; i++) {
-  console.log(question());
-}
+// for (let i = 0; i < 7; i++) {
+  // console.log(question());
+// }
 // end
 
 export { subjects, adverbs, getAdjective, getPossesive, getVerb, getObject, rand };

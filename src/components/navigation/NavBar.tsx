@@ -14,6 +14,7 @@ export default function NavBar() {
   return (
     <nav className={css['nav']}>
       <NavButton path='/'         navFn={navTo} isDebouncing={isDebouncing} />
+      <NavButton path='/vocab'    navFn={navTo} isDebouncing={isDebouncing} />
       <NavButton path='/settings' navFn={navTo} isDebouncing={isDebouncing} />
     </nav>
   );
