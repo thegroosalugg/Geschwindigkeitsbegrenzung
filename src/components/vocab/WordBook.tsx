@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { translations } from '@/data/translations';
+import WordEntry from './WordEntry';
 import css from './WordBook.module.css';
 
 export default function WordBook() {
@@ -8,14 +9,11 @@ export default function WordBook() {
       <motion.h1 animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}>
         Verben
       </motion.h1>
-      <ul>
-        {translations.map(({ body, pret, perf, eng, ru, CASE }) => (
-          <li key={body}>
-            <span>{body}</span>
-            <span>{CASE}</span>
-          </li>
+      <motion.ul animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}>
+        {translations.map((word) => (
+          <WordEntry key={word.body} {...word} />
         ))}
-      </ul>
+      </motion.ul>
     </section>
   );
 }
