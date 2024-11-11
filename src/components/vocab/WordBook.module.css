@@ -1,24 +1,22 @@
 .wordbook {
-  max-height: 88vh;
-  align-self: center;
   padding: 0.5rem;
   margin: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 
   h1 {
+    width: fit-content;
     font-family: 'Unlock', serif;
     text-align: center;
     font-size: 1.2rem;
+    margin: 0 auto 0.5rem;
     padding: 0.5rem;
     border: 1px solid #e6e6e6;
     box-shadow: 2px 2px 4px #4f075f;
-    margin-bottom: 0.5rem;
   }
 
   ul {
-    max-height: 78vh;
+    max-height: 72vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     align-items: center;
     gap: 0.5rem;
     overflow: auto;
@@ -26,15 +24,28 @@
     li {
       display: flex;
       justify-content: space-between;
+      border: 1px solid #e6e6e6;
+      height: 2rem;
+      padding: 0.5rem;
+      font-size: 0.8rem;
+
+      span {
+        &:first-of-type {
+          font-weight: 600;
+        }
+        &:last-of-type {
+          font-family: 'Unlock', serif;
+        }
+      }
     }
   }
 }
 
-@media screen and (pointer: coarse) and (orientation: landscape) {
+/* @media screen and (pointer: coarse) and (orientation: landscape) {
   .wordbook {
 
     ul {
-      flex-wrap: wrap;
+
     }
   }
-}
+} */

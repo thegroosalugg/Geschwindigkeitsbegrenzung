@@ -13,7 +13,7 @@ const icons = {
 
 const labels = {
           '/': 'Spiel',
-     '/vocab': 'Wortschatz',
+     '/vocab': 'Wörter',
   '/settings': 'Optionen'
 }
 

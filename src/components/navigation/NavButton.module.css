@@ -7,6 +7,7 @@
   transition: 0.5s ease-in-out;
   position: relative;
   padding: 0.5rem;
+  width: 70px;
   background: none;
   border: none;
   cursor: pointer;
