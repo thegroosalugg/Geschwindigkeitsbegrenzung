@@ -1,6 +1,7 @@
 import { useRoutes } from 'react-router-dom';
 import RootLayout from './pages/Root';
 import GamePage from './pages/Game';
+import VocabPage from './pages/Vocab';
 import SettingsPage from './pages/Settings';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -14,6 +15,7 @@ export default function App() {
   const element = useRoutes(
     [
       { path: '/',         element: <GamePage /> },
+      { path: '/vocab',    element: <VocabPage /> },
       { path: '/settings', element: <SettingsPage /> }
     ]
   );

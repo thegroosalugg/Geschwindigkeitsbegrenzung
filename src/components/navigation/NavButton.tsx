@@ -7,11 +7,13 @@ import css from './NavButton.module.css';
 
 const icons = {
           '/': 'chess-rook',
+     '/vocab': 'book-open',
   '/settings': 'gear'
 }
 
 const labels = {
           '/': 'Spiel',
+     '/vocab': 'Wörter',
   '/settings': 'Optionen'
 }
 
