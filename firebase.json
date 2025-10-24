@@ -1,11 +1,8 @@
 {
   "hosting": {
+    "site": "geschwindigkeitsbegrenzu-a89a6",
     "public": "dist",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
