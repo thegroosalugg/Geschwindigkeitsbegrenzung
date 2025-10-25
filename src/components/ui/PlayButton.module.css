@@ -1,0 +1,15 @@
+.play-btn {
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--black);
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px var(--shadow);
+  text-shadow: 0.5px 0.5px 2px var(--black);
+  font-family: var(--font-minor);
+  font-size: 1.2rem;
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isMobile } from 'react-device-detect';
 import useDebounceRef from '@/hooks/useDebounceRef';
 import User from '@/models/User';
 import Timer from '@/models/Timer';
 import HighScore from '@/models/HighScore';
 import GameOverEntry from './GameOverEntry';
+import PlayButton from '../ui/PlayButton';
 import css from './GameOver.module.css';
 
 export default function GameOver({ user, timer }: { user: User, timer: Timer }) {
@@ -78,10 +78,8 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
           />
         )}
       </motion.ul>
-      <motion.button
+      <PlayButton
            onClick={() => throttleRefFn(timer.replay, 1000)}
-          whileTap={{ scale: 1.2 }}
-        whileHover={isMobile ? {} : { scale: 1.1 }}
            initial={{ opacity: 0 }}
            animate={{
                opacity: [  0, 1],
@@ -89,8 +87,8 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
             transition: { duration: 0.6, delay: 0.4 + highscores.length * 0.2, type: 'easeIn' },
           }}
       >
-        Wiederholungsversuch
-      </motion.button>
+        Replay
+      </PlayButton>
     </motion.section>
   );
 }

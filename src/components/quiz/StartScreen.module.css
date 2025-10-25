@@ -1,18 +1,3 @@
-.play-btn {
-  margin: 1rem auto;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--black);
-  border-radius: 5px;
-  box-shadow: 2px 2px 4px var(--shadow);
-  font-family: var(--font-minor);
-  font-size: 1.2rem;
-
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.6;
-  }
-}
-
 .cover-img {
   align-self: center;
   width: 200px;
