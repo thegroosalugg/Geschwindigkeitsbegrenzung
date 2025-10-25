@@ -1,7 +1,9 @@
 .wordbook {
   max-width: 960px;
   width: 95%;
+  min-height: 200px;
   margin: 0 auto 0.5rem;
+  padding: 0.2rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   align-items: center;

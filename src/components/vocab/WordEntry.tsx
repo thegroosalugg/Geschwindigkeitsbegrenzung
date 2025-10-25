@@ -27,17 +27,17 @@ const WordEntry: React.FC<Word> = (word) => {
 
   return (
     <li className={css['word']}>
-      <div>
+      <div className={css['header']}>
         <motion.span key={display} animate={{ opacity: [0, 1], transition: { duration: 1 } }}>
           {display}
         </motion.span>
         <span>{CASE}</span>
       </div>
-      <div>
+      <div className={css['button-row']}>
         {buttons.map((button, index) => (
           <motion.button
-            key={button}
-            onClick={() => setDisplay(button)}
+                key={button}
+            onClick={() => setDisplay(button)}               // magenta  : transparent
             animate={{ backgroundColor: display === button ? '#b073dc5d' : '#00000000' }}
           >
             <FontAwesomeIcon icon={icons[index] as IconProp} size='xs' />
