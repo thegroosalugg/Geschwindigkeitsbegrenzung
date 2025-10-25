@@ -5,15 +5,15 @@ import css from './WordBook.module.css';
 
 export default function WordBook() {
   return (
-    <section className={css['wordbook']}>
-      <motion.h1 animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}>
+    <>
+      <motion.h1 className={css['wordbook-header']} animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}>
         Verben
       </motion.h1>
-      <motion.ul animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}>
+      <motion.ul className={css['wordbook-list']} animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}>
         {translations.map((word) => (
           <WordEntry key={word.body} {...word} />
         ))}
       </motion.ul>
-    </section>
+    </>
   );
 }
