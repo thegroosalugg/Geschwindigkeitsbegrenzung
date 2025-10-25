@@ -8,6 +8,7 @@
   position: relative;
   padding: 0.5rem;
   width: 70px;
+  font-size: 0.75rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -39,9 +40,7 @@
     }
   }
 
-  &:hover {
-    color: #777777;
-  }
+  &:hover { color: #777777; }
 
   &.mobile {
     &:hover {

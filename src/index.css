@@ -1,12 +1,53 @@
-@import './reset.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Bebas+Neue&family=Unlock&display=swap');
+
+:root {
+  --purple-700: #42275a;
+  --purple-800: #4f075f;
+  --font-major: "Montserrat", serif;
+  --font-minor: "Unlock", serif;
+  --bg: var(--purple-700);
+  --fg: #e6e6e6;
+  --accent: #734b6d;
+}
+
+@media (prefers-color-scheme: dark) {
+  html { color-scheme: dark; }
+  :root {
+    --bg: #42275a;
+    --fg: #e6e6e6;
+  }
+}
+
+/* CSS Reset */
+*, *::before, *::after { box-sizing: border-box; }
+*                      { margin: 0;  padding: 0; }
+
+input, textarea, select          { outline: none; border-radius: 0; }
+a                                { text-decoration: none;           }
+ul, ol                           {      list-style: none;           }
+img, picture, video, canvas, svg {         display: block;          }
+button                           {          cursor: pointer;        }
+
+a, p, h1, h2, h3, h4, h5, h6, button, label, input, textarea, select, option {
+  overflow-wrap: break-word; /* only works when element has width */
+           font: inherit;
+          color: inherit;
+}
+
+::-webkit-scrollbar       { width: 1px; height: 1px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--fg); border-radius: 5px; }
+/* End of CSS Reset */
 
 /* body fits device height - background covers whole device */
 body {
   min-height: 100vh;
-  color: #e6e6e6;
-  background: linear-gradient(to bottom, #42275a, #734b6d);
-  font-family: 'Montserrat', sans-serif;
+  color: var(--fg);
+  background: linear-gradient(to bottom, var(--bg), var(--accent));
+  line-height: 1.2;
+  font-family: var(--font-major);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 1st direct child of body - position fixed allows its children dvh to adjust instantly on scroll */
