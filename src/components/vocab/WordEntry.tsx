@@ -36,9 +36,10 @@ const WordEntry: React.FC<Word> = (word) => {
       <div className={css['button-row']}>
         {buttons.map((button, index) => (
           <motion.button
-                key={button}
-            onClick={() => setDisplay(button)}               // magenta  : transparent
-            animate={{ backgroundColor: display === button ? '#b073dc5d' : '#00000000' }}
+                   key={button}
+            aria-label={index < buttons.length - 2 ? 'show tense form' : 'show translation'}
+               onClick={() => setDisplay(button)}               // magenta  : transparent
+               animate={{ backgroundColor: display === button ? '#b073dc5d' : '#00000000' }}
           >
             <FontAwesomeIcon icon={icons[index] as IconProp} size='xs' />
           </motion.button>
