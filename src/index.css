@@ -2,17 +2,18 @@
 
 :root {
   --black: #000;
+  --white: #e6e6e6;
   --indigo: #302b63;
   --magenta: #734b6d;
-  --purple-700: #42275a;
-  --purple-800: #4f075f;
+  --purple: #42275a;
+  --shadow: #4f075f;
   --easy: #659999;
   --medium: #f4791f;
   --hard: #aa4533;
   --font-major: "Montserrat", serif;
   --font-minor: "Unlock", serif;
-  --bg: var(--purple-700);
-  --fg: #e6e6e6;
+  --bg: var(--purple);
+  --fg: var(--white);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -47,7 +48,7 @@ a, p, h1, h2, h3, h4, h5, h6, button, label, input, textarea, select, option {
 body {
   min-height: 100vh;
   color: var(--fg);
-  background: linear-gradient(to bottom, var(--purple-700), var(--magenta));
+  background: linear-gradient(to bottom, var(--purple), var(--magenta));
   line-height: 1.2;
   font-family: var(--font-major);
   -webkit-font-smoothing: antialiased;

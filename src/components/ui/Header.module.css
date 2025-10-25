@@ -1,5 +1,6 @@
 .header {
   width: fit-content;
+  max-width: 95%;
   font-family: var(--font-minor);
   text-align: center;
   font-size: 1.2rem;
@@ -7,5 +8,5 @@
   padding: 0.5rem;
   border: 1px solid var(--fg);
   border-radius: 2px;
-  box-shadow: 2px 2px 4px var(--purple-800);
+  box-shadow: 2px 2px 4px var(--shadow);
 }
