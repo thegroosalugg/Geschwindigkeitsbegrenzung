@@ -7,19 +7,19 @@ const config = {
   1: {
      mode: 'einfach',
     image: 'uter',
-    color: '#659999',
+    color: 'var(--easy)',
       hex: '#a8c6dc',
   },
   2: {
      mode: 'mittel',
     image: 'nelson',
-    color: '#f4791f',
+    color: 'var(--medium)',
       hex: '#82afd1',
   },
   3: {
      mode: 'schwer',
     image: 'ranier',
-    color: '#aa4533',
+    color: 'var(--hard)',
       hex: '#5999c9',
   },
 };

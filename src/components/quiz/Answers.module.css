@@ -10,13 +10,12 @@
   button {
     flex: 1 0 30%;
     padding: 0.5rem;
-    font-family: 'Unlock', serif;
+    font-family: var(--font-minor);
     font-size: 1.8rem;
     text-align: center;
-    text-shadow: 1px 1px 2px #000;
-    border: 1px solid #ffffff;
-    color: #e6e6e6;
-    cursor: pointer;
+    text-shadow: 1px 1px 2px var(--black);
+    border: 1px solid var(--fg);
+    color: var(--fg);
 
     &:disabled {
       pointer-events: none;

@@ -1,20 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Bebas+Neue&family=Unlock&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Unlock&display=swap');
 
 :root {
+  --black: #000;
+  --indigo: #302b63;
+  --magenta: #734b6d;
   --purple-700: #42275a;
   --purple-800: #4f075f;
+  --easy: #659999;
+  --medium: #f4791f;
+  --hard: #aa4533;
   --font-major: "Montserrat", serif;
   --font-minor: "Unlock", serif;
   --bg: var(--purple-700);
   --fg: #e6e6e6;
-  --accent: #734b6d;
 }
 
 @media (prefers-color-scheme: dark) {
   html { color-scheme: dark; }
   :root {
-    --bg: #42275a;
-    --fg: #e6e6e6;
+    /* TBC */
   }
 }
 
@@ -43,7 +47,7 @@ a, p, h1, h2, h3, h4, h5, h6, button, label, input, textarea, select, option {
 body {
   min-height: 100vh;
   color: var(--fg);
-  background: linear-gradient(to bottom, var(--bg), var(--accent));
+  background: linear-gradient(to bottom, var(--purple-700), var(--magenta));
   line-height: 1.2;
   font-family: var(--font-major);
   -webkit-font-smoothing: antialiased;
