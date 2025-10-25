@@ -9,7 +9,7 @@
   span {
     text-shadow: 1px 1px 2px var(--black);
 
-    &:nth-of-type(1) { color: var(--hard);   }
+    &:nth-of-type(1) { color: var(--danger); }
     &:nth-of-type(2) { color: var(--medium); }
     &:nth-of-type(3) { color: var(--easy);   }
   }

@@ -18,7 +18,7 @@ const DetailRow = ({ title, info, image }: { title: string; info: number | IconP
   const marginRight = Array.isArray(info) && info.includes('face-grin-beam-sweat') ? '0.1rem' : 0;
 
   return (
-    <p>
+    <p className={css['detail-row']}>
       <span>
         {image &&  <img src={`/${image}.png`} alt={image} className={css[image]} />}
         {title}
@@ -34,8 +34,6 @@ const DetailRow = ({ title, info, image }: { title: string; info: number | IconP
   );
 };
 
-const backgrounds = ['#898121', '#776f1c', '#676018', '#5d5c1c', '#4C4B16'];
-
 export default function GameOverEntry({score, newScore, index}: ScoreProps) {
   const { date, total, solved, level } = score;
   const icons = [index === 0 && 'crown', date === newScore.date && 'face-grin-beam-sweat'].filter(
@@ -45,7 +43,7 @@ export default function GameOverEntry({score, newScore, index}: ScoreProps) {
   const isLandscape = window.matchMedia('(orientation: landscape)').matches;
   const x = !(isMobile && isLandscape) ? [ 25 * direction, 0] : 0;
   const y =   isMobile && isLandscape  ? [-20,             0] : 0;
-  const background = backgrounds[index];
+  const background = `hsl(55, 61%, ${33 - index * 4}%)`; // olive: gets darker per index
   const      image = images[level as keyof typeof images];
 
   return (

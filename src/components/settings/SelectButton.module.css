@@ -5,7 +5,7 @@
   background: none;
   border: none;
   border-radius: 3px;
-  color: var(--fg);
+  color: var(--white);
   font-family: var(--font-minor);
 
   > span {
@@ -48,7 +48,7 @@
     left: 0;
     right: 0;
     z-index: 1;
-    border: 2px solid var(--fg);
+    border: 2px solid var(--white);
     border-radius: 3px;
   }
 }

@@ -16,21 +16,22 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
              newScore.save();
   const    highscores = HighScore.getAll();
   const hasHighScores = highscores.length > 0;
+  const          ease = 'easeIn';
+  const      duration = 0.5;
 
   return (
-    <motion.section className={css['gameover']} exit={{ opacity: 0, y: 100, transition: { duration: 0.5 }}}>
-      <motion.h2
-        initial={{ opacity: 0 }}
-        animate={{
+    <>
+      <motion.h1
+        className={css['results-header']}
+          initial={{ opacity: 0 }}
+          animate={{
              originY: 1,
              opacity: 1,
               scaleY: [0, 1],
                    x: [-30, 0],
-               color: !total || isHighScore ? '#E6E6E6' : '#000',
-          background: `linear-gradient(to right, ${
-            !total ? '#CB6040, #ab5236' : isHighScore ? '#7E60BF, #E4B1F0' : '#EDDFE0, #B7B7B7'
-          })`,
-          transition: { duration: 0.6 }
+               color: `var(--${!total || isHighScore ? 'white' : 'black'})`,
+          background: `var(--${!total ? 'danger' : isHighScore ? 'violet' : 'gray'})`,
+          transition: { duration }
         }}
       >
         {!total ? (
@@ -53,14 +54,16 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
             </span>
           </>
         )}
-      </motion.h2>
-      <motion.h1
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 1], transition: { duration: 0.6, delay: 0.2, ease: 'easeIn' } }}
+      </motion.h1>
+      <motion.h2
+        className={css['scores-header']}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1], transition: { ease, duration, delay: 0.2 } }}
       >
         {hasHighScores ? 'Ihre besten Ergebnisse' : 'Hier ist nichts zu finden'}
-      </motion.h1>
+      </motion.h2>
       <motion.ul
+         className={css['scores-list']}
           variants={{ hidden: { opacity: 0 }, animate: { opacity: 1 } }}
            initial='hidden'
            animate='animate'
@@ -68,13 +71,13 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
       >
         {hasHighScores ? (
           highscores.map((score: HighScore, index: number) => (
-            <GameOverEntry key={score.date} score={score} newScore={newScore} index={index} />
+            <GameOverEntry key={score.date} {...{ score, newScore, index }} />
           ))
         ) : (
           <motion.img
                  src='/mailbox.png'
                  alt='empty mailbox'
-            variants={{ animate: { opacity: [0, 1], transition: { duration: 0.6, ease: 'easeIn' } } }}
+            variants={{ animate: { opacity: [0, 1], transition: { ease, duration } } }}
           />
         )}
       </motion.ul>
@@ -84,11 +87,11 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
            animate={{
                opacity: [  0, 1],
                      y: [-20, 0],
-            transition: { duration: 0.6, delay: 0.4 + highscores.length * 0.2, type: 'easeIn' },
+            transition: { ease, duration, delay: 0.4 + highscores.length * 0.2 },
           }}
       >
         Replay
       </PlayButton>
-    </motion.section>
+    </>
   );
 }

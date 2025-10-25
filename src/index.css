@@ -1,26 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Unlock&display=swap');
 
 :root {
-  --black: #000;
-  --white: #e6e6e6;
+  --black:  #1d1d1d;
+  --white:  #e6e6e6;
+  --gray:   #b7b7b7;
   --indigo: #302b63;
-  --magenta: #734b6d;
+  --magenta:#734b6d;
+  --violet: #7E60bf;
   --purple: #42275a;
   --shadow: #4f075f;
-  --easy: #659999;
+  --easy:   #659999;
   --medium: #f4791f;
-  --hard: #aa4533;
+  --danger: #aa4533;
   --font-major: "Montserrat", serif;
   --font-minor: "Unlock", serif;
-  --bg: var(--purple);
-  --fg: var(--white);
-}
-
-@media (prefers-color-scheme: dark) {
-  html { color-scheme: dark; }
-  :root {
-    /* TBC */
-  }
 }
 
 /* CSS Reset */
@@ -41,13 +34,13 @@ a, p, h1, h2, h3, h4, h5, h6, button, label, input, textarea, select, option {
 
 ::-webkit-scrollbar       { width: 1px; height: 1px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--fg); border-radius: 5px; }
+::-webkit-scrollbar-thumb { background: var(--white); border-radius: 5px; }
 /* End of CSS Reset */
 
 /* body fits device height - background covers whole device */
 body {
   min-height: 100vh;
-  color: var(--fg);
+  color: var(--white);
   background: linear-gradient(to bottom, var(--purple), var(--magenta));
   line-height: 1.2;
   font-family: var(--font-major);
