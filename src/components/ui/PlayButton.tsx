@@ -2,7 +2,7 @@ import { motion, HTMLMotionProps } from "framer-motion";
 import User from "@/models/User";
 import css from './PlayButton.module.css';
 
-const backgrounds = ['easy', 'medium', 'danger'];
+const backgrounds = ['info', 'warning', 'danger'];
 
 export default function PlayButton({
   children,

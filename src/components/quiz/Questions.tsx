@@ -49,7 +49,7 @@ export default function Questions({ question, timer }: QuestionProps) {
               <AnimatePresence mode='wait'>
                 <motion.span
                       key={isStopped + ''}
-                    style={{ minWidth: question.ans.length * 18 }}
+                    style={{ minWidth: question.ans.length * 20 }}
                   initial={{ opacity: 0 }}
                      exit={{ opacity: 0 }}
                   animate={{

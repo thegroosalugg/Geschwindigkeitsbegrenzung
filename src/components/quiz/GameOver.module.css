@@ -17,7 +17,7 @@
 
 .scores-list {
   margin: 0 auto;
-  padding: 0.2rem;
+  padding: 0.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,5 +38,6 @@
     margin: 1rem;
   }
 
-  &::-webkit-scrollbar { height: 0; } /* unwanted horizontal scrollbar keeps appearing on enter */
+  &::-webkit-scrollbar       { height: 0; width: 1.5px; } /* unwanted horizontal scrollbar keeps appearing on enter */
+  &::-webkit-scrollbar-thumb { background: #8b9220;   }
 }

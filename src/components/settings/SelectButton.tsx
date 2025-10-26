@@ -7,12 +7,12 @@ const config = {
   1: {
      mode: 'einfach',
     image: 'uter',
-    color: 'var(--easy)',
+    color: 'var(--info)',
   },
   2: {
      mode: 'mittel',
     image: 'nelson',
-    color: 'var(--medium)',
+    color: 'var(--warning)',
   },
   3: {
      mode: 'schwer',

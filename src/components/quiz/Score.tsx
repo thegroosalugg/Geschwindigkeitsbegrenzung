@@ -5,7 +5,7 @@ import User from '@/models/User';
 import Timer from '@/models/Timer';
 import css from './Score.module.css';
 
-interface DispItemProps {
+interface ScoreItemProps {
       isSolved?: boolean;
        isTotal?: boolean;
        isLives?: boolean;
@@ -15,7 +15,7 @@ interface DispItemProps {
            user: User;
 }
 
-const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, user }: DispItemProps) => {
+const ScoreItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, user }: ScoreItemProps) => {
   const { isAnimating } = useDelay(delay, timer.isStopped);
   const { total, score, solved, lives, item } = user;
   const hasItem = isTotal && item;
@@ -23,24 +23,16 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
 
   let content;
   if (isSolved) content = baseValue - 1;
-  if (isTotal)  content = baseValue - score;
+  if (isTotal)  content = hasItem ? 'Freeze!' : baseValue - score;
   if (isLives)  content = baseValue + (timer.isInitial ? 0 : 1);
 
   const background = isLives
-    ? { background: lives <= 0 ? '#000000' : lives <= 1 ? '#aa4834' : lives <= 2 ? '#d39b3a' : '#1666a8' }
+    ? `var(--${lives <= 0 ? "black" : lives <= 1 ? "danger" : lives <= 2 ? "warning" : "info"})`
     : isTotal
-    ? { background: item ? '#3A6D8C' : '#e6e6e6' }
-    : {};
+    ? `var(--${item ? "teal" : "white"})`
+    : `hsl(${80 + solved * 15}, ${50 + solved * 2}%, ${35 + solved * 2}%)`;
 
-  const color = isTotal ? { color: item ? '#e6e6e6' : '#42275a' } : {};
-
-  const clipPath = isTotal
-    ? {
-        clipPath: item
-          ? 'polygon(71% 0%, 84% 16%, 100% 36%, 86% 58%, 73% 75%, 28% 75%, 0% 75%, 13% 38%, 0% 0%, 29% 0%)'
-          : 'polygon(75% 0%, 100% 0%, 100% 75%, 75% 75%, 45% 75%, 15% 100%, 25% 75%, 0% 75%, 0% 0%, 25% 0%)',
-      }
-    : {};
+  const color = isTotal ? { color: `var(--${item ? 'white' : 'purple'})` } : {};
 
   function clickHandler() {
     if (hasItem && !timer.isStopped) timer.pause();
@@ -48,39 +40,37 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
 
   return (
     <motion.p
-      initial={false}
-      onClick={clickHandler}
-      animate={{
-        ...background,
-         ...clipPath,
-          ...color,
-             scale:
-              (shouldAnimate && !isTotal) || hasItem
-                ? [1, 1.2, 1]
-                : timer.isPaused && isTotal
-                ? [1, 2, 1]
-                : 1,
-            cursor: hasItem ? 'pointer' : '',
-        transition: {
-           ease: 'easeInOut',
-          scale: {
-               delay: isSolved ? 1.8 : 0.2,
-            duration: hasItem  ?   2 : 0.5,
-              repeat: hasItem && Infinity,
-          },
-          background: { duration: 0.8, delay: isLives ? 1.5 : 0 },
-            clipPath: { duration: 0.5, ease: 'easeInOut' }
-        },
-      }}
+      className={css['score-item']}
+        initial={false}
+        onClick={clickHandler}
+        animate={{
+             ...color,
+           background,
+               cursor: hasItem ? 'pointer' : '',
+                scale:
+                  (shouldAnimate && !isTotal) || hasItem
+                    ? [1, 1.2, 1]
+                    : timer.isPaused && isTotal
+                    ? [1, 2, 1]
+                    : 1,
+           transition: {
+                   ease: 'easeInOut',
+             background: { duration: 0.8, delay: isLives ? 1.5 : 0 },
+                  scale: {
+                       delay: isSolved ? 1.8 : 0.2,
+                    duration: hasItem  ?   2 : 0.5,
+                      repeat: hasItem && Infinity,
+                  },
+           },
+        }}
     >
       <motion.span
         initial={false}
         animate={{
-             opacity: shouldAnimate             ? [1, 0, 1] : 1,
-              scaleY: shouldAnimate &&  isTotal ? [1, 0, 1] : 1,
-              scaleX: shouldAnimate && !isTotal ? [1, 0, 1] : 1,
-          translateY: isTotal ? -6 : isSolved ? -5 : -2,
-          translateX: isTotal ? -2 : 0,
+             opacity: shouldAnimate && !hasItem          ? [1, 0, 1] : 1,
+              scaleY: shouldAnimate &&  isTotal && !item ? [1, 0, 1] : 1,
+              scaleX: shouldAnimate && !isTotal          ? [1, 0, 1] : 1,
+          translateY: isSolved ? -4 : isLives ? -2 : 0,
           transition: {
                  ease: 'easeInOut',
              duration: 0.5,
@@ -88,7 +78,7 @@ const DisplayItem = ({ isSolved, isTotal, isLives, shouldAnimate, delay, timer, 
           },
         }}
       >
-        {shouldAnimate && isAnimating ? content : baseValue}
+        {((shouldAnimate && isAnimating) || hasItem) ? content : baseValue}
       </motion.span>
     </motion.p>
   );
@@ -106,12 +96,13 @@ export default function Score({ user, timer }: ScoreProps) {
   const onIsRight =  isCorrect && isStopped;
   const onIsWrong = !isCorrect && isStopped;
   const direction = useRef(1);
-  const background =
-  score < 10 ? '#aa4834' :
-  score < 20 ? '#adadad' :
-  score < 30 ? '#6ba816' :
-  score < 40 ? '#167ca8' :
-  '#9B7EBD';
+  const background = `var(--${
+    score < 10 ? 'gray'    :
+    score < 20 ? 'danger'  :
+    score < 30 ? 'success' :
+    score < 40 ? 'teal'    :
+    'violet'
+  })`;
 
   return (
     <motion.div
@@ -120,22 +111,22 @@ export default function Score({ user, timer }: ScoreProps) {
         animate={{ opacity: 1, x:   0, transition: { duration: 0.5 } }}
            exit={{ opacity: 0, y: 100, rotate: -20, transition: { duration: 1, delay: 0.4 } }}
     >
-      <DisplayItem user={user} shouldAnimate={onIsRight} delay={2200} timer={timer} isSolved />
-      <DisplayItem user={user} shouldAnimate={onIsRight} delay={1400} timer={timer} isTotal  />
-      <DisplayItem user={user} shouldAnimate={onIsWrong} delay={1200} timer={timer} isLives  />
+      <ScoreItem {...{ user, timer }} shouldAnimate={onIsRight} delay={2200} isSolved />
+      <ScoreItem {...{ user, timer }} shouldAnimate={onIsRight} delay={1400} isTotal  />
+      <ScoreItem {...{ user, timer }} shouldAnimate={onIsWrong} delay={1200} isLives  />
       <AnimatePresence onExitComplete={() => direction.current = direction.current === 1 ? -1 : 1}>
         {onIsRight && isAnimating && (
           <motion.div
             className={css['pop-up']}
-              style={{ background }}
-            initial={{ opacity: 0 , translateY: 0, rotate: 0 }}
-               exit={{ opacity: 0, scale: 0.5, transition: { duration: 1 } }}
-            animate={{
-                 opacity:   1,
-              translateY: -40,
-                  rotate:  10 * direction.current,
-              transition: { type: 'spring', damping: 55, stiffness: 300, delay: 0.2 }
-            }}
+                style={{ background }}
+              initial={{ opacity: 0 , translateY: 0, rotate: 0 }}
+                 exit={{ opacity: 0, scale: 0.5, transition: { duration: 1 } }}
+              animate={{
+                   opacity:   1,
+                translateY: -40,
+                    rotate:  10 * direction.current,
+                transition: { type: 'spring', damping: 55, stiffness: 300, delay: 0.2 }
+              }}
           >
             {score}
           </motion.div>
