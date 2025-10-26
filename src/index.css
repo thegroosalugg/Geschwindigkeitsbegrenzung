@@ -1,23 +1,77 @@
-@import './reset.css';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Bebas+Neue&family=Unlock&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Unlock&display=swap');
 
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  font-family: 'Montserrat', sans-serif;
-  color: #e6e6e6;
-  background: linear-gradient(to bottom, #42275a, #734b6d);
+:root {
+  --black:   #1d1d1d;
+  --white:   #e6e6e6;
+  --gray:    #b7b7b7;
+  --rose:    #d8cccc;
+  --teal:    #3a6d8c;
+  --indigo:  #302b63;
+  --magenta: #734b6d;
+  --violet:  #7E60bf;
+  --purple:  #42275a;
+  --shadow:  #4f075f;
+  --info:    #659999;
+  --warning: #f4791f;
+  --danger:  #aa4533;
+  --success: #6f8c2E;
+  --gold:    #cd8f2a;
+  --font-major: "Montserrat", serif;
+  --font-minor: "Unlock", serif;
 }
 
+/* CSS Reset */
+*, *::before, *::after { box-sizing: border-box; }
+*                      { margin: 0;  padding: 0; }
+
+input, textarea, select          { outline: none; border-radius: 0; }
+a                                { text-decoration: none;           }
+ul, ol                           {      list-style: none;           }
+img, picture, video, canvas, svg {         display: block;          }
+button                           {          cursor: pointer;        }
+
+a, p, h1, h2, h3, h4, h5, h6, button, label, input, textarea, select, option {
+  overflow-wrap: break-word; /* only works when element has width */
+           font: inherit;
+          color: inherit;
+}
+
+::-webkit-scrollbar       { width: 1px; height: 1px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--white); border-radius: 5px; }
+/* End of CSS Reset */
+
+/* body fits device height - background covers whole device */
+body {
+  min-height: 100vh;
+  color: var(--white);
+  background: linear-gradient(to bottom, var(--purple), var(--magenta));
+  line-height: 1.2;
+  font-family: var(--font-major);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 1st direct child of body - position fixed allows its children dvh to adjust instantly on scroll */
+#root {
+  position: fixed;
+  inset: 0;
+}
+
+/* 1st direct child of #root with content - allows content to react instantly to show/hide browser UI elements */
+#content {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+
+  @media (pointer: coarse) and (orientation: landscape) { flex-direction: row; }
+}
+
+
+/* #main shares space with navbar - flex 1 allows it to fill all space */
 #main {
   flex: 1;
   display: flex;
   flex-direction: column;
-}
-
-@media screen and (pointer: coarse) and (orientation: landscape) {
-  #root {
-    flex-direction: row;
-  }
+  overflow: auto;
 }

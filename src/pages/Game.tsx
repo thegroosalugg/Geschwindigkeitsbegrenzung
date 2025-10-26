@@ -12,15 +12,15 @@ export default function GamePage() {
   return (
     <AnimatePresence mode='wait'>
       {!timer.isStarted ? (
-        <StartScreen key='start'    timer={timer} />
+        <StartScreen key='start'    {...{ timer }} />
       ) : !timer.isGameover ? (
         <>
-          <Questions key='question' timer={timer}             question={question} />
-          <Score     key='score'    timer={timer} user={user}                     />
-          <Answers   key='answers'  timer={timer} user={user} question={question} />
+          <Questions key='question' {...{ timer, question }} />
+          <Score     key='score'    {...{ timer, user }} />
+          <Answers   key='answers'  {...{ timer, user, question }} />
         </>
       ) : (
-        <GameOver    key='gameover' timer={timer} user={user} />
+        <GameOver key='gameover'    {...{ timer, user }} />
       )}
     </AnimatePresence>
   );

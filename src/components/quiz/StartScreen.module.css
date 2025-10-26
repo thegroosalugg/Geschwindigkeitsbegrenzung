@@ -1,37 +1,4 @@
-.start-screen {
+.cover-img {
   align-self: center;
-  max-width: 600px;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1rem;
-
-  h1 {
-    word-break: break-all;
-    text-align: center;
-    font-family: "Unlock", serif;
-    font-size: 1.2rem;
-    padding: 0.5rem;
-    border: 1px solid #e6e6e6;
-    box-shadow: 2px 2px 4px #4f075f;
-  }
-
-  button {
-    margin-top: 1.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid #000000;
-    box-shadow: 2px 2px 4px #4f075f;
-    font-family: "Unlock", serif;
-    font-size: 1.2rem;
-
-    &:disabled {
-      pointer-events: none;
-      opacity: 0.6;
-    }
-  }
-
-  img {
-    width: 200px;
-  }
+  width: 200px;
 }

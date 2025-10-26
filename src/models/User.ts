@@ -18,7 +18,7 @@ export default class User {
     this.penalty   = 1;
     this.score     = 0;
     this.total     = 0;
-    this.reqScore  = 100;
+    this.reqScore  = 50;
     this.solved    = 0;
     this.streak    = 0;
     this.level     = level;
@@ -52,7 +52,7 @@ export default class User {
 
       if (total > reqScore) {
         item = true;
-        reqScore += 100 + solved + streak + level * 3;
+        reqScore += 50 + solved + streak + level * 3;
       }
 
     } else {

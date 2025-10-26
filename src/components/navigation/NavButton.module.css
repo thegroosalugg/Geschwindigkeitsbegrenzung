@@ -1,20 +1,24 @@
 .nav-button {
+  --opacity: 0.6; /* dynamic value */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.1rem;
-  color: #d8cccc;
+  color: var(--rose);
   transition: 0.5s ease-in-out;
   position: relative;
   padding: 0.5rem;
   width: 70px;
+  font-size: 0.75rem;
   background: none;
   border: none;
-  cursor: pointer;
+
+  &:hover { opacity: var(--opacity); }
+  &.mobile { --opacity: 1; }
 
   &:disabled {
     pointer-events: none;
-    opacity: 0.6;
+    opacity: 0.6; /* same value for desktop/mobile */
   }
 
   .active-tab {
@@ -23,33 +27,18 @@
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid #e3a137;
-    transition: border-color 0.5s ease-in-out;
+    border: 1px solid var(--gold);
+    border-radius: 2px;
+    transition: opacity 0.5s ease-in-out;
   }
 
   &.active {
-    color: #e3a137;
+    color: var(--gold);
 
     &:hover {
-      color: #b4802c;
+      opacity: var(--opacity);
 
-      .active-tab {
-        border-color: #b4802c;
-      }
-    }
-  }
-
-  &:hover {
-    color: #777777;
-  }
-
-  &.mobile {
-    &:hover {
-      color: #e3a137;
-
-      .active-tab {
-        border-color: #e3a137;
-      }
+      .active-tab { opacity: var(--opacity); }
     }
   }
 }

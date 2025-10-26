@@ -1,46 +1,35 @@
-.question {
+.container {
   flex: 1;
   align-self: center;
   max-width: 960px;
   padding: 0.5rem;
 
-  article {
-    h1 {
-      padding: 0.5rem;
-      font-size: 1.8rem;
-      text-align: center;
-      color: #42275a;
-      text-shadow: 1px 1px 2px #000;
-      background: #e6e6e6;
-    }
-
-    progress {
-      width: 100%;
-      appearance: none;
-
-      &::-webkit-progress-bar {
-        background-color: #e6e6e6;
-      }
-
-      &::-webkit-progress-value {
-        background-color: #302b63;
-      }
-
-      &::-moz-progress-bar {
-        background-color: #302b63;
-      }
-    }
-  }
+  @media (pointer: coarse) and (orientation: landscape) { max-width: 100%; }
 }
 
-@media screen and (pointer: coarse) and (orientation: landscape) {
-  .question {
-    max-width: 100%;
+.question {
+  border-radius: 10px;
+  overflow: hidden;
 
-    article {
-      h1 {
-        font-size: 1.3rem;
-      }
-    }
+  h1 {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--purple);
+    text-shadow: 1px 1px 2px var(--black);
+    background: var(--white);
+
+    > span { display: inline-block; }
+
+    @media (pointer: coarse) and (orientation: landscape) { font-size: 1.25rem; }
+  }
+
+  progress {
+    width: 100%;
+    appearance: none;
+
+    &::-webkit-progress-bar   { background-color: var(--white);  }
+    &::-webkit-progress-value { background-color: var(--indigo); }
+    &::-moz-progress-bar      { background-color: var(--indigo); }
   }
 }
