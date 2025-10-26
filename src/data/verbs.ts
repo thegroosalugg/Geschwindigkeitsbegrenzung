@@ -100,7 +100,7 @@ export const verbs = [
   { body: 'wehr'/*en*/,        prep: 'gegen', case: 'akk', cat: [      3,4,5           ], reflex },
   // ***SEPARABLE VERBS
   { body: 'häng'/*en*/,        prep: 'von',   case: 'dat', cat: [0,    3,4,5,  7,8,9   ], end: 'ab'   },
-  { body: 'pass'/*en*/,        prep: 'auf',   case: 'akk', cat: [0,1,  3,  5,  7,8,9   ], end: 'auf'  },
+  { body: 'pass'/*en*/,        prep: 'auf',   case: 'akk', cat: [0,1,  3,  5,  7,8,9   ], end: 'auf', mod: { st: 't' } },
   { body: 'weis'/*en*/,        prep: 'auf',   case: 'akk', cat: [0,1,2,3,4,5,6,7,8,9   ], end: 'hin'  },
   { body: 'denk'/*en*/,        prep: 'über',  case: 'akk', cat: [0,1,2,3,4,5,6,7,8     ], end: 'nach' },
   { body: 'n'/*ehmen*/,        prep: 'an',    case: 'dat', cat: [      3,  5,6,  8     ], end: 'teil', mod: nehmen },
