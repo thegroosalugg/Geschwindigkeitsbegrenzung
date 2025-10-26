@@ -12,11 +12,10 @@ interface QuestionProps {
 export default function Questions({ question, timer }: QuestionProps) {
   const questParts = question.body.split('___');
   const { isInitial, isStopped, isPaused, max, remaining } = timer;
-  const longString =  question.ans.length > 4;
 
   return (
     <motion.div
-      className={css['question']}
+      className={css['container']}
       exit={{
            originX: 0.2,
                  y: 100,
@@ -29,46 +28,44 @@ export default function Questions({ question, timer }: QuestionProps) {
         {isInitial ? (
           <InitialCountdown key='countdown' />
         ) : (
-          <motion.article
-                key={question.body}
-              style={{ originY: 0.2 }}
-            initial={{ scaleY: 0 }}
-               exit={{ scaleY: 0 }}
-            animate={{
+          <motion.div
+                  key={question.body}
+            className={css['question']}
+                style={{ originY: 0.2 }}
+              initial={{ scaleY: 0 }}
+                 exit={{ scaleY: 0 }}
+              animate={{
                   scaleY: 1,
               transition: { duration: 0.5, ease: 'linear' },
             }}
           >
             <motion.h1
               animate={{
-                     color: isPaused ? '#e6e6e6' : '#42275a',
-                background: isPaused ? '#3A6D8C' : '#e6e6e6'
+                     color: `var(--${isPaused ? 'white' : 'purple'})`,
+                background: `var(--${isPaused ?  'teal' : 'white'})`,
               }}
             >
               {questParts[0]}
               <AnimatePresence mode='wait'>
                 <motion.span
                       key={isStopped + ''}
-                    style={{
-                      minWidth: longString ? 90 : 72,
-                      fontSize: longString ? '1.7rem' : '1.8.rem',
-                    }}
+                    style={{ minWidth: question.ans.length * 18 }}
                   initial={{ opacity: 0 }}
                      exit={{ opacity: 0 }}
                   animate={{
                        opacity: 1,
-                         color: isStopped ? '#cd8f2a' : isPaused ? '#e6e6e6' : '#42275a',
+                         color: `var(--${isStopped ? 'gold' : isPaused ? 'white' : 'purple'})`,
                     transition: { delay: isPaused ? 0 : 0.3 },
                   }}
                 >
-                  {isStopped ? question.ans : '_____'}
+                  {isStopped ? question.ans : '_'.repeat(question.ans.length + 1)}
                 </motion.span>
               </AnimatePresence>
               {questParts[1]}
             </motion.h1>
             {/* offset animation time from progress timer */}
             <progress value={remaining} max={max - 500} />
-          </motion.article>
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.div>

@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Unlock&display=swap');
 
 :root {
-  --black:  #1d1d1d;
-  --white:  #e6e6e6;
-  --gray:   #b7b7b7;
-  --rose:   #d8cccc;
-  --indigo: #302b63;
-  --magenta:#734b6d;
-  --violet: #7E60bf;
-  --purple: #42275a;
-  --shadow: #4f075f;
-  --easy:   #659999;
-  --medium: #f4791f;
-  --danger: #aa4533;
+  --black:   #1d1d1d;
+  --white:   #e6e6e6;
+  --gray:    #b7b7b7;
+  --rose:    #d8cccc;
+  --teal:    #3a6d8c;
+  --indigo:  #302b63;
+  --magenta: #734b6d;
+  --violet:  #7E60bf;
+  --purple:  #42275a;
+  --shadow:  #4f075f;
+  --easy:    #659999;
+  --medium:  #f4791f;
+  --danger:  #aa4533;
+  --success: #6f8c2E;
+  --gold:    #cd8f2a;
   --font-major: "Montserrat", serif;
   --font-minor: "Unlock", serif;
 }

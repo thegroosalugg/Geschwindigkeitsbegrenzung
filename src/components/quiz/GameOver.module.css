@@ -37,4 +37,6 @@
     width: 200px;
     margin: 1rem;
   }
+
+  &::-webkit-scrollbar { height: 0; } /* unwanted horizontal scrollbar keeps appearing on enter */
 }

@@ -1,5 +1,4 @@
 .nav-button {
-  --hover: #e3a137;
   --opacity: 0.6; /* dynamic value */
   display: flex;
   flex-direction: column;
@@ -28,13 +27,13 @@
     bottom: 0;
     left: 0;
     right: 0;
-    border: 1px solid var(--hover);
+    border: 1px solid var(--gold);
     border-radius: 2px;
     transition: opacity 0.5s ease-in-out;
   }
 
   &.active {
-    color: var(--hover);
+    color: var(--gold);
 
     &:hover {
       opacity: var(--opacity);
