@@ -1,9 +1,15 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import NavBar from "@/components/navigation/NavBar";
+import { useEffect } from "react";
+import { postAnalytics } from "@/util/analytics";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    postAnalytics()
+  })
 
   return (
     <div id="content">
