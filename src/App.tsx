@@ -5,12 +5,14 @@ import GamePage      from './pages/Game';
 import VocabPage     from './pages/Vocab';
 import SettingsPage  from './pages/Settings';
 import AboutPage     from './pages/About';
+import NotFoundPage  from './pages/NotFound';
 
 const routes = [
   { path: '/',         element: <GamePage />     },
   { path: '/vocab',    element: <VocabPage />    },
   { path: '/settings', element: <SettingsPage /> },
   { path: '/about',    element: <AboutPage />    },
+  { path: '*',         element: <NotFoundPage /> },
 ];
 
 export default function App() {
