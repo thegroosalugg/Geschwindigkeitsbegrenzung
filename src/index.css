@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Unlock&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Unlock&display=swap');
 
 :root {
   --black:   #1d1d1d;
@@ -48,8 +48,6 @@ body {
   background: linear-gradient(to bottom, var(--purple), var(--magenta));
   line-height: 1.2;
   font-family: var(--font-major);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 1st direct child of body - position fixed allows its children dvh to adjust instantly on scroll */
