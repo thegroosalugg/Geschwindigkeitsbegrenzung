@@ -20,14 +20,14 @@ const DetailRow = ({ title, info, image }: { title: string; info: number | IconP
   return (
     <p className={css['detail-row']}>
       <span>
-        {image &&  <img src={`/${image}.png`} alt={image} className={css[image]} />}
+        {image &&  <img src={`/${image}.webp`} alt={image} className={css[image]} loading="lazy" />}
         {title}
       </span>
       <span>
         {typeof info === 'number'
           ? info
           : info.map((icon) => (
-              <FontAwesomeIcon key={icon as string} icon={icon} style={{ marginRight }} />
+              <FontAwesomeIcon key={icon as string} {...{ icon }} style={{ marginRight }} />
             ))}
       </span>
     </p>
@@ -52,7 +52,7 @@ export default function GameOverEntry({score, newScore, index}: ScoreProps) {
         variants={{ animate: { background, opacity: [0, 1], x, y } }}
       transition={{ duration: 0.6, ease: 'easeIn' }}
     >
-      <DetailRow title={formatDate(date)} info={icons} image={image} />
+      <DetailRow title={formatDate(date)} info={icons} {...{ image }} />
       <DetailRow title='Punktzahl'        info={total} />
       <DetailRow title='Fragen'           info={solved} />
     </motion.li>

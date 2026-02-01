@@ -75,8 +75,9 @@ export default function GameOver({ user, timer }: { user: User, timer: Timer }) 
           ))
         ) : (
           <motion.img
-                 src='/mailbox.png'
+                 src='/mailbox.webp'
                  alt='empty mailbox'
+             loading='lazy'
             variants={{ animate: { opacity: [0, 1], transition: { ease, duration } } }}
           />
         )}

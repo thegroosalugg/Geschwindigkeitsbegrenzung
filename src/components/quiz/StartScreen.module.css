@@ -1,4 +1,5 @@
 .cover-img {
   align-self: center;
   width: 200px;
+  aspect-ratio: auto;
 }

@@ -24,6 +24,7 @@
     position: absolute;
     right: 10px;
     z-index: 2;
+    aspect-ratio: auto;
 
     &.einfach {
       width: 48px;
