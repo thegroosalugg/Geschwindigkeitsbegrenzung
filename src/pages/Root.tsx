@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   })
 
   return (
-    <div id="content">
+    <>
       <NavBar />
       <AnimatePresence mode="popLayout">
         <motion.main
@@ -24,6 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </motion.main>
       </AnimatePresence>
-    </div>
+    </>
   );
 }

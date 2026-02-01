@@ -54,17 +54,12 @@ body {
 #root {
   position: fixed;
   inset: 0;
-}
-
-/* 1st direct child of #root with content - allows content to react instantly to show/hide browser UI elements */
-#content {
   height: 100dvh;
   display: flex;
   flex-direction: column;
 
   @media (pointer: coarse) and (orientation: landscape) { flex-direction: row; }
 }
-
 
 /* #main shares space with navbar - flex 1 allows it to fill all space */
 #main {
