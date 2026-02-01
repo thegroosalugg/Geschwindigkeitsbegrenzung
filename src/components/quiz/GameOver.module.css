@@ -35,6 +35,7 @@
 
   > img {
     width: 200px;
+    aspect-ratio: auto;
     margin: 1rem;
   }
 

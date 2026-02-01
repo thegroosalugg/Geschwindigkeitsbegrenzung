@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import useDebounce from '@/hooks/useDebounce';
 import NavButton from './NavButton';
 import css from './NavBar.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -17,14 +16,7 @@ export default function NavBar() {
       <NavButton path='/'         navFn={navTo} isDebouncing={isDebouncing} />
       <NavButton path='/vocab'    navFn={navTo} isDebouncing={isDebouncing} />
       <NavButton path='/settings' navFn={navTo} isDebouncing={isDebouncing} />
-      <a
-        className={css['source-code']}
-            href="https://github.com/thegroosalugg/Geschwindigkeitsbegrenzung"
-          target='_blank'
-      >
-        <FontAwesomeIcon icon='code' size='2x' />
-        Code
-      </a>
+      <NavButton path='/about'    navFn={navTo} isDebouncing={isDebouncing} />
     </nav>
   );
 }

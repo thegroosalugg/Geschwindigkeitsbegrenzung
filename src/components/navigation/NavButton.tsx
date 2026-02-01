@@ -8,13 +8,15 @@ import css from './NavButton.module.css';
 const icons = {
           '/': 'chess-rook',
      '/vocab': 'book-open',
-  '/settings': 'gear'
+  '/settings': 'gear',
+     '/about': 'globe',
 }
 
 const labels = {
           '/': 'Spiel',
      '/vocab': 'Wörter',
-  '/settings': 'Optionen'
+  '/settings': 'Optionen',
+     '/about': 'Info',
 }
 
 interface NavProps {

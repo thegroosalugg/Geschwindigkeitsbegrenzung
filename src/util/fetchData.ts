@@ -8,7 +8,6 @@ export interface Fetch {
     token?: string
 }
 
-// Detroid Rock City
 const fetchData = async ({ url, method = 'GET', data, headers: headersInit = {}, token }: Fetch) => {
   const   isFile = data instanceof FormData // multipart/form-data
   const     body = data ? (isFile ? data : JSON.stringify(data)) : null

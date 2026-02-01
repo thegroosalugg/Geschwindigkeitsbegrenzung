@@ -11,17 +11,3 @@
     min-height: 100vh; /* ensures it doesn't clip from bottom when scrolling in landscape */
   }
 }
-
-.source-code {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.1rem;
-  color: var(--rose);
-  font-size: 0.75rem;
-  padding: 0.5rem;
-  width: 70px;
-  transition: 0.5s ease-in-out;
-
-  &:hover { opacity: 0.6; }
-}

@@ -8,10 +8,10 @@ import {
   faChessRook,
   faBookOpen,
   faGear,
+  faGlobe,
   faCrown,
   faFaceGrinBeamSweat,
   faStar,
-  faCode,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -23,10 +23,10 @@ library.add(
   faChessRook,
   faBookOpen,
   faGear,
+  faGlobe,
   faCrown,
   faFaceGrinBeamSweat,
   faStar,
-  faCode,
 );
 
 // How to import all icons
