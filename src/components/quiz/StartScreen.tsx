@@ -17,7 +17,7 @@ export default function StartScreen({ timer }: { timer: Timer }) {
               alt='skeletons playing instruments'
           animate={{ opacity: [0, 1], transition: { duration: 1, ease: 'easeIn' } }}
              exit={{ opacity: 0 }}
-        fetchPriority='high'
+          loading='eager'
       />
       <PlayButton disabled={isDebouncing} onClick={() => throttleFn(timer.start, 700)}>
         Spiel
