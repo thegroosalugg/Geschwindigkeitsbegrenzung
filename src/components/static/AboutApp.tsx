@@ -4,6 +4,7 @@ import css from './AboutApp.module.css'
 
 export default function AboutApp() {
   const variants = { animate: { opacity: [0, 1] } }
+  const { VITE_PORTFOLIO_URL, VITE_SOURCE_URL } = import.meta.env
 
   return (
     <motion.div className={css['about-app']} animate="animate" transition={{ staggerChildren: 0.2 }}>
@@ -16,10 +17,10 @@ export default function AboutApp() {
         the project’s README below.
       </motion.p>
       <motion.nav className={css['app-links']} {...{ variants }}>
-        <a href="https://github.com/thegroosalugg/Geschwindigkeitsbegrenzung" target="_blank">
+        <a href={VITE_SOURCE_URL} target="_blank">
           View Source Code
         </a>
-        <a href="https://victor-loginov.vercel.app/" target="_blank">
+        <a href={VITE_PORTFOLIO_URL} target="_blank">
           More from me
         </a>
       </motion.nav>
